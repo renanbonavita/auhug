@@ -7,7 +7,7 @@
    Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
    atualize a lista ARQUIVOS e aumente o número em VERSAO. */
 
-const VERSAO = "auhug-v1";
+const VERSAO = "auhug-v2";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -16,7 +16,11 @@ const ARQUIVOS = [
   "icon-512.png",
   "apple-touch-icon.png",
   "favicon.png",
-  "og-image.png"
+  "og-image.png",
+  "simbolos/arasaac-forte.png",
+  "simbolos/arasaac-explodindo.png",
+  "simbolos/arasaac-travado.png",
+  "simbolos/arasaac-comecar.png"
 ];
 
 self.addEventListener("install", evento => {
