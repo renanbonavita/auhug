@@ -1,0 +1,61 @@
+/* AuHug — funcionamento sem internet.
+   Na primeira visita, guarda todos os arquivos no celular.
+   Depois, abre sempre na hora a partir do celular (mesmo sem sinal)
+   e, se houver internet, baixa a versão nova em segundo plano
+   para a próxima vez que o app for aberto.
+
+   Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
+   atualize a lista ARQUIVOS e aumente o número em VERSAO. */
+
+const VERSAO = "auhug-v1";
+const ARQUIVOS = [
+  "./",
+  "index.html",
+  "manifest.webmanifest",
+  "icon-192.png",
+  "icon-512.png",
+  "apple-touch-icon.png",
+  "favicon.png",
+  "og-image.png"
+];
+
+self.addEventListener("install", evento => {
+  evento.waitUntil(
+    caches.open(VERSAO).then(c => c.addAll(ARQUIVOS)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener("activate", evento => {
+  evento.waitUntil(
+    caches.keys()
+      .then(nomes => Promise.all(nomes.filter(n => n !== VERSAO).map(n => caches.delete(n))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener("fetch", evento => {
+  const pedido = evento.request;
+  if (pedido.method !== "GET" || new URL(pedido.url).origin !== self.location.origin) return;
+
+  // Abrir o app (qualquer endereço dentro dele) sempre usa a página principal guardada.
+  const chave = pedido.mode === "navigate" ? "./" : pedido;
+
+  evento.respondWith(
+    caches.open(VERSAO).then(async cache => {
+      const guardado = await cache.match(chave, { ignoreSearch: true });
+      const daRede = fetch(pedido)
+        .then(resp => {
+          if (resp && resp.ok) cache.put(chave, resp.clone());
+          return resp;
+        })
+        .catch(() => null);
+
+      if (guardado) {
+        evento.waitUntil(daRede);
+        return guardado;
+      }
+      const resp = await daRede;
+      return resp || new Response("Sem conexão.", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+    })
+  );
+});

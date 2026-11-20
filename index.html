@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AuHug</title>
+<meta name="description" content="Autorregulação e comunicação para pessoas autistas em momentos de crise.">
+<meta name="theme-color" content="#1f2329">
+<!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.). Ao ativar o domínio próprio, troque o endereço abaixo. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="AuHug">
+<meta property="og:description" content="Para pessoas autistas em momentos de crise. Gratuito, sem cadastro, funciona sem internet.">
+<meta property="og:image" content="https://renanbonavita.github.io/auhug/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AuHug">
+<style>
+  /* Paleta de baixa estimulação: sem preto puro, sem branco puro, sem cores vivas. */
+  :root{
+    --fundo:#1f2329;
+    --botao:#2a2f37;
+    --borda:#3a404a;
+    --texto:#e6e0d4;
+    --suave:#a8a296;
+    --acento:#c4aa8c;
+    --cartao-fundo:#ece5d8;
+    --cartao-texto:#22262c;
+    --cartao-suave:#5a5650;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--fundo);color:var(--texto);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.4;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-text-size-adjust:100%;
+  }
+  /* Sem animações ou transições em lugar nenhum. */
+  *,*::before,*::after{animation:none!important;transition:none!important}
+
+  .tela{display:none;min-height:100dvh;min-height:100vh;
+    padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));
+    flex-direction:column;max-width:560px;margin:0 auto}
+  .tela.ativa{display:flex}
+
+  button,a.botao{font:inherit;color:inherit;cursor:pointer}
+  a{color:var(--acento)}
+
+  /* ---------- Início ---------- */
+  .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px}
+  .lista{display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center}
+  .estado{
+    display:block;width:100%;text-align:left;
+    background:var(--botao);border:2px solid var(--borda);border-radius:18px;
+    padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
+  }
+  .estado:active{border-color:var(--acento)}
+  .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
+  .rodape p+p{margin-top:10px}
+  .rodape a{color:var(--suave)}
+
+  .aviso-instalar{
+    background:transparent;border:1px dashed var(--borda);border-radius:14px;
+    padding:12px 14px;font-size:.95rem;color:var(--suave);
+    display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px
+  }
+  .aviso-instalar[hidden]{display:none}
+  .aviso-instalar button{background:none;border:none;color:var(--suave);font-size:.95rem;text-decoration:underline;padding:6px}
+
+  /* ---------- Tela de instrução ---------- */
+  .voltar{
+    align-self:flex-start;background:none;border:2px solid var(--borda);
+    border-radius:12px;padding:12px 18px;font-size:1.05rem;color:var(--suave)
+  }
+  .instrucao{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 4px}
+  .instrucao h1{font-size:2.4rem;line-height:1.15;font-weight:700}
+  .instrucao p{font-size:1.35rem;color:var(--suave);margin-top:22px}
+  .mostrar{
+    width:100%;background:var(--botao);border:2px solid var(--acento);border-radius:18px;
+    padding:24px 20px;font-size:1.3rem;font-weight:600;min-height:84px
+  }
+
+  /* ---------- Cartão para terceiros ---------- */
+  #cartao{background:var(--cartao-fundo);color:var(--cartao-texto);max-width:none}
+  #cartao .voltar{border-color:#c9c1b2;color:var(--cartao-suave)}
+  .cartao-corpo{flex:1;display:flex;flex-direction:column;justify-content:center;
+    max-width:560px;width:100%;margin:0 auto;padding:20px 4px}
+  .cartao-corpo .frase{font-size:1.6rem;line-height:1.3;font-weight:600}
+  .cartao-corpo .frase+.frase{margin-top:10px}
+  .cartao-corpo .destaque{font-size:2rem;font-weight:800;margin-bottom:14px}
+  .cartao-corpo .pedido{margin-top:22px;padding-top:18px;border-top:2px solid #cfc7b8}
+  .cartao-corpo .pedido .frase{font-weight:700}
+  .cartao-corpo .nota{margin-top:26px;padding-top:14px;border-top:1px solid #cfc7b8;
+    font-size:1.05rem;color:var(--cartao-suave)}
+  #cartao .topo{max-width:560px;width:100%;margin:0 auto}
+
+  /* ---------- Sobre ---------- */
+  .texto{padding:24px 2px;font-size:1.08rem}
+  .texto h1{font-size:1.6rem;margin-bottom:14px}
+  .texto h2{font-size:1.2rem;margin:26px 0 10px;color:var(--acento)}
+  .texto p,.texto li{color:var(--texto)}
+  .texto p+p{margin-top:10px}
+  .texto ol{padding-left:22px}
+  .texto li+li{margin-top:6px}
+  .texto .fraco{color:var(--suave)}
+
+  @media (min-height:760px){
+    .estado{min-height:104px;font-size:1.55rem}
+  }
+  /* Celulares baixos (ex.: iPhone SE): o cartão inteiro precisa caber sem rolar. */
+  @media (max-height:700px){
+    #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
+    #cartao .voltar{padding:8px 14px}
+    .cartao-corpo{padding:10px 4px}
+    .cartao-corpo .frase{font-size:1.4rem;line-height:1.22}
+    .cartao-corpo .frase+.frase{margin-top:6px}
+    .cartao-corpo .destaque{font-size:1.75rem;margin-bottom:8px}
+    .cartao-corpo .pedido{margin-top:14px;padding-top:12px}
+    .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== INÍCIO ===== -->
+<main id="inicio" class="tela ativa" aria-label="Início">
+  <div class="marca">AuHug</div>
+
+  <div id="aviso-instalar" class="aviso-instalar" hidden>
+    <span>Instale na tela inicial enquanto está tudo bem.</span>
+    <span>
+      <button type="button" data-ir="sobre-instalar">Como</button>
+      <button type="button" id="fechar-aviso" aria-label="Não mostrar de novo">Ocultar</button>
+    </span>
+  </div>
+
+  <nav class="lista" aria-label="O que está acontecendo">
+    <button class="estado" type="button" data-estado="forte">Tudo está forte demais</button>
+    <button class="estado" type="button" data-estado="explodindo">Estou explodindo por dentro</button>
+    <button class="estado" type="button" data-estado="travado">Não consigo me mexer nem falar</button>
+    <button class="estado" type="button" data-estado="comecar">Não consigo começar nada</button>
+  </nav>
+
+  <footer class="rodape">
+    <p>Se você pensa em se machucar, ligue <a href="tel:188">188 (CVV)</a>. Gratuito, 24h.</p>
+    <p><a href="#sobre">Sobre o AuHug</a></p>
+  </footer>
+</main>
+
+<!-- ===== INSTRUÇÃO PARA A PRÓPRIA PESSOA ===== -->
+<section id="instrucao" class="tela" aria-live="polite">
+  <button class="voltar" type="button" data-voltar>← Voltar</button>
+  <div class="instrucao">
+    <h1 id="instrucao-principal"></h1>
+    <p id="instrucao-permissao"></p>
+  </div>
+  <button class="mostrar" type="button" id="botao-cartao">Mostrar cartão para alguém</button>
+</section>
+
+<!-- ===== CARTÃO PARA TERCEIROS ===== -->
+<section id="cartao" class="tela" aria-live="polite">
+  <div class="topo"><button class="voltar" type="button" data-voltar>← Voltar</button></div>
+  <div class="cartao-corpo" id="cartao-corpo"></div>
+</section>
+
+<!-- ===== SOBRE ===== -->
+<section id="sobre" class="tela">
+  <button class="voltar" type="button" data-voltar>← Voltar</button>
+  <div class="texto">
+    <h1>Sobre o AuHug</h1>
+    <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
+    <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
+    <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV), gratuito e 24h.</p>
+
+    <h2 id="sobre-instalar">Deixe o AuHug na tela inicial</h2>
+    <p>Na crise, procurar um site é difícil. Instale agora, enquanto está tudo bem.</p>
+    <p>Depois de aberto uma vez com internet, o AuHug funciona também sem sinal.</p>
+    <p><strong>Android (Chrome):</strong></p>
+    <ol>
+      <li>Toque no menu <strong>⋮</strong> no canto superior.</li>
+      <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
+      <li>Confirme. O ícone do AuHug aparece junto com seus apps.</li>
+    </ol>
+    <p style="margin-top:14px"><strong>iPhone (Safari):</strong></p>
+    <ol>
+      <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima).</li>
+      <li>Role e toque em <strong>Adicionar à Tela de Início</strong>.</li>
+      <li>Toque em <strong>Adicionar</strong>.</li>
+    </ol>
+    <p class="fraco" style="margin-top:14px">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
+
+    <h2>Privacidade</h2>
+    <p>O AuHug não pede cadastro e não coleta nenhum dado seu.</p>
+
+    <div id="bloco-relato" hidden>
+      <h2>Conte como foi</h2>
+      <p>O AuHug é feito com a comunidade autista. Se você usou, sua experiência ajuda a melhorar.</p>
+      <p><a id="link-relato" href="#" target="_blank" rel="noopener">Enviar um relato</a></p>
+    </div>
+  </div>
+</section>
+
+<script>
+/* =============================================================
+   CONTEÚDO — edite os textos aqui.
+   - principal: instrução para a própria pessoa (até ~5 palavras)
+   - permissao: frase menor de acolhimento
+   - destaque: primeira linha do cartão
+   - estado: o que está acontecendo
+   - pedido: o que a outra pessoa deve fazer
+   - notaSeguranca: mostra a frase sobre álcool/drogas no fim do cartão
+   ============================================================= */
+const CONTEUDO = {
+  forte: {
+    principal: "Afaste-se do barulho.",
+    permissao: "Você pode sair sem explicar.",
+    destaque: "Sou autista.",
+    estado: ["Barulho, luz e movimento estão fortes demais para mim.",
+             "Preciso de um lugar mais calmo por alguns minutos."],
+    pedido: ["Fale pouco e devagar.", "Não toque em mim."],
+    notaSeguranca: true
+  },
+  explodindo: {
+    principal: "Vá para um canto quieto.",
+    permissao: "Nada precisa ser resolvido.",
+    destaque: "Sou autista.",
+    estado: ["Estou em sobrecarga e não consigo falar.", "Isso vai passar."],
+    pedido: ["Fique por perto, em silêncio.", "Peça para as pessoas se afastarem.",
+             "Não toque em mim.", "Não faça perguntas."],
+    notaSeguranca: true
+  },
+  travado: {
+    principal: "Fique onde está.",
+    permissao: "Isso vai passar.",
+    destaque: "Sou autista.",
+    estado: ["Meu corpo travou e não consigo falar ou me mexer.",
+             "Estou consciente e ouvindo.", "Isso vai passar."],
+    pedido: ["Fique por perto, em silêncio.", "Não faça perguntas.", "Não toque em mim."],
+    notaSeguranca: true
+  },
+  comecar: {
+    principal: "Beba um gole de água.",
+    permissao: "Uma coisa só. Sem pressa.",
+    destaque: "Sou autista.",
+    estado: ["Estou com dificuldade de iniciar qualquer coisa."],
+    pedido: ["Me ajude assim: diga uma tarefa simples por vez.",
+             "Espere eu terminar antes da próxima.", "Sem pressa."],
+    notaSeguranca: false
+  }
+};
+
+const NOTA_SEGURANCA = "Esta é uma reação neurológica do autismo. Não estou sob efeito de álcool ou drogas.";
+
+/* Link do formulário de relatos (ex.: Google Forms). Deixe vazio para esconder. */
+const LINK_RELATO = "";
+
+/* ============================================================= */
+
+const telas = ["inicio","instrucao","cartao","sobre"];
+let estadoAtual = null;
+let travaTela = null;
+
+function el(tag, classe, texto){
+  const e = document.createElement(tag);
+  if (classe) e.className = classe;
+  if (texto) e.textContent = texto;
+  return e;
+}
+
+function mostrar(id){
+  telas.forEach(t => document.getElementById(t).classList.toggle("ativa", t === id));
+  window.scrollTo(0,0);
+  document.querySelector('meta[name="theme-color"]')
+    .setAttribute("content", id === "cartao" ? "#ece5d8" : "#1f2329");
+  if (id === "cartao") manterTelaLigada(); else liberarTela();
+}
+
+function renderInstrucao(chave){
+  const c = CONTEUDO[chave];
+  document.getElementById("instrucao-principal").textContent = c.principal;
+  document.getElementById("instrucao-permissao").textContent = c.permissao;
+}
+
+function renderCartao(chave){
+  const c = CONTEUDO[chave];
+  const corpo = document.getElementById("cartao-corpo");
+  corpo.replaceChildren();
+  corpo.appendChild(el("p","frase destaque",c.destaque));
+  c.estado.forEach(f => corpo.appendChild(el("p","frase",f)));
+  const pedido = el("div","pedido");
+  c.pedido.forEach(f => pedido.appendChild(el("p","frase",f)));
+  corpo.appendChild(pedido);
+  if (c.notaSeguranca) corpo.appendChild(el("p","nota",NOTA_SEGURANCA));
+}
+
+/* Navegação por endereço (#), para o botão "voltar" do celular funcionar. */
+function rota(){
+  const h = location.hash.replace("#","");
+  const [tipo, chave] = h.split("/");
+  if ((tipo === "instrucao" || tipo === "cartao") && CONTEUDO[chave]){
+    estadoAtual = chave;
+    if (tipo === "instrucao") renderInstrucao(chave); else renderCartao(chave);
+    mostrar(tipo);
+  } else if (tipo === "sobre"){
+    mostrar("sobre");
+    if (chave === "instalar") document.getElementById("sobre-instalar").scrollIntoView();
+  } else {
+    mostrar("inicio");
+  }
+}
+
+document.querySelectorAll("[data-estado]").forEach(b =>
+  b.addEventListener("click", () => { location.hash = "instrucao/" + b.dataset.estado; }));
+
+document.getElementById("botao-cartao").addEventListener("click", () => {
+  location.hash = "cartao/" + estadoAtual;
+});
+
+/* "Voltar" desfaz o último passo dentro do app; se a pessoa abriu direto num link, vai para o início. */
+const pilha = [location.hash];
+window.addEventListener("hashchange", () => {
+  if (pilha.length > 1 && pilha[pilha.length - 2] === location.hash) pilha.pop();
+  else pilha.push(location.hash);
+});
+document.querySelectorAll("[data-voltar]").forEach(b =>
+  b.addEventListener("click", () => {
+    if (pilha.length > 1) { history.back(); return; }
+    const destino = location.hash.startsWith("#cartao/") ? "#instrucao/" + estadoAtual : "#";
+    history.replaceState(null, "", destino === "#" ? location.pathname : destino);
+    pilha[0] = location.hash;
+    rota();
+  }));
+
+document.querySelectorAll("[data-ir='sobre-instalar']").forEach(b =>
+  b.addEventListener("click", () => { location.hash = "sobre/instalar"; }));
+
+/* Mantém a tela acesa enquanto o cartão está aberto (quando o navegador permite). */
+async function manterTelaLigada(){
+  try { if ("wakeLock" in navigator && !travaTela) travaTela = await navigator.wakeLock.request("screen"); }
+  catch(e){ travaTela = null; }
+}
+function liberarTela(){
+  try { if (travaTela) travaTela.release(); } catch(e){}
+  travaTela = null;
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && location.hash.startsWith("#cartao/")) {
+    travaTela = null; manterTelaLigada();
+  }
+});
+
+/* Aviso de instalação: só aparece no navegador (não no app instalado) e pode ser ocultado. */
+(function(){
+  const instalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  let oculto = false;
+  try { oculto = localStorage.getItem("auhug-aviso-oculto") === "1"; } catch(e){}
+  const aviso = document.getElementById("aviso-instalar");
+  if (!instalado && !oculto) aviso.hidden = false;
+  document.getElementById("fechar-aviso").addEventListener("click", () => {
+    aviso.hidden = true;
+    try { localStorage.setItem("auhug-aviso-oculto","1"); } catch(e){}
+  });
+})();
+
+/* Link de relatos */
+if (LINK_RELATO){
+  document.getElementById("link-relato").href = LINK_RELATO;
+  document.getElementById("bloco-relato").hidden = false;
+}
+
+window.addEventListener("hashchange", rota);
+rota();
+
+/* Funcionamento sem internet (arquivo sw.js). */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
