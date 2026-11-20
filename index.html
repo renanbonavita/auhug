@@ -64,6 +64,11 @@
     padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
   }
   .estado:active{border-color:var(--acento)}
+  /* Símbolos nos botões (prévia: ?simbolos=arasaac ou ?simbolos=proprios) */
+  .com-simbolo .estado{display:flex;align-items:center;gap:18px;padding:18px 20px 18px 16px}
+  .simbolo{flex:0 0 auto;width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+  .simbolo img{width:64px;height:64px;border-radius:12px;background:var(--cartao-fundo);padding:4px}
+  .simbolo svg{width:58px;height:58px;color:var(--acento)}
   .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
   .rodape p+p{margin-top:10px}
   .rodape a{color:var(--suave)}
@@ -112,6 +117,9 @@
   .texto ol{padding-left:22px}
   .texto li+li{margin-top:6px}
   .texto .fraco{color:var(--suave)}
+  .pix{margin-top:12px;background:var(--botao);border:2px solid var(--borda);border-radius:14px;padding:14px 16px}
+  .pix .chave{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;word-break:break-all;margin:6px 0 12px}
+  .pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
 
   @media (min-height:760px){
     .estado{min-height:104px;font-size:1.55rem}
@@ -201,6 +209,19 @@
     <h2>Privacidade</h2>
     <p>O AuHug não pede cadastro e não coleta nenhum dado seu.</p>
 
+    <div id="bloco-pix" hidden>
+      <h2>Apoie o AuHug</h2>
+      <p>O AuHug é gratuito e feito por uma pessoa autista. Se quiser ajudar a manter o projeto, qualquer valor por Pix faz diferença.</p>
+      <div class="pix">
+        <div class="fraco">Chave Pix<span id="pix-nome"></span></div>
+        <div class="chave" id="pix-chave"></div>
+        <button type="button" id="pix-copiar">Copiar chave Pix</button>
+        <span id="pix-ok" class="fraco" role="status" style="margin-left:10px"></span>
+      </div>
+    </div>
+
+    <p id="credito-arasaac" class="fraco" style="margin-top:26px;font-size:.9rem" hidden>Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).</p>
+
     <div id="bloco-relato" hidden>
       <h2>Conte como foi</h2>
       <p>O AuHug é feito com a comunidade autista. Se você usou, sua experiência ajuda a melhorar.</p>
@@ -262,6 +283,10 @@ const NOTA_SEGURANCA = "Esta é uma reação neurológica do autismo. Não estou
 
 /* Link do formulário de relatos (ex.: Google Forms). Deixe vazio para esconder. */
 const LINK_RELATO = "";
+
+/* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
+const CHAVE_PIX = "";
+const NOME_PIX = "";  /* nome que aparece para quem paga, ex.: "Renan Bonavita" */
 
 /* ============================================================= */
 
@@ -372,6 +397,54 @@ document.addEventListener("visibilitychange", () => {
 })();
 
 /* Link de relatos */
+/* Símbolos nos botões da tela inicial — PRÉVIA para escolher o estilo.
+   Abra com ?simbolos=arasaac ou ?simbolos=proprios no endereço. */
+const SIMBOLOS_PROPRIOS = {
+  /* som e luz chegando de todos os lados */
+  forte: '<circle cx="32" cy="32" r="10"/><path d="M5 32h11M11 27l5 5-5 5M59 32H48M53 27l-5 5 5 5M32 5v11M27 11l5 5 5-5M32 59V48M27 53l5-5 5 5"/>',
+  /* estouro dentro da cabeça */
+  explodindo: '<circle cx="32" cy="32" r="25"/><path d="M32 17v7M32 40v7M17 32h7M40 32h7M21.5 21.5l5 5M37.5 37.5l5 5M42.5 21.5l-5 5M26.5 37.5l-5 5"/>',
+  /* boca fechada como zíper */
+  travado: '<circle cx="32" cy="32" r="25"/><circle cx="24" cy="26" r="1.5" fill="currentColor"/><circle cx="40" cy="26" r="1.5" fill="currentColor"/><path d="M21 41h22M25 38v6M30 38v6M35 38v6M40 38v6"/>',
+  /* linha de partida e primeiro passo */
+  comecar: '<path d="M12 14v36M12 32h14M22 26l6 6-6 6"/><path d="M34 32h4M44 32h4M54 32h2" />'
+};
+const modoSimbolos = new URLSearchParams(location.search).get("simbolos");
+if (modoSimbolos === "arasaac" || modoSimbolos === "proprios") {
+  document.getElementById("inicio").classList.add("com-simbolo");
+  document.querySelectorAll("[data-estado]").forEach(b => {
+    const k = b.dataset.estado;
+    const texto = el("span", null, b.textContent);
+    const s = el("span", "simbolo");
+    s.setAttribute("aria-hidden", "true");
+    if (modoSimbolos === "arasaac") {
+      const img = document.createElement("img");
+      img.src = "simbolos/arasaac-" + k + ".png"; img.alt = "";
+      s.appendChild(img);
+    } else {
+      s.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">' + SIMBOLOS_PROPRIOS[k] + '</svg>';
+    }
+    b.replaceChildren(s, texto);
+  });
+  if (modoSimbolos === "arasaac") document.getElementById("credito-arasaac").hidden = false;
+}
+
+/* Pix */
+if (CHAVE_PIX){
+  document.getElementById("pix-chave").textContent = CHAVE_PIX;
+  if (NOME_PIX) document.getElementById("pix-nome").textContent = " — " + NOME_PIX;
+  document.getElementById("bloco-pix").hidden = false;
+  document.getElementById("pix-copiar").addEventListener("click", async () => {
+    const ok = document.getElementById("pix-ok");
+    try { await navigator.clipboard.writeText(CHAVE_PIX); ok.textContent = "Copiada."; }
+    catch(e){
+      const r = document.createRange(); r.selectNodeContents(document.getElementById("pix-chave"));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      ok.textContent = "Selecionada. Toque e segure para copiar.";
+    }
+  });
+}
+
 if (LINK_RELATO){
   document.getElementById("link-relato").href = LINK_RELATO;
   document.getElementById("bloco-relato").hidden = false;
