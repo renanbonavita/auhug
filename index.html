@@ -57,7 +57,11 @@
 
   /* ---------- Início ---------- */
   .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px}
-  .lista{display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center}
+  /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
+     Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
+  :root{--fixo:215px;--aviso:0px;--moldura:26px}
+  body.com-aviso{--aviso:92px}
+  .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
     display:block;width:100%;text-align:left;
     background:var(--botao);border:2px solid var(--borda);border-radius:18px;
@@ -65,9 +69,12 @@
   }
   .estado:active{border-color:var(--acento)}
   /* Símbolos (pictogramas ARASAAC) nos botões */
-  .estado{display:flex;align-items:center;gap:18px;padding:18px 20px 18px 16px}
-  .simbolo{flex:0 0 auto;width:64px;height:64px;display:flex;align-items:center;justify-content:center}
-  .simbolo img{width:64px;height:64px;border-radius:12px;background:var(--cartao-fundo);padding:4px}
+  .estado{display:flex;align-items:center;gap:16px;padding:10px 16px 10px 10px;min-height:0}
+  .simbolo{flex:0 0 auto;display:flex;
+    width:clamp(56px,calc((100vh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
+    width:clamp(56px,calc((100dvh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
+    aspect-ratio:1}
+  .simbolo img{width:100%;height:100%;border-radius:14px;background:var(--cartao-fundo);padding:5px}
   .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
   .rodape p+p{margin-top:10px}
   .rodape a{color:var(--suave)}
@@ -121,15 +128,20 @@
   .pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
 
   @media (min-height:760px){
-    .estado{min-height:104px;font-size:1.55rem}
+    .estado{font-size:1.55rem}
   }
   /* Celulares baixos (ex.: iPhone SE): tela inicial e cartão precisam caber sem rolar. */
   @media (max-height:700px){
     #inicio{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
     .marca{margin-bottom:8px}
-    .lista{gap:10px}
-    .estado{min-height:0;padding:10px 14px 10px 10px;gap:14px;font-size:1.2rem;line-height:1.25;border-radius:16px}
-    .simbolo,.simbolo img{width:52px;height:52px}
+    .marca{display:none}
+    :root{--fixo:132px;--moldura:22px}
+    body.com-aviso{--aviso:64px}
+    .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
+    .aviso-instalar{padding:6px 10px;font-size:.85rem;margin-bottom:8px;gap:8px}
+    .aviso-instalar button{font-size:.85rem;padding:4px}
+    .simbolo img{padding:4px;border-radius:12px}
+    .lista{gap:8px}
     .rodape{margin-top:12px;font-size:.88rem}
     .rodape p+p{margin-top:6px}
     #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
@@ -394,9 +406,9 @@ document.addEventListener("visibilitychange", () => {
   let oculto = false;
   try { oculto = localStorage.getItem("auhug-aviso-oculto") === "1"; } catch(e){}
   const aviso = document.getElementById("aviso-instalar");
-  if (!instalado && !oculto) aviso.hidden = false;
+  if (!instalado && !oculto) { aviso.hidden = false; document.body.classList.add("com-aviso"); }
   document.getElementById("fechar-aviso").addEventListener("click", () => {
-    aviso.hidden = true;
+    aviso.hidden = true; document.body.classList.remove("com-aviso");
     try { localStorage.setItem("auhug-aviso-oculto","1"); } catch(e){}
   });
 })();
