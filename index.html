@@ -57,11 +57,13 @@
   a{color:var(--acento)}
 
   /* ---------- Início ---------- */
-  .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px}
+  .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .logo-marca{width:30px;height:30px;border-radius:7px}
+  .logo-sobre{width:64px;height:64px;border-radius:14px;margin-bottom:10px}
   .beta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--borda);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
   /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
      Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
-  :root{--fixo:215px;--aviso:0px;--moldura:26px}
+  :root{--fixo:224px;--aviso:0px;--moldura:26px}
   body.com-aviso{--aviso:92px}
   .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
@@ -88,6 +90,17 @@
   }
   .aviso-instalar[hidden]{display:none}
   .aviso-instalar button{background:none;border:none;color:var(--suave);font-size:.95rem;text-decoration:underline;padding:6px}
+
+  /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
+  .barra{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
+  .ouvir{display:inline-flex;align-items:center;gap:8px;background:none;border:2px solid var(--borda);
+    border-radius:12px;padding:12px 16px;font-size:1.05rem;color:var(--suave)}
+  .ouvir[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
+  .ouvir[hidden]{display:none}
+  #cartao .ouvir{border-color:#c9c1b2;color:var(--cartao-suave)}
+  #cartao .ouvir[aria-pressed="true"]{border-color:var(--cartao-texto);color:var(--cartao-texto)}
+  .opcao{display:flex;gap:12px;align-items:flex-start;margin-top:10px;font-size:1.05rem}
+  .opcao input{width:24px;height:24px;margin-top:2px;accent-color:var(--acento);flex:0 0 auto}
 
   /* ---------- Tela de instrução ---------- */
   .voltar{
@@ -130,7 +143,9 @@
   .texto ol{padding-left:22px}
   .texto li+li{margin-top:6px}
   .texto .fraco{color:var(--suave)}
-  .botao-zap{display:inline-block;margin-top:12px;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
+  .botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .botao-zap[hidden]{display:none}
+  .botao-zap{display:inline-block;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
   .pix{margin-top:12px;background:var(--botao);border:2px solid var(--borda);border-radius:14px;padding:14px 16px}
   .pix .chave{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;word-break:break-all;margin:6px 0 12px}
   .pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
@@ -153,7 +168,7 @@
     .rodape{margin-top:12px;font-size:.88rem}
     .rodape p+p{margin-top:6px}
     #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
-    #cartao .voltar{padding:8px 14px}
+    #cartao .voltar,#cartao .ouvir{padding:8px 14px}
     .cartao-corpo{padding:10px 4px}
     .cartao-corpo .frase{font-size:1.4rem;line-height:1.22}
     .cartao-corpo .frase+.frase{margin-top:6px}
@@ -167,7 +182,7 @@
 
 <!-- ===== INÍCIO ===== -->
 <main id="inicio" class="tela ativa" aria-label="Início">
-  <div class="marca">AuHug <span class="beta">beta</span></div>
+  <div class="marca"><img class="logo-marca" src="icon-192.png" alt="">AuHug <span class="beta">beta</span></div>
 
   <div id="aviso-instalar" class="aviso-instalar" hidden>
     <span>Instale na tela inicial enquanto está tudo bem.</span>
@@ -186,13 +201,16 @@
 
   <footer class="rodape">
     <p>Se você pensa em se machucar, ligue <a href="tel:188">188 (CVV)</a>. Gratuito, 24h.</p>
-    <p><a href="#sobre">Sobre o AuHug</a></p>
+    <p><a href="#sobre">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span></p>
   </footer>
 </main>
 
 <!-- ===== INSTRUÇÃO PARA A PRÓPRIA PESSOA ===== -->
 <section id="instrucao" class="tela" aria-live="polite">
-  <button class="voltar" type="button" data-voltar>← Voltar</button>
+  <div class="barra">
+    <button class="voltar" type="button" data-voltar>← Voltar</button>
+    <button class="ouvir" type="button" data-ouvir="instrucao" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Ouvir</span></button>
+  </div>
   <div class="instrucao">
     <img id="instrucao-simbolo" class="simbolo-instrucao" src="" alt="">
     <h1 id="instrucao-principal"></h1>
@@ -203,7 +221,10 @@
 
 <!-- ===== CARTÃO PARA TERCEIROS ===== -->
 <section id="cartao" class="tela" aria-live="polite">
-  <div class="topo"><button class="voltar" type="button" data-voltar>← Voltar</button></div>
+  <div class="topo barra">
+    <button class="voltar" type="button" data-voltar>← Voltar</button>
+    <button class="ouvir" type="button" data-ouvir="cartao" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Ler em voz alta</span></button>
+  </div>
   <div class="cartao-corpo" id="cartao-corpo"></div>
 </section>
 
@@ -211,6 +232,7 @@
 <section id="sobre" class="tela">
   <button class="voltar" type="button" data-voltar>← Voltar</button>
   <div class="texto">
+    <img class="logo-sobre" src="icon-192.png" alt="">
     <h1>Sobre o AuHug</h1>
     <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
     <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
@@ -234,13 +256,22 @@
     </ol>
     <p class="fraco" style="margin-top:14px">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
 
+    <div id="bloco-voz" hidden>
+      <h2>Voz</h2>
+      <p>Nas telas de instrução e no cartão, o botão <strong>Ouvir</strong> lê o texto em voz alta com a voz do seu celular.</p>
+      <label class="opcao"><input type="checkbox" id="voz-auto"><span>Ler a instrução em voz alta automaticamente ao tocar num botão</span></label>
+    </div>
+
     <h2>Privacidade</h2>
-    <p>O AuHug não pede cadastro e não coleta nenhum dado seu.</p>
+    <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e anônimo; as respostas ficam no Google Forms.</span></p>
 
     <div id="bloco-relato" hidden>
-      <h2>Conte como foi</h2>
-      <p>Se você usou o AuHug, me conte pelo WhatsApp: o que ajudou, o que atrapalhou e o que faltou. Pode ser uma frase só, quando você estiver bem.</p>
-      <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener">Mandar mensagem no WhatsApp</a>
+      <h2 id="sobre-avaliar">Conte como foi</h2>
+      <p>Se você usou o AuHug, conte como foi: o que ajudou, o que atrapalhou e o que faltou. Pode ser bem curto, quando você estiver bem.</p>
+      <div class="botoes-relato">
+        <a class="botao-zap" id="link-formulario" href="#" target="_blank" rel="noopener" hidden>Responder ao formulário (1 minuto)</a>
+        <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener" hidden>Mandar mensagem no WhatsApp</a>
+      </div>
     </div>
 
     <div id="bloco-pix" hidden>
@@ -315,6 +346,9 @@ const NOTA_SEGURANCA = "Esta é uma reação neurológica do autismo. Não estou
 const WHATSAPP = "";
 const WHATSAPP_MENSAGEM = "Oi! Usei o AuHug e queria contar como foi: ";
 
+/* Link do formulário de avaliação (ex.: Google Forms). Deixe vazio para esconder. */
+const LINK_FORMULARIO = "";
+
 /* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
 const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
 
@@ -331,7 +365,10 @@ function el(tag, classe, texto){
   return e;
 }
 
+let manterVoz = false;   /* true quando a fala começou no toque que abriu esta tela */
 function mostrar(id){
+  if (!manterVoz) pararVoz();
+  manterVoz = false;
   telas.forEach(t => document.getElementById(t).classList.toggle("ativa", t === id));
   window.scrollTo(0,0);
   document.querySelector('meta[name="theme-color"]')
@@ -369,6 +406,7 @@ function rota(){
   } else if (tipo === "sobre"){
     mostrar("sobre");
     if (chave === "instalar") document.getElementById("sobre-instalar").scrollIntoView();
+    if (chave === "avaliar") document.getElementById("sobre-avaliar").scrollIntoView();
   } else {
     mostrar("inicio");
   }
@@ -445,9 +483,73 @@ if (CHAVE_PIX){
 }
 
 if (WHATSAPP){
-  document.getElementById("link-relato").href =
-    "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WHATSAPP_MENSAGEM);
+  const z = document.getElementById("link-relato");
+  z.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WHATSAPP_MENSAGEM); z.hidden = false;
   document.getElementById("bloco-relato").hidden = false;
+}
+
+/* ---------- Voz (leitura em voz alta com a voz do próprio celular) ---------- */
+const temVoz = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let vozAuto = false;
+try { vozAuto = localStorage.getItem("auhug-voz-auto") === "1"; } catch(e){}
+
+function textoDaTela(qual){
+  const c = CONTEUDO[estadoAtual]; if (!c) return "";
+  if (qual === "instrucao") return c.principal + " " + c.permissao;
+  return [c.destaque, ...c.estado, ...c.pedido, c.notaSeguranca ? NOTA_SEGURANCA : ""].join(" ");
+}
+function vozPortugues(){
+  const vs = speechSynthesis.getVoices();
+  return vs.find(v => /^pt[-_]BR/i.test(v.lang)) || vs.find(v => /^pt/i.test(v.lang)) || null;
+}
+function marcarBotoes(ativo){
+  document.querySelectorAll("[data-ouvir]").forEach(b => {
+    b.setAttribute("aria-pressed", ativo ? "true" : "false");
+    b.querySelector("span").textContent = ativo ? "Parar" : (b.dataset.ouvir === "cartao" ? "Ler em voz alta" : "Ouvir");
+  });
+}
+function falar(texto){
+  if (!temVoz || !texto) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(texto);
+  u.lang = "pt-BR"; u.rate = 0.9;
+  const v = vozPortugues(); if (v) u.voice = v;
+  u.onend = u.onerror = () => marcarBotoes(false);
+  marcarBotoes(true);
+  speechSynthesis.speak(u);
+}
+function pararVoz(){ if (temVoz) { speechSynthesis.cancel(); marcarBotoes(false); } }
+
+if (temVoz) {
+  document.querySelectorAll("[data-ouvir]").forEach(b => {
+    b.hidden = false;
+    b.addEventListener("click", () => {
+      if (b.getAttribute("aria-pressed") === "true") pararVoz(); else falar(textoDaTela(b.dataset.ouvir));
+    });
+  });
+  document.getElementById("bloco-voz").hidden = false;
+  const caixa = document.getElementById("voz-auto");
+  caixa.checked = vozAuto;
+  caixa.addEventListener("change", () => {
+    vozAuto = caixa.checked;
+    try { localStorage.setItem("auhug-voz-auto", vozAuto ? "1" : "0"); } catch(e){}
+  });
+  /* Leitura automática: fala direto no toque (alguns celulares só permitem voz em resposta a um toque). */
+  document.querySelectorAll("[data-estado]").forEach(b => b.addEventListener("click", () => {
+    if (!vozAuto) return;
+    const c = CONTEUDO[b.dataset.estado];
+    manterVoz = true;
+    falar(c.principal + " " + c.permissao);
+  }));
+  speechSynthesis.getVoices();
+}
+
+/* Formulário de avaliação */
+if (LINK_FORMULARIO){
+  const a = document.getElementById("link-formulario"); a.href = LINK_FORMULARIO; a.hidden = false;
+  document.getElementById("bloco-relato").hidden = false;
+  document.getElementById("privacidade-form").hidden = false;
+  document.getElementById("rodape-avaliar").hidden = false;
 }
 
 window.addEventListener("hashchange", rota);

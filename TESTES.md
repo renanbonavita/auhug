@@ -76,6 +76,14 @@ Desative o modo avião depois.
 
 - [ ] Tocar em "188 (CVV)" abre o discador com o número 188 já digitado (não precisa completar a ligação).
 
+## 7b. Voz
+
+- [ ] Na instrução, "Ouvir" lê a instrução em português; o botão vira "Parar" e para quando tocado.
+- [ ] No cartão, "Ler em voz alta" lê o cartão inteiro.
+- [ ] Ao sair da tela, a leitura para.
+- [ ] Em Sobre → Voz, ligue "Ler a instrução em voz alta automaticamente": ao tocar num dos 4 botões, a instrução é lida sozinha.
+- [ ] Em modo avião, a voz continua funcionando (se não funcionar, anote o modelo do celular).
+
 ## 8. Página Sobre
 
 - [ ] As instruções de instalação estão corretas para o seu celular.

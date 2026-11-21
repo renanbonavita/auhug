@@ -20,6 +20,10 @@ Abra `index.html` num editor de texto e procure por `CONTEÚDO`. Todos os textos
 
 Para ativar o botão "Conte como foi" (WhatsApp) na página Sobre, coloque seu número em `WHATSAPP = ""`, só números, com 55 e DDD (ex.: `"5511999999999"`).
 
+Para ativar o botão do formulário de avaliação (e o link "Avaliar" no rodapé), cole o link em `LINK_FORMULARIO = ""`.
+
+A leitura em voz alta usa a voz do próprio celular (não precisa de internet na maioria dos aparelhos). Se o celular não tiver voz em português instalada, ele usa a voz padrão.
+
 Para mostrar o Pix de doação na página Sobre, preencha `CHAVE_PIX = ""`.
 
 ## Publicar no GitHub Pages (sem usar linha de comando)
