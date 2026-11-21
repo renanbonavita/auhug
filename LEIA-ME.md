@@ -14,7 +14,7 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 | `favicon.png` | Ícone da aba do navegador |
 | `robots.txt`, `sitemap.xml` | Orientam buscadores (Google, Bing) |
 | `llms.txt` | Resumo do app para assistentes de IA |
-| `og-image-5.png` | Imagem de prévia quando o link é compartilhado |
+| `og-image-6.png` | Imagem de prévia quando o link é compartilhado |
 
 ## Como editar os textos
 

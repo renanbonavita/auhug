@@ -31,7 +31,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="AuHug: apoio para pessoas autistas em crise">
 <meta property="og:description" content="Para pessoas autistas em momentos de crise. Gratuito, sem cadastro, funciona sem internet.">
-<meta property="og:image" content="https://auhug.com.br/og-image-5.png">
+<meta property="og:image" content="https://auhug.com.br/og-image-6.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -170,6 +170,18 @@
   .texto ol,.texto ul{padding-left:22px}
   .texto li+li{margin-top:6px}
   .texto .fraco{color:var(--suave)}
+  /* Seções recolhidas: o título é o botão; abre e fecha sem animação. */
+  .dica-secoes{margin:24px 0 10px;font-size:.95rem}
+  .secao{border-top:1px solid var(--borda)}
+  .secao:last-of-type{border-bottom:1px solid var(--borda)}
+  .secao[hidden]{display:none}
+  .secao summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:10px 2px}
+  .secao summary::-webkit-details-marker{display:none}
+  .secao summary h2{margin:0;font-size:1.2rem}
+  .secao summary::after{content:"+";font-size:1.8rem;line-height:1;color:var(--suave);flex:0 0 auto;width:28px;text-align:center}
+  .secao[open] summary::after{content:"−"}
+  .secao > :not(summary){margin-bottom:12px}
+  .secao[open]{padding-bottom:10px}
   .botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .botao-zap[hidden]{display:none}
   .botao-zap{display:inline-block;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
@@ -270,53 +282,57 @@
     <h1>Sobre o AuHug</h1>
     <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
     <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
-    <h2>Para quais situações</h2>
-    <ul class="situacoes">
-      <li><strong>Tudo está forte demais:</strong> sobrecarga sensorial (barulho, luz, movimento).</li>
-      <li><strong>Estou explodindo por dentro:</strong> meltdown, quando a sobrecarga chega ao limite.</li>
-      <li><strong>Não consigo me mexer nem falar:</strong> shutdown, quando o corpo trava e a fala some.</li>
-      <li><strong>Não consigo começar nada:</strong> inércia autista, a dificuldade de iniciar qualquer tarefa.</li>
-    </ul>
     <p class="fraco">Esta é uma <strong>versão beta</strong>: o AuHug ainda está sendo testado e melhorado junto com a comunidade autista.</p>
     <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV), gratuito e 24h.</p>
 
-    <h2 id="sobre-instalar">Deixe o AuHug na tela inicial</h2>
-    <p>Na crise, procurar um site é difícil. Instale agora, enquanto está tudo bem.</p>
-    <p>Depois de aberto uma vez com internet, o AuHug funciona também sem sinal.</p>
-    <p><strong>Android (Chrome):</strong></p>
-    <ol>
-      <li>Toque no menu <strong>⋮</strong> no canto superior.</li>
-      <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
-      <li>Confirme. O ícone do AuHug aparece junto com seus apps.</li>
-    </ol>
-    <p style="margin-top:14px"><strong>iPhone (Safari):</strong></p>
-    <ol>
-      <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima).</li>
-      <li>Role e toque em <strong>Adicionar à Tela de Início</strong>.</li>
-      <li>Toque em <strong>Adicionar</strong>.</li>
-    </ol>
-    <p class="fraco" style="margin-top:14px">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
+    <p class="dica-secoes fraco">Toque num assunto para abrir.</p>
 
-    <div id="bloco-voz" hidden>
-      <h2>Voz</h2>
-      <p>Nas telas de instrução e no cartão, o botão <strong>Ouvir</strong> lê o texto em voz alta com a voz do seu celular.</p>
+    <details class="secao">
+      <summary><h2>Para quais situações</h2></summary>
+      <ul class="situacoes">
+        <li><strong>Tudo está forte demais:</strong> sobrecarga sensorial (barulho, luz, movimento).</li>
+        <li><strong>Estou explodindo por dentro:</strong> meltdown, quando a sobrecarga chega ao limite.</li>
+        <li><strong>Não consigo me mexer nem falar:</strong> shutdown, quando o corpo trava e a fala some.</li>
+        <li><strong>Não consigo começar nada:</strong> inércia autista, a dificuldade de iniciar qualquer tarefa.</li>
+      </ul>
+    </details>
+
+    <details class="secao" id="sobre-instalar">
+      <summary><h2>Deixe o AuHug na tela inicial</h2></summary>
+      <p>Na crise, procurar um site é difícil. Instale agora, enquanto está tudo bem.</p>
+      <p>Depois de aberto uma vez com internet, o AuHug funciona também sem sinal.</p>
+      <p><strong>Android (Chrome):</strong></p>
+      <ol>
+        <li>Toque no menu <strong>⋮</strong> no canto superior.</li>
+        <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
+        <li>Confirme. O ícone do AuHug aparece junto com seus apps.</li>
+      </ol>
+      <p style="margin-top:14px"><strong>iPhone (Safari):</strong></p>
+      <ol>
+        <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima).</li>
+        <li>Role e toque em <strong>Adicionar à Tela de Início</strong>.</li>
+        <li>Toque em <strong>Adicionar</strong>.</li>
+      </ol>
+      <p class="fraco" style="margin-top:14px">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
+    </details>
+
+    <details class="secao" id="bloco-voz" hidden>
+      <summary><h2>Voz</h2></summary>
+      <p>Toque no alto-falante de um botão da tela inicial para ouvir o texto dele. Nas telas de instrução e no cartão, o botão <strong>Ouvir</strong> lê o texto em voz alta com a voz do seu celular.</p>
       <label class="opcao"><input type="checkbox" id="voz-auto"><span>Ler a instrução em voz alta automaticamente ao tocar num botão</span></label>
-    </div>
+    </details>
 
-    <h2>Privacidade</h2>
-    <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e anônimo; as respostas ficam no Google Forms.</span></p>
-
-    <div id="bloco-relato" hidden>
-      <h2 id="sobre-avaliar">Conte como foi</h2>
+    <details class="secao" id="sobre-avaliar" hidden>
+      <summary><h2>Conte como foi</h2></summary>
       <p>Se você usou o AuHug, conte como foi: o que ajudou, o que atrapalhou e o que faltou. Pode ser bem curto, quando você estiver bem.</p>
       <div class="botoes-relato">
         <a class="botao-zap" id="link-formulario" href="#" target="_blank" rel="noopener" hidden>Responder ao formulário (1 minuto)</a>
         <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener" hidden>Mandar mensagem no WhatsApp</a>
       </div>
-    </div>
+    </details>
 
-    <div id="bloco-pix" hidden>
-      <h2>Apoie o AuHug</h2>
+    <details class="secao" id="bloco-pix" hidden>
+      <summary><h2>Apoie o AuHug</h2></summary>
       <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e é gratuito. Se quiser apoiar o projeto, qualquer valor por Pix ajuda.</p>
       <div class="pix">
         <div class="fraco">Chave Pix</div>
@@ -324,10 +340,17 @@
         <button type="button" id="pix-copiar">Copiar chave Pix</button>
         <span id="pix-ok" class="fraco" role="status" style="margin-left:10px"></span>
       </div>
-    </div>
+    </details>
 
-    <p class="fraco" style="margin-top:26px;font-size:.9rem">Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).</p>
+    <details class="secao">
+      <summary><h2>Privacidade</h2></summary>
+      <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e anônimo; as respostas ficam no Google Forms.</span></p>
+    </details>
 
+    <details class="secao">
+      <summary><h2>Créditos</h2></summary>
+      <p>Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).</p>
+    </details>
   </div>
 </section>
 
@@ -446,8 +469,8 @@ function rota(){
     mostrar(tipo);
   } else if (tipo === "sobre"){
     mostrar("sobre");
-    if (chave === "instalar") document.getElementById("sobre-instalar").scrollIntoView();
-    if (chave === "avaliar") document.getElementById("sobre-avaliar").scrollIntoView();
+    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar" }[chave];
+    if (alvo) { const d = document.getElementById(alvo); d.open = true; d.scrollIntoView(); }
   } else {
     mostrar("inicio");
   }
@@ -526,7 +549,7 @@ if (CHAVE_PIX){
 if (WHATSAPP){
   const z = document.getElementById("link-relato");
   z.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WHATSAPP_MENSAGEM); z.hidden = false;
-  document.getElementById("bloco-relato").hidden = false;
+  document.getElementById("sobre-avaliar").hidden = false;
 }
 
 /* ---------- Voz (leitura em voz alta com a voz do próprio celular) ---------- */
@@ -601,7 +624,7 @@ if (temVoz) {
 /* Formulário de avaliação */
 if (LINK_FORMULARIO){
   const a = document.getElementById("link-formulario"); a.href = LINK_FORMULARIO; a.hidden = false;
-  document.getElementById("bloco-relato").hidden = false;
+  document.getElementById("sobre-avaliar").hidden = false;
   document.getElementById("privacidade-form").hidden = false;
   document.getElementById("rodape-avaliar").hidden = false;
 }
