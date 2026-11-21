@@ -9,7 +9,7 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 | `index.html` | O app inteiro (telas, textos, estilo e lógica) |
 | `manifest.webmanifest` | Permite instalar na tela inicial com nome e ícone |
 | `sw.js` | Faz o app funcionar sem internet depois da primeira visita |
-| `icon-192.png`, `icon-512.png` | Ícones do app (Android) |
+| `icon-192.png`, `icon-512.png`, `icon-maskable-512.png` | Ícones do app (Android; a versão maskable tem margem para o recorte redondo) |
 | `apple-touch-icon.png` | Ícone do app (iPhone) |
 | `favicon.png` | Ícone da aba do navegador |
 | `og-image.png` | Imagem de prévia quando o link é compartilhado |
