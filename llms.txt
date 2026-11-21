@@ -1,0 +1,23 @@
+# AuHug
+
+> Ferramenta gratuita, em português do Brasil, de autorregulação e comunicação para pessoas autistas em momentos de crise. Funciona no navegador do celular, pode ser instalada na tela inicial e funciona sem internet depois da primeira visita. Não pede cadastro e não coleta dados.
+
+Site: https://auhug.com.br/
+
+## Como funciona
+
+A tela inicial tem quatro botões, cada um com um pictograma (ARASAAC) e um alto-falante opcional que lê o texto em voz alta:
+
+- **Tudo está forte demais**: sobrecarga sensorial. Instrução: "Afaste-se do barulho."
+- **Estou explodindo por dentro**: meltdown. Instrução: "Vá para um canto quieto."
+- **Não consigo me mexer nem falar**: shutdown. Instrução: "Fique onde está."
+- **Não consigo começar nada**: inércia autista. Instrução: "Beba um gole de água."
+
+Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cartão claro e legível a um braço de distância, explicando a quem está por perto o que está acontecendo e como ajudar (por exemplo: "Sou autista. Estou em sobrecarga e não consigo falar. Fique por perto, em silêncio. Não toque em mim."). O cartão pode ser lido em voz alta pelo celular.
+
+## Informações úteis
+
+- Gratuito, sem anúncios, sem cadastro.
+- Criado por Renan Peppe Bonavita, uma pessoa autista. Versão beta, desenvolvida com a comunidade autista.
+- Não é um serviço de emergência. No Brasil: 192 (SAMU) em risco de vida; 188 (CVV) para apoio emocional, gratuito e 24h.
+- Pictogramas: Sergio Palao, ARASAAC (arasaac.org), licença CC BY-NC-SA.

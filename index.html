@@ -3,16 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AuHug</title>
-<meta name="description" content="Autorregulação e comunicação para pessoas autistas em momentos de crise.">
+<title>AuHug: apoio para pessoas autistas em crise</title>
+<meta name="description" content="App gratuito para pessoas autistas em crise (sobrecarga sensorial, meltdown, shutdown): instruções curtas, pictogramas, leitura em voz alta e um cartão para mostrar a quem está perto. Funciona sem internet.">
+<link rel="canonical" href="https://auhug.com.br/">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AuHug",
+  "url": "https://auhug.com.br/",
+  "description": "Ferramenta gratuita de autorregulação e comunicação para pessoas autistas em momentos de crise: sobrecarga sensorial, meltdown, shutdown e dificuldade de iniciar tarefas. Mostra uma instrução curta com pictograma para a própria pessoa e um cartão para mostrar a quem está por perto.",
+  "inLanguage": "pt-BR",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Android, iOS, navegador",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+  "audience": { "@type": "PeopleAudience", "audienceType": "Pessoas autistas, familiares e profissionais" },
+  "accessibilityFeature": ["pictogramas", "leitura em voz alta", "alto contraste", "funciona sem internet"],
+  "creator": { "@type": "Person", "name": "Renan Peppe Bonavita" }
+}
+</script>
 <meta name="theme-color" content="#1f2329">
 <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.). -->
 <meta property="og:url" content="https://auhug.com.br/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="AuHug">
+<meta property="og:title" content="AuHug: apoio para pessoas autistas em crise">
 <meta property="og:description" content="Para pessoas autistas em momentos de crise. Gratuito, sem cadastro, funciona sem internet.">
-<meta property="og:image" content="https://auhug.com.br/og-image-4.png">
+<meta property="og:image" content="https://auhug.com.br/og-image-5.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -58,12 +77,12 @@
 
   /* ---------- Início ---------- */
   .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-  .logo-marca{width:30px;height:30px;border-radius:7px}
+  .logo-rodape{width:24px;height:24px;border-radius:6px;vertical-align:middle;margin:-3px 6px 0 0}
   .logo-sobre{width:64px;height:64px;border-radius:14px;margin-bottom:10px}
   .beta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--borda);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
   /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
      Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
-  :root{--fixo:224px;--aviso:0px;--moldura:26px}
+  :root{--fixo:217px;--aviso:0px;--moldura:26px}
   body.com-aviso{--aviso:92px}
   .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
@@ -72,6 +91,14 @@
     padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
   }
   .estado:active{border-color:var(--acento)}
+  /* Alto-falante de cada botão: botão separado, preso à direita, só aparece se o celular tiver voz. */
+  .linha-estado{position:relative}
+  body.com-voz .estado{padding-right:64px;gap:14px}
+  .falar-estado{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:48px;height:48px;
+    display:flex;align-items:center;justify-content:center;background:var(--fundo);
+    border:2px solid var(--borda);border-radius:14px;color:var(--suave)}
+  .falar-estado[hidden]{display:none}
+  .falar-estado[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
   /* Símbolos (pictogramas ARASAAC) nos botões */
   .estado{display:flex;align-items:center;gap:16px;padding:10px 16px 10px 10px;min-height:0}
   .simbolo{flex:0 0 auto;display:flex;
@@ -140,7 +167,7 @@
   .texto h2{font-size:1.2rem;margin:26px 0 10px;color:var(--acento)}
   .texto p,.texto li{color:var(--texto)}
   .texto p+p{margin-top:10px}
-  .texto ol{padding-left:22px}
+  .texto ol,.texto ul{padding-left:22px}
   .texto li+li{margin-top:6px}
   .texto .fraco{color:var(--suave)}
   .botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
@@ -153,6 +180,11 @@
   @media (min-height:760px){
     .estado{font-size:1.55rem}
   }
+  /* Celulares estreitos com alto-falante: fonte e símbolo um pouco menores, para o texto não quebrar demais. */
+  @media (max-width:400px){
+    body.com-voz .estado{font-size:1.18rem;line-height:1.22}
+    body.com-voz .simbolo{max-width:88px}
+  }
   /* Celulares baixos (ex.: iPhone SE): tela inicial e cartão precisam caber sem rolar. */
   @media (max-height:700px){
     #inicio{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
@@ -164,6 +196,8 @@
     .aviso-instalar{padding:6px 10px;font-size:.85rem;margin-bottom:8px;gap:8px}
     .aviso-instalar button{font-size:.85rem;padding:4px}
     .simbolo img{padding:4px;border-radius:12px}
+    body.com-voz .estado{padding-right:58px}
+    .falar-estado{width:44px;height:44px;right:7px}
     .lista{gap:8px}
     .rodape{margin-top:12px;font-size:.88rem}
     .rodape p+p{margin-top:6px}
@@ -182,7 +216,7 @@
 
 <!-- ===== INÍCIO ===== -->
 <main id="inicio" class="tela ativa" aria-label="Início">
-  <div class="marca"><img class="logo-marca" src="icon-192.png" alt="">AuHug <span class="beta">beta</span></div>
+  <div class="marca">AuHug <span class="beta">beta</span></div>
 
   <div id="aviso-instalar" class="aviso-instalar" hidden>
     <span>Instale na tela inicial enquanto está tudo bem.</span>
@@ -193,15 +227,15 @@
   </div>
 
   <nav class="lista" aria-label="O que está acontecendo">
-    <button class="estado" type="button" data-estado="forte"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-forte.png" alt=""></span><span>Tudo está forte demais</span></button>
-    <button class="estado" type="button" data-estado="explodindo"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-explodindo.png" alt=""></span><span>Estou explodindo por dentro</span></button>
-    <button class="estado" type="button" data-estado="travado"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-travado.png" alt=""></span><span>Não consigo me mexer nem falar</span></button>
-    <button class="estado" type="button" data-estado="comecar"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-comecar.png" alt=""></span><span>Não consigo começar nada</span></button>
+    <div class="linha-estado"><button class="estado" type="button" data-estado="forte"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-forte.png" alt=""></span><span>Tudo está forte demais</span></button><button class="falar-estado" type="button" data-falar="forte" aria-label="Ouvir: Tudo está forte demais" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
+    <div class="linha-estado"><button class="estado" type="button" data-estado="explodindo"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-explodindo.png" alt=""></span><span>Estou explodindo por dentro</span></button><button class="falar-estado" type="button" data-falar="explodindo" aria-label="Ouvir: Estou explodindo por dentro" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
+    <div class="linha-estado"><button class="estado" type="button" data-estado="travado"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-travado.png" alt=""></span><span>Não consigo me mexer nem falar</span></button><button class="falar-estado" type="button" data-falar="travado" aria-label="Ouvir: Não consigo me mexer nem falar" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
+    <div class="linha-estado"><button class="estado" type="button" data-estado="comecar"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-comecar.png" alt=""></span><span>Não consigo começar nada</span></button><button class="falar-estado" type="button" data-falar="comecar" aria-label="Ouvir: Não consigo começar nada" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
   </nav>
 
   <footer class="rodape">
     <p>Se você pensa em se machucar, ligue <a href="tel:188">188 (CVV)</a>. Gratuito, 24h.</p>
-    <p><a href="#sobre">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span></p>
+    <p><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span></p>
   </footer>
 </main>
 
@@ -236,6 +270,13 @@
     <h1>Sobre o AuHug</h1>
     <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
     <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
+    <h2>Para quais situações</h2>
+    <ul class="situacoes">
+      <li><strong>Tudo está forte demais:</strong> sobrecarga sensorial (barulho, luz, movimento).</li>
+      <li><strong>Estou explodindo por dentro:</strong> meltdown, quando a sobrecarga chega ao limite.</li>
+      <li><strong>Não consigo me mexer nem falar:</strong> shutdown, quando o corpo trava e a fala some.</li>
+      <li><strong>Não consigo começar nada:</strong> inércia autista, a dificuldade de iniciar qualquer tarefa.</li>
+    </ul>
     <p class="fraco">Esta é uma <strong>versão beta</strong>: o AuHug ainda está sendo testado e melhorado junto com a comunidade autista.</p>
     <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV), gratuito e 24h.</p>
 
@@ -347,7 +388,7 @@ const WHATSAPP = "";
 const WHATSAPP_MENSAGEM = "Oi! Usei o AuHug e queria contar como foi: ";
 
 /* Link do formulário de avaliação (ex.: Google Forms). Deixe vazio para esconder. */
-const LINK_FORMULARIO = "";
+const LINK_FORMULARIO = "https://forms.gle/9T5ycz3EdE6rd37m8";
 
 /* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
 const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
@@ -503,6 +544,7 @@ function vozPortugues(){
   return vs.find(v => /^pt[-_]BR/i.test(v.lang)) || vs.find(v => /^pt/i.test(v.lang)) || null;
 }
 function marcarBotoes(ativo){
+  if (!ativo) document.querySelectorAll("[data-falar]").forEach(b => b.setAttribute("aria-pressed","false"));
   document.querySelectorAll("[data-ouvir]").forEach(b => {
     b.setAttribute("aria-pressed", ativo ? "true" : "false");
     b.querySelector("span").textContent = ativo ? "Parar" : (b.dataset.ouvir === "cartao" ? "Ler em voz alta" : "Ouvir");
@@ -528,6 +570,18 @@ if (temVoz) {
     });
   });
   document.getElementById("bloco-voz").hidden = false;
+  document.body.classList.add("com-voz");
+  document.querySelectorAll("[data-falar]").forEach(b => {
+    b.hidden = false;
+    b.addEventListener("click", () => {
+      const tocando = b.getAttribute("aria-pressed") === "true";
+      pararVoz();
+      if (tocando) return;
+      const texto = document.querySelector('[data-estado="' + b.dataset.falar + '"] span:last-child').textContent;
+      falar(texto);
+      b.setAttribute("aria-pressed", "true");
+    });
+  });
   const caixa = document.getElementById("voz-auto");
   caixa.checked = vozAuto;
   caixa.addEventListener("change", () => {

@@ -12,7 +12,9 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 | `icon-192.png`, `icon-512.png`, `icon-maskable-512.png` | Ícones do app (Android; a versão maskable tem margem para o recorte redondo) |
 | `apple-touch-icon.png` | Ícone do app (iPhone) |
 | `favicon.png` | Ícone da aba do navegador |
-| `og-image-4.png` | Imagem de prévia quando o link é compartilhado |
+| `robots.txt`, `sitemap.xml` | Orientam buscadores (Google, Bing) |
+| `llms.txt` | Resumo do app para assistentes de IA |
+| `og-image-5.png` | Imagem de prévia quando o link é compartilhado |
 
 ## Como editar os textos
 
