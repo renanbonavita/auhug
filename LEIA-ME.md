@@ -43,7 +43,11 @@ No repositório, clique em **Add file** → **Upload files**, arraste o `index.h
 
 Se você **adicionar ou renomear arquivos**, abra `sw.js`, atualize a lista `ARQUIVOS` e mude `auhug-v1` para `auhug-v2` (e assim por diante).
 
-## Domínio próprio (opcional, depois)
+## Domínio próprio
+
+O site está em **https://auhug.com.br** (registrado no Registro.br; DNS no modo avançado com 4 registros A do GitHub e CNAME `www` → `renanbonavita.github.io`). O arquivo `CNAME` do repositório diz ao GitHub qual é o domínio: não apague.
+
+### Como foi configurado
 
 1. Verifique a disponibilidade de `auhug.app`, `auhug.com.br` etc. num registrador (ex.: Registro.br para `.com.br`, ou Cloudflare, Porkbun, Namecheap).
 2. Em **Settings → Pages → Custom domain**, escreva o domínio e salve.
