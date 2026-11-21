@@ -18,7 +18,7 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 
 Abra `index.html` num editor de texto e procure por `CONTEÚDO`. Todos os textos das quatro telas e dos cartões estão ali, num bloco só. Mude o texto entre aspas e salve.
 
-Para ativar o link "Conte como foi" na página Sobre, cole o link do seu formulário em `LINK_RELATO = ""`, entre as aspas.
+Para ativar o botão "Conte como foi" (WhatsApp) na página Sobre, coloque seu número em `WHATSAPP = ""`, só números, com 55 e DDD (ex.: `"5511999999999"`).
 
 Para mostrar o Pix de doação na página Sobre, preencha `CHAVE_PIX = ""`.
 

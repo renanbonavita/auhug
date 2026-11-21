@@ -58,6 +58,7 @@
 
   /* ---------- Início ---------- */
   .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px}
+  .beta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--borda);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
   /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
      Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
   :root{--fixo:215px;--aviso:0px;--moldura:26px}
@@ -129,6 +130,7 @@
   .texto ol{padding-left:22px}
   .texto li+li{margin-top:6px}
   .texto .fraco{color:var(--suave)}
+  .botao-zap{display:inline-block;margin-top:12px;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
   .pix{margin-top:12px;background:var(--botao);border:2px solid var(--borda);border-radius:14px;padding:14px 16px}
   .pix .chave{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;word-break:break-all;margin:6px 0 12px}
   .pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
@@ -165,7 +167,7 @@
 
 <!-- ===== INÍCIO ===== -->
 <main id="inicio" class="tela ativa" aria-label="Início">
-  <div class="marca">AuHug</div>
+  <div class="marca">AuHug <span class="beta">beta</span></div>
 
   <div id="aviso-instalar" class="aviso-instalar" hidden>
     <span>Instale na tela inicial enquanto está tudo bem.</span>
@@ -212,6 +214,7 @@
     <h1>Sobre o AuHug</h1>
     <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
     <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
+    <p class="fraco">Esta é uma <strong>versão beta</strong>: o AuHug ainda está sendo testado e melhorado junto com a comunidade autista.</p>
     <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV), gratuito e 24h.</p>
 
     <h2 id="sobre-instalar">Deixe o AuHug na tela inicial</h2>
@@ -234,6 +237,12 @@
     <h2>Privacidade</h2>
     <p>O AuHug não pede cadastro e não coleta nenhum dado seu.</p>
 
+    <div id="bloco-relato" hidden>
+      <h2>Conte como foi</h2>
+      <p>Se você usou o AuHug, me conte pelo WhatsApp: o que ajudou, o que atrapalhou e o que faltou. Pode ser uma frase só, quando você estiver bem.</p>
+      <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener">Mandar mensagem no WhatsApp</a>
+    </div>
+
     <div id="bloco-pix" hidden>
       <h2>Apoie o AuHug</h2>
       <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e é gratuito. Se quiser apoiar o projeto, qualquer valor por Pix ajuda.</p>
@@ -247,11 +256,6 @@
 
     <p class="fraco" style="margin-top:26px;font-size:.9rem">Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).</p>
 
-    <div id="bloco-relato" hidden>
-      <h2>Conte como foi</h2>
-      <p>O AuHug é feito com a comunidade autista. Se você usou, sua experiência ajuda a melhorar.</p>
-      <p><a id="link-relato" href="#" target="_blank" rel="noopener">Enviar um relato</a></p>
-    </div>
   </div>
 </section>
 
@@ -306,8 +310,10 @@ const CONTEUDO = {
 
 const NOTA_SEGURANCA = "Esta é uma reação neurológica do autismo. Não estou sob efeito de álcool ou drogas.";
 
-/* Link do formulário de relatos (ex.: Google Forms). Deixe vazio para esconder. */
-const LINK_RELATO = "";
+/* WhatsApp para relatos (página Sobre): só números, com 55 e DDD, ex.: "5511999999999".
+   Deixe vazio para esconder o bloco "Conte como foi". */
+const WHATSAPP = "";
+const WHATSAPP_MENSAGEM = "Oi! Usei o AuHug e queria contar como foi: ";
 
 /* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
 const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
@@ -438,8 +444,9 @@ if (CHAVE_PIX){
   });
 }
 
-if (LINK_RELATO){
-  document.getElementById("link-relato").href = LINK_RELATO;
+if (WHATSAPP){
+  document.getElementById("link-relato").href =
+    "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WHATSAPP_MENSAGEM);
   document.getElementById("bloco-relato").hidden = false;
 }
 

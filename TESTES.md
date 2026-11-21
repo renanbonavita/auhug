@@ -82,6 +82,7 @@ Desative o modo avião depois.
 - [ ] O texto "Apoie o AuHug" mostra a chave Pix.
 - [ ] "Copiar chave Pix" mostra "Copiada." e, ao colar no app do banco, a chave está certa.
 - [ ] No app do banco, o nome que aparece é **Renan Peppe Bonavita**.
+- [ ] "Mandar mensagem no WhatsApp" abre uma conversa com o seu número e a mensagem "Oi! Usei o AuHug e queria contar como foi:" já escrita.
 - [ ] O crédito dos pictogramas ARASAAC aparece no fim.
 
 ## 9. Compartilhar o link
