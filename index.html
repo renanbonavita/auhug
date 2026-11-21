@@ -95,6 +95,9 @@
   }
   .instrucao{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 4px}
   .instrucao h1{font-size:2.4rem;line-height:1.15;font-weight:700}
+  /* Pictograma da ação, acima da instrução; encolhe em telas baixas. */
+  .simbolo-instrucao{width:clamp(96px,calc(100vh - 470px),168px);width:clamp(96px,calc(100dvh - 470px),168px);
+    aspect-ratio:1;border-radius:20px;background:var(--cartao-fundo);padding:8px;margin-bottom:22px}
   .instrucao p{font-size:1.35rem;color:var(--suave);margin-top:22px}
   .mostrar{
     width:100%;background:var(--botao);border:2px solid var(--acento);border-radius:18px;
@@ -189,6 +192,7 @@
 <section id="instrucao" class="tela" aria-live="polite">
   <button class="voltar" type="button" data-voltar>← Voltar</button>
   <div class="instrucao">
+    <img id="instrucao-simbolo" class="simbolo-instrucao" src="" alt="">
     <h1 id="instrucao-principal"></h1>
     <p id="instrucao-permissao"></p>
   </div>
@@ -310,6 +314,10 @@ const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
 
 /* ============================================================= */
 
+/* PRÉVIA TEMPORÁRIA: ?instrucao=estado mostra o símbolo do estado na tela de instrução,
+   em vez do pictograma da ação. Remover depois da escolha. */
+var PREFIXO_INSTRUCAO = new URLSearchParams(location.search).get("instrucao") === "estado" ? "arasaac-" : "acao-";
+
 const telas = ["inicio","instrucao","cartao","sobre"];
 let estadoAtual = null;
 let travaTela = null;
@@ -333,6 +341,7 @@ function renderInstrucao(chave){
   const c = CONTEUDO[chave];
   document.getElementById("instrucao-principal").textContent = c.principal;
   document.getElementById("instrucao-permissao").textContent = c.permissao;
+  document.getElementById("instrucao-simbolo").src = "simbolos/" + PREFIXO_INSTRUCAO + chave + ".png";
 }
 
 function renderCartao(chave){
