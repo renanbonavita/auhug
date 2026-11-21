@@ -314,10 +314,6 @@ const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
 
 /* ============================================================= */
 
-/* PRÉVIA TEMPORÁRIA: ?instrucao=estado mostra o símbolo do estado na tela de instrução,
-   em vez do pictograma da ação. Remover depois da escolha. */
-var PREFIXO_INSTRUCAO = new URLSearchParams(location.search).get("instrucao") === "estado" ? "arasaac-" : "acao-";
-
 const telas = ["inicio","instrucao","cartao","sobre"];
 let estadoAtual = null;
 let travaTela = null;
@@ -341,7 +337,7 @@ function renderInstrucao(chave){
   const c = CONTEUDO[chave];
   document.getElementById("instrucao-principal").textContent = c.principal;
   document.getElementById("instrucao-permissao").textContent = c.permissao;
-  document.getElementById("instrucao-simbolo").src = "simbolos/" + PREFIXO_INSTRUCAO + chave + ".png";
+  document.getElementById("instrucao-simbolo").src = "simbolos/acao-" + chave + ".png";
 }
 
 function renderCartao(chave){
