@@ -63,7 +63,12 @@ Se você **adicionar ou renomear arquivos**, abra `sw.js`, atualize a lista `ARQ
 
 ## Próximas versões (fora do MVP)
 
-- Personalização do cartão (nome, contato)
+Decidido: o cartão continua genérico, sem dados pessoais, para ser simples de usar na crise.
+
+
 - Tela de recuperação pós-crise e burnout
-- Versão em inglês
-- Ícones nos botões
+- Versão em inglês (em domínio .com próprio)
+
+## Créditos
+
+Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). O pictograma de "Estou explodindo por dentro" é uma adaptação de pictogramas ARASAAC, sob a mesma licença.
