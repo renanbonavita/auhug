@@ -71,4 +71,4 @@ Decidido: o cartão continua genérico, sem dados pessoais, para ser simples de 
 
 ## Créditos
 
-Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). O pictograma de "Estou explodindo por dentro" é uma adaptação de pictogramas ARASAAC, sob a mesma licença.
+Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).
