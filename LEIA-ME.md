@@ -20,7 +20,7 @@ Abra `index.html` num editor de texto e procure por `CONTEÚDO`. Todos os textos
 
 Para ativar o link "Conte como foi" na página Sobre, cole o link do seu formulário em `LINK_RELATO = ""`, entre as aspas.
 
-Para mostrar o Pix de doação na página Sobre, preencha `CHAVE_PIX = ""` e `NOME_PIX = ""`.
+Para mostrar o Pix de doação na página Sobre, preencha `CHAVE_PIX = ""`.
 
 ## Publicar no GitHub Pages (sem usar linha de comando)
 

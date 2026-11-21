@@ -217,13 +217,12 @@
 
     <div id="bloco-pix" hidden>
       <h2>Apoie o AuHug</h2>
-      <p>O AuHug foi criado por Renan Bonavita, uma pessoa autista, e é gratuito. Se quiser apoiar o projeto, qualquer valor por Pix ajuda.</p>
+      <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e é gratuito. Se quiser apoiar o projeto, qualquer valor por Pix ajuda.</p>
       <div class="pix">
         <div class="fraco">Chave Pix</div>
         <div class="chave" id="pix-chave"></div>
         <button type="button" id="pix-copiar">Copiar chave Pix</button>
         <span id="pix-ok" class="fraco" role="status" style="margin-left:10px"></span>
-        <p class="fraco" id="pix-nome" style="margin-top:12px;font-size:.95rem"></p>
       </div>
     </div>
 
@@ -293,7 +292,6 @@ const LINK_RELATO = "";
 
 /* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
 const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
-const NOME_PIX = "Renan Peppe Bonavita";  /* nome que o banco mostra para quem paga */
 
 /* ============================================================= */
 
@@ -407,7 +405,7 @@ document.addEventListener("visibilitychange", () => {
 /* Pix */
 if (CHAVE_PIX){
   document.getElementById("pix-chave").textContent = CHAVE_PIX;
-  if (NOME_PIX) document.getElementById("pix-nome").textContent = "No banco, aparece o nome " + NOME_PIX + ".";
+  
   document.getElementById("bloco-pix").hidden = false;
   document.getElementById("pix-copiar").addEventListener("click", async () => {
     const ok = document.getElementById("pix-ok");

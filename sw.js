@@ -7,7 +7,7 @@
    Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
    atualize a lista ARQUIVOS e aumente o número em VERSAO. */
 
-const VERSAO = "auhug-v3";
+const VERSAO = "auhug-v4";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -25,7 +25,8 @@ const ARQUIVOS = [
 
 self.addEventListener("install", evento => {
   evento.waitUntil(
-    caches.open(VERSAO).then(c => c.addAll(ARQUIVOS)).then(() => self.skipWaiting())
+    // cache: "reload" ignora a cópia antiga que o navegador guarda e busca a versão do servidor.
+    caches.open(VERSAO).then(c => c.addAll(ARQUIVOS.map(u => new Request(u, { cache: "reload" })))).then(() => self.skipWaiting())
   );
 });
 
@@ -47,7 +48,8 @@ self.addEventListener("fetch", evento => {
   evento.respondWith(
     caches.open(VERSAO).then(async cache => {
       const guardado = await cache.match(chave, { ignoreSearch: true });
-      const daRede = fetch(pedido)
+      // cache: "no-cache" confere com o servidor se há versão nova, em vez de usar a cópia do navegador.
+      const daRede = fetch(pedido.url, { cache: "no-cache", credentials: "same-origin" })
         .then(resp => {
           if (resp && resp.ok) cache.put(chave, resp.clone());
           return resp;
