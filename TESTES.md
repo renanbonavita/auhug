@@ -42,6 +42,7 @@ Para **cada** botão: toque nele, leia a instrução, toque em "Mostrar cartão 
 | Não consigo me mexer nem falar | "Fique onde está." | [ ] | [ ] sim |
 | Não consigo começar nada | "Beba um gole de água." | [ ] | [ ] **não** deve aparecer |
 
+- [ ] Na tela de instrução, o botão "Mostrar cartão para alguém" aparece **sem rolar**, tanto no navegador (com a barra de endereço) quanto no app instalado.
 - [ ] O cartão inteiro cabe na tela, sem rolar (inclusive o de "explodindo", que é o mais longo).
 - [ ] Com o cartão aberto, a tela **não apaga sozinha** por pelo menos 1 minuto (Android; no iPhone pode não funcionar).
 

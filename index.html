@@ -47,7 +47,7 @@
   /* Sem animações ou transições em lugar nenhum. */
   *,*::before,*::after{animation:none!important;transition:none!important}
 
-  .tela{display:none;min-height:100dvh;min-height:100vh;
+  .tela{display:none;min-height:100vh;min-height:100dvh;/* dvh por último: altura visível com a barra do navegador */
     padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));
     flex-direction:column;max-width:560px;margin:0 auto}
   .tela.ativa{display:flex}
@@ -97,7 +97,9 @@
   .instrucao p{font-size:1.35rem;color:var(--suave);margin-top:22px}
   .mostrar{
     width:100%;background:var(--botao);border:2px solid var(--acento);border-radius:18px;
-    padding:24px 20px;font-size:1.3rem;font-weight:600;min-height:84px
+    padding:24px 20px;font-size:1.3rem;font-weight:600;min-height:84px;
+    /* Fica preso ao rodapé visível: nunca exige rolar, mesmo com a barra do navegador. */
+    position:sticky;bottom:max(12px,env(safe-area-inset-bottom))
   }
 
   /* ---------- Cartão para terceiros ---------- */
