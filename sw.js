@@ -7,12 +7,13 @@
    Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
    atualize a lista ARQUIVOS e aumente o número em VERSAO. */
 
-const VERSAO = "auhug-v34";
+const VERSAO = "auhug-v35";
 const ARQUIVOS = [
   "./",
   "index.html",
   "manifest.webmanifest",
   "icon-192.png",
+  "icon-64.png",
   "icon-512.png",
   "icon-maskable-512.png",
   "apple-touch-icon.png",
