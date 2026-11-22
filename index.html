@@ -199,6 +199,9 @@
   .rodape a{color:var(--suave)}
   .links-rodape a{display:inline-block;padding:4px 1px}
   .emergencia a{display:inline-block;padding:4px 2px;margin:-4px 0}
+  .emergencia .grupo{white-space:nowrap}
+  .emergencia a{padding:4px 3px}
+  @media (max-width:360px){ .emergencia{font-size:.84rem} }
 
 
   /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
@@ -367,7 +370,7 @@
 
   <footer class="rodape">
     <p class="links-rodape"><a href="#sobre"><img class="logo-rodape" src="icon-64.png" alt="" width="24" height="24">Sobre</a> · <a href="#sobre/plano">Personalize</a><span id="rodape-instalar" hidden> · <a href="#sobre/instalar">Instalar</a></span><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
-    <p class="emergencia">Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
+    <p class="emergencia"><span class="grupo">Emergência: <a href="tel:192" aria-label="Ligar para 192, SAMU, emergência">192</a></span> · <span class="grupo">Apoio emocional: <a href="tel:188" aria-label="Ligar para 188, CVV, apoio emocional 24 horas">188</a></span></p>
   </footer>
 </main>
 

@@ -12,7 +12,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 - [ ] O site abre em menos de 3 segundos.
 - [ ] No rodapé aparece o link "Instalar", que abre as instruções de instalação.
 - [ ] Os 4 botões aparecem com símbolo e texto, sem rolar a tela.
-- [ ] O link "188 (CVV)" e o "Sobre o AuHug" aparecem no fim da tela, sem rolar.
+- [ ] Os links do rodapé e a linha "Emergência: 192 · Apoio emocional: 188" aparecem no fim da tela, sem rolar.
 - [ ] Os símbolos estão nítidos (não borrados) e dá para entender cada um.
 
 ## 2. Instalação na tela inicial
@@ -74,7 +74,7 @@ Desative o modo avião depois.
 
 ## 7. Ligação para o 188
 
-- [ ] Tocar em "188 (CVV)" abre o discador com o número 188 já digitado (não precisa completar a ligação).
+- [ ] Tocar em "192" e em "188" no rodapé abre o discador com o número já digitado (não precisa completar a ligação).
 
 ## 7b. Voz
 
