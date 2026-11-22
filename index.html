@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AuHug: apoio para pessoas autistas em crise</title>
-<meta name="description" content="App gratuito para pessoas autistas em crise (sobrecarga sensorial, meltdown, shutdown): instruções curtas, pictogramas, leitura em voz alta e um cartão para mostrar a quem está perto. Funciona sem internet.">
+<title>AuHug: apoio à comunicação em momentos de sobrecarga autista</title>
+<meta name="description" content="Ferramenta gratuita que ajuda pessoas autistas a comunicar o que precisam em momentos de sobrecarga, meltdown ou shutdown, mesmo sem conseguir falar: cartões para quem está por perto, pictogramas, leitura em voz alta e um primeiro passo simples. Funciona sem internet.">
 <link rel="canonical" href="https://auhug.com.br/">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">
@@ -13,7 +13,7 @@
   "@type": "WebApplication",
   "name": "AuHug",
   "url": "https://auhug.com.br/",
-  "description": "Ferramenta gratuita de autorregulação e comunicação para pessoas autistas em momentos de crise: sobrecarga sensorial, meltdown, shutdown e dificuldade de iniciar tarefas. Mostra uma instrução curta com pictograma para a própria pessoa e um cartão para mostrar a quem está por perto.",
+  "description": "Ferramenta gratuita de apoio à comunicação para pessoas autistas em momentos de sobrecarga: ajuda a comunicar o que a pessoa precisa, mesmo quando falar é difícil ou impossível, com cartões para quem está por perto, pictogramas, leitura em voz alta e um primeiro passo simples para a própria pessoa.",
   "inLanguage": "pt-BR",
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Android, iOS, navegador",
@@ -70,7 +70,7 @@
       "name": "O AuHug coleta meus dados?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional e anônimo."
+        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail."
       }
     },
     {
@@ -110,8 +110,8 @@
 </script>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="AuHug: apoio para pessoas autistas em crise">
-<meta property="og:description" content="Para pessoas autistas em momentos de crise. Gratuito, sem cadastro, funciona sem internet.">
+<meta property="og:title" content="AuHug: apoio à comunicação em momentos de sobrecarga autista">
+<meta property="og:description" content="Ajuda pessoas autistas a comunicar o que precisam quando falar é difícil. Gratuito, sem cadastro, funciona sem internet.">
 <meta property="og:image" content="https://auhug.com.br/og-image-6.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -135,6 +135,9 @@
     --cartao-fundo:#ece5d8;
     --cartao-texto:#22262c;
     --cartao-suave:#5a5650;
+    /* Contorno de botões: contraste mínimo de 3:1 (WCAG 1.4.11). */
+    --contorno:#6d6d6d;
+    --contorno-cartao:#898379;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -168,7 +171,7 @@
   .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
     display:block;width:100%;text-align:left;
-    background:var(--botao);border:2px solid var(--borda);border-radius:18px;
+    background:var(--botao);border:2px solid var(--contorno);border-radius:18px;
     padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
   }
   .estado:active{border-color:var(--acento)}
@@ -177,7 +180,7 @@
   body.com-voz .estado{padding-right:64px;gap:14px}
   .falar-estado{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:48px;height:48px;
     display:flex;align-items:center;justify-content:center;background:var(--fundo);
-    border:2px solid var(--borda);border-radius:14px;color:var(--suave)}
+    border:2px solid var(--contorno);border-radius:14px;color:var(--suave)}
   .falar-estado[hidden]{display:none}
   .falar-estado[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
   /* Símbolos (pictogramas ARASAAC) nos botões */
@@ -201,18 +204,23 @@
 
   /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
   .barra{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
-  .ouvir{display:inline-flex;align-items:center;gap:8px;background:none;border:2px solid var(--borda);
+  .ouvir{display:inline-flex;align-items:center;gap:8px;background:none;border:2px solid var(--contorno);
     border-radius:12px;padding:12px 16px;font-size:1.05rem;color:var(--suave)}
   .ouvir[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
   .ouvir[hidden]{display:none}
-  #cartao .ouvir{border-color:#c9c1b2;color:var(--cartao-suave)}
+  .voltar,.ouvir{white-space:nowrap}
+  @media (max-width:360px){
+    .voltar,.ouvir{padding:9px 11px;font-size:.95rem;gap:6px}
+    .ouvir svg{width:18px;height:18px}
+  }
+  #cartao .ouvir{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
   #cartao .ouvir[aria-pressed="true"]{border-color:var(--cartao-texto);color:var(--cartao-texto)}
   .opcao{display:flex;gap:12px;align-items:flex-start;margin-top:10px;font-size:1.05rem}
   .opcao input{width:24px;height:24px;margin-top:2px;accent-color:var(--acento);flex:0 0 auto}
 
   /* ---------- Tela de instrução ---------- */
   .voltar{
-    align-self:flex-start;background:none;border:2px solid var(--borda);
+    align-self:flex-start;background:none;border:2px solid var(--contorno);
     border-radius:12px;padding:12px 18px;font-size:1.05rem;color:var(--suave)
   }
   .instrucao{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 4px}
@@ -230,16 +238,17 @@
 
   /* ---------- Cartão para terceiros ---------- */
   #cartao{background:var(--cartao-fundo);color:var(--cartao-texto);max-width:none}
-  #cartao .voltar{border-color:#c9c1b2;color:var(--cartao-suave)}
+  #cartao .voltar{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
   .cartao-corpo{flex:1;display:flex;flex-direction:column;justify-content:center;
     max-width:560px;width:100%;margin:0 auto;padding:20px 4px}
-  .cartao-corpo .frase{font-size:1.6rem;line-height:1.3;font-weight:600}
+  .cartao-corpo{font-size:16px}
+  .cartao-corpo .frase{font-size:1.6em;line-height:1.3;font-weight:600}
   .cartao-corpo .frase+.frase{margin-top:10px}
-  .cartao-corpo .destaque{font-size:2rem;font-weight:800;margin-bottom:14px}
+  .cartao-corpo .destaque{font-size:2em;font-weight:800;margin-bottom:14px}
   .cartao-corpo .pedido{margin-top:22px;padding-top:18px;border-top:2px solid #cfc7b8}
   .cartao-corpo .pedido .frase{font-weight:700}
   .cartao-corpo .nota{margin-top:26px;padding-top:14px;border-top:1px solid #cfc7b8;
-    font-size:1.05rem;color:var(--cartao-suave)}
+    font-size:1.05em;color:var(--cartao-suave)}
   #cartao .topo{max-width:560px;width:100%;margin:0 auto}
 
   /* ---------- Sobre ---------- */
@@ -303,11 +312,11 @@
     #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
     #cartao .voltar,#cartao .ouvir{padding:8px 14px}
     .cartao-corpo{padding:10px 4px}
-    .cartao-corpo .frase{font-size:1.4rem;line-height:1.22}
+    .cartao-corpo .frase{font-size:1.4em;line-height:1.22}
     .cartao-corpo .frase+.frase{margin-top:6px}
-    .cartao-corpo .destaque{font-size:1.75rem;margin-bottom:8px}
+    .cartao-corpo .destaque{font-size:1.75em;margin-bottom:8px}
     .cartao-corpo .pedido{margin-top:14px;padding-top:12px}
-    .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98rem}
+    .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98em}
   }
 </style>
 </head>
@@ -333,7 +342,7 @@
   </nav>
 
   <footer class="rodape">
-    <p>Se você pensa em se machucar, ligue <a href="tel:188">188 (CVV)</a>. Gratuito, 24h.</p>
+    <p>Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
     <p><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
   </footer>
 </main>
@@ -367,10 +376,10 @@
   <div class="texto">
     <img class="logo-sobre" src="icon-192.png" alt="">
     <h1>Sobre o AuHug</h1>
-    <p>O AuHug ajuda pessoas autistas em momentos de crise a se regular e a se comunicar sem precisar falar.</p>
+    <p>O AuHug ajuda pessoas autistas a comunicar o que precisam em momentos de sobrecarga, mesmo quando falar é difícil ou impossível, e sugere um primeiro passo simples.</p>
     <p>Cada botão mostra uma orientação curta para você e um cartão para mostrar a outra pessoa.</p>
     <p class="fraco">Esta é uma <strong>versão beta</strong>: o AuHug ainda está sendo testado e melhorado junto com a comunidade autista.</p>
-    <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV), gratuito e 24h.</p>
+    <p class="fraco">O AuHug não chama ninguém e não é um serviço de emergência. <strong>192 (SAMU):</strong> urgência e emergência médica, como risco de vida, ferimento grave ou sinais de AVC. <strong>188 (CVV):</strong> apoio emocional, gratuito e 24h, inclusive se você pensa em se machucar.</p>
 
     <p class="dica-secoes fraco">Toque num assunto para abrir.</p>
 
@@ -457,7 +466,7 @@
         <h3>Funciona no iPhone e no Android?</h3>
         <p>Sim, nos dois. No Android, use o Chrome; no iPhone, o Safari.</p>
         <h3>O AuHug coleta meus dados?</h3>
-        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional e anônimo.</p>
+        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail.</p>
         <h3>Posso imprimir o cartão?</h3>
         <p>Sim. Os quatro cartões estão num <a href="cartoes/cartoes-auhug-a4.pdf">PDF em tamanho A4</a>, um por página, para imprimir e levar com você.</p>
         <h3>O AuHug substitui atendimento profissional?</h3>
@@ -471,7 +480,7 @@
 
     <details class="secao">
       <summary><h2>Privacidade</h2></summary>
-      <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e anônimo; as respostas ficam no Google Forms.</span></p>
+      <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
     </details>
 
     <details class="secao">
@@ -490,6 +499,7 @@
    - estado: o que está acontecendo
    - pedido: o que a outra pessoa deve fazer
    - notaSeguranca: mostra a frase sobre álcool/drogas no fim do cartão
+   - nota: (opcional) frase própria no fim do cartão, no lugar da frase padrão
    ============================================================= */
 const CONTEUDO = {
   forte: {
@@ -514,10 +524,11 @@ const CONTEUDO = {
     principal: "Fique onde está.",
     permissao: "Isso vai passar.",
     destaque: "Sou autista.",
-    estado: ["Meu corpo travou e não consigo falar ou me mexer.",
-             "Estou consciente e ouvindo.", "Isso vai passar."],
-    pedido: ["Fique por perto, em silêncio.", "Não faça perguntas.", "Não toque em mim."],
-    notaSeguranca: true
+    estado: ["Na sobrecarga, meu corpo pode travar e posso não conseguir falar ou me mexer.",
+             "Posso ouvir, mesmo sem conseguir responder."],
+    pedido: ["Preciso de tempo, silêncio e um lugar tranquilo.", "Não faça perguntas.", "Não toque em mim."],
+    /* Nota própria: travar e perder a fala de repente também pode ser sinal de AVC. */
+    nota: "Esta é uma reação que reconheço em mim. Se parecer nova, diferente do meu padrão, ou um lado do meu rosto ou corpo estiver fraco, ligue 192 (SAMU)."
   },
   comecar: {
     principal: "Beba um gole de água.",
@@ -583,8 +594,19 @@ function renderCartao(chave){
   const pedido = el("div","pedido");
   c.pedido.forEach(f => pedido.appendChild(el("p","frase",f)));
   corpo.appendChild(pedido);
-  if (c.notaSeguranca) corpo.appendChild(el("p","nota",NOTA_SEGURANCA));
+  const nota = c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : "");
+  if (nota) corpo.appendChild(el("p","nota",nota));
 }
+
+/* Ajuste automático: se o cartão não couber na tela, reduz a fonte aos poucos (mínimo 75%). */
+function ajustarCartao(){
+  const corpo = document.getElementById("cartao-corpo");
+  let esc = 1; corpo.style.fontSize = "";
+  while (document.documentElement.scrollHeight > window.innerHeight + 1 && esc > 0.75) {
+    esc -= 0.05; corpo.style.fontSize = (16 * esc) + "px";
+  }
+}
+window.addEventListener("resize", () => { if (location.hash.startsWith("#cartao/")) ajustarCartao(); });
 
 /* Navegação por endereço (#), para o botão "voltar" do celular funcionar. */
 function rota(){
@@ -594,6 +616,7 @@ function rota(){
     estadoAtual = chave;
     if (tipo === "instrucao") renderInstrucao(chave); else renderCartao(chave);
     mostrar(tipo);
+    if (tipo === "cartao") ajustarCartao();
   } else if (tipo === "sobre"){
     mostrar("sobre");
     const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar", "quem-fez": "sobre-quem-fez" }[chave];
@@ -687,7 +710,7 @@ try { vozAuto = localStorage.getItem("auhug-voz-auto") === "1"; } catch(e){}
 function textoDaTela(qual){
   const c = CONTEUDO[estadoAtual]; if (!c) return "";
   if (qual === "instrucao") return c.principal + " " + c.permissao;
-  return [c.destaque, ...c.estado, ...c.pedido, c.notaSeguranca ? NOTA_SEGURANCA : ""].join(" ");
+  return [c.destaque, ...c.estado, ...c.pedido, c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : "")].join(" ");
 }
 function vozPortugues(){
   const vs = speechSynthesis.getVoices();

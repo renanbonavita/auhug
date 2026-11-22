@@ -1,6 +1,6 @@
 # AuHug
 
-> Ferramenta gratuita, em português do Brasil, de autorregulação e comunicação para pessoas autistas em momentos de crise. Funciona no navegador do celular, pode ser instalada na tela inicial e funciona sem internet depois da primeira visita. Não pede cadastro e não coleta dados.
+> Ferramenta gratuita, em português do Brasil, de apoio à comunicação para pessoas autistas em momentos de sobrecarga: ajuda a comunicar o que a pessoa precisa, mesmo quando falar é difícil ou impossível. Funciona no navegador do celular, pode ser instalada na tela inicial e funciona sem internet depois da primeira visita. Não pede cadastro e não coleta dados.
 
 Site: https://auhug.com.br/
 
@@ -28,5 +28,6 @@ Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cart�
 - Gratuito, sem anúncios, sem cadastro.
 - Criado por Renan Peppe Bonavita, uma pessoa autista, a partir das próprias crises: em momentos de disfunção executiva, uma instrução escrita, clara e direta ajuda a agir. Versão beta, desenvolvida com a comunidade autista.
 - Instagram: https://www.instagram.com/auhug.br/
-- Não é um serviço de emergência. No Brasil: 192 (SAMU) em risco de vida; 188 (CVV) para apoio emocional, gratuito e 24h.
+- Não é um serviço de emergência. No Brasil: 192 (SAMU) para urgência e emergência médica (risco de vida, sinais de AVC); 188 (CVV) para apoio emocional, gratuito e 24h.
+- O cartão de shutdown avisa que, se a reação for nova, diferente do padrão da pessoa ou vier com fraqueza num lado do corpo, deve-se ligar 192.
 - Pictogramas: Sergio Palao, ARASAAC (arasaac.org), licença CC BY-NC-SA.
