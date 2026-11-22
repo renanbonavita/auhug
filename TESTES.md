@@ -93,6 +93,14 @@ Desative o modo avião depois.
 - [ ] "Mandar mensagem no WhatsApp" abre uma conversa com o seu número e a mensagem "Oi! Usei o AuHug e queria contar como foi:" já escrita.
 - [ ] O crédito dos pictogramas ARASAAC aparece no fim.
 
+## 8b. Meu plano de apoio
+
+- [ ] Em Sobre → Meu plano de apoio, mude o toque e as perguntas, marque 1 ou 2 itens de "O que mais me ajuda" e preencha a pessoa de confiança.
+- [ ] "Ver meu cartão" mostra o cartão com essas escolhas.
+- [ ] O telefone da pessoa de confiança abre o discador.
+- [ ] Feche e abra o app: as escolhas continuam lá.
+- [ ] "Apagar minhas escolhas" volta os cartões ao padrão.
+
 ## 9. Compartilhar o link
 
 - [ ] Mande o link para você mesmo (ou alguém) no WhatsApp: aparece a prévia com o ícone e o texto "AuHug – Para pessoas autistas em momentos de crise".

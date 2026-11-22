@@ -70,7 +70,7 @@
       "name": "O AuHug coleta meus dados?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail."
+        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular, nem as escolhas do seu plano de apoio. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail."
       }
     },
     {
@@ -275,6 +275,14 @@
   .quem-fez p+p{margin-top:12px}
   .assinatura{color:var(--acento);font-weight:600}
   .link-ig{display:inline-flex;align-items:center;gap:8px;color:var(--suave);text-decoration:underline}
+  .plano fieldset{border:none;margin-top:16px}
+  .plano legend{font-weight:700;color:var(--texto);margin-bottom:4px}
+  .plano .opcao{margin-top:8px}
+  .campo{display:block;width:100%;margin-top:8px;padding:12px 14px;font:inherit;color:var(--texto);
+    background:var(--botao);border:2px solid var(--contorno);border-radius:12px}
+  button.botao-zap{background:none;font:inherit;cursor:pointer}
+  .cartao-corpo .contato{margin-top:18px;padding:12px 14px;border:2px solid var(--contorno-cartao);border-radius:14px;font-size:1.15em}
+  .cartao-corpo .contato a{color:var(--cartao-texto);font-weight:700;white-space:nowrap}
   .faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
   .faq h3:first-child{margin-top:4px}
   .faq p{color:var(--suave);margin-top:4px}
@@ -299,7 +307,7 @@
     .marca{margin-bottom:8px}
     .marca{display:none}
     :root{--fixo:132px;--moldura:22px}
-    body.com-aviso{--aviso:64px}
+    body.com-aviso{--aviso:72px}
     .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
     .aviso-instalar{padding:6px 10px;font-size:.85rem;margin-bottom:8px;gap:8px}
     .aviso-instalar button{font-size:.85rem;padding:4px}
@@ -326,20 +334,20 @@
 <main id="inicio" class="tela ativa" aria-label="Início">
   <div class="marca">AuHug <span class="beta">beta</span></div>
 
-  <div id="aviso-instalar" class="aviso-instalar" hidden>
-    <span>Instale na tela inicial enquanto está tudo bem.</span>
-    <span>
-      <button type="button" data-ir="sobre-instalar">Como</button>
-      <button type="button" id="fechar-aviso" aria-label="Não mostrar de novo">Ocultar</button>
-    </span>
-  </div>
-
   <nav class="lista" aria-label="O que está acontecendo">
     <div class="linha-estado"><button class="estado" type="button" data-estado="forte"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-forte.png" alt=""></span><span>Tudo está forte demais</span></button><button class="falar-estado" type="button" data-falar="forte" aria-label="Ouvir: Tudo está forte demais" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
     <div class="linha-estado"><button class="estado" type="button" data-estado="explodindo"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-explodindo.png" alt=""></span><span>Estou explodindo por dentro</span></button><button class="falar-estado" type="button" data-falar="explodindo" aria-label="Ouvir: Estou explodindo por dentro" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
     <div class="linha-estado"><button class="estado" type="button" data-estado="travado"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-travado.png" alt=""></span><span>Não consigo me mexer nem falar</span></button><button class="falar-estado" type="button" data-falar="travado" aria-label="Ouvir: Não consigo me mexer nem falar" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
     <div class="linha-estado"><button class="estado" type="button" data-estado="comecar"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-comecar.png" alt=""></span><span>Não consigo começar nada</span></button><button class="falar-estado" type="button" data-falar="comecar" aria-label="Ouvir: Não consigo começar nada" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
   </nav>
+
+  <div id="aviso-instalar" class="aviso-instalar" hidden style="margin:14px 0 0">
+    <span>Instale na tela inicial enquanto está tudo bem.</span>
+    <span>
+      <button type="button" data-ir="sobre-instalar">Como</button>
+      <button type="button" id="fechar-aviso" aria-label="Não mostrar de novo">Ocultar</button>
+    </span>
+  </div>
 
   <footer class="rodape">
     <p>Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
@@ -391,6 +399,48 @@
         <li><strong>Não consigo me mexer nem falar:</strong> shutdown, quando o corpo trava e a fala some.</li>
         <li><strong>Não consigo começar nada:</strong> inércia autista, a dificuldade de iniciar qualquer tarefa.</li>
       </ul>
+    </details>
+
+    <details class="secao" id="sobre-plano">
+      <summary><h2>Meu plano de apoio</h2></summary>
+      <p>Ajuste o que aparece nos seus cartões para quem está por perto. Faça isso num momento tranquilo. Suas escolhas ficam <strong>só neste celular</strong>.</p>
+      <p class="fraco" style="font-size:.95rem">Escolha só o essencial: quanto menos itens, mais fácil para a outra pessoa ler.</p>
+      <form id="form-plano" class="plano" onsubmit="return false">
+        <fieldset>
+          <legend>Toque</legend>
+          <label class="opcao"><input type="radio" name="toque" value="nao" checked><span>Não toque em mim</span></label>
+          <label class="opcao"><input type="radio" name="toque" value="ombro"><span>Pode tocar no meu ombro, com calma</span></label>
+          <label class="opcao"><input type="radio" name="toque" value="abraco"><span>Um abraço firme me ajuda, se eu aceitar</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Perguntas</legend>
+          <label class="opcao"><input type="radio" name="perguntas" value="nao" checked><span>Não faça perguntas</span></label>
+          <label class="opcao"><input type="radio" name="perguntas" value="simnao"><span>Só perguntas de sim ou não; posso responder com um gesto</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>O que mais me ajuda</legend>
+          <label class="opcao"><input type="checkbox" name="ajuda" value="luz"><span>Diminuir o barulho e a luz</span></label>
+          <label class="opcao"><input type="checkbox" name="ajuda" value="calmo"><span>Ir para um lugar mais calmo</span></label>
+          <label class="opcao"><input type="checkbox" name="ajuda" value="perto"><span>Alguém por perto, em silêncio</span></label>
+          <label class="opcao"><input type="checkbox" name="ajuda" value="agua"><span>Receber água</span></label>
+          <label class="opcao"><input type="checkbox" name="ajuda" value="fone"><span>Não tirarem meu fone ou o objeto que estou segurando</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Uma frase minha (opcional)</legend>
+          <input class="campo" type="text" name="frase" maxlength="90" placeholder="Ex.: Uso fone abafador para me proteger do barulho.">
+        </fieldset>
+        <fieldset>
+          <legend>Pessoa de confiança (opcional)</legend>
+          <input class="campo" type="text" name="contatoNome" maxlength="40" placeholder="Nome" autocomplete="off">
+          <input class="campo" type="tel" name="contatoTel" maxlength="20" placeholder="Telefone com DDD" autocomplete="off">
+          <p class="fraco" style="font-size:.92rem;margin-top:6px">Aparece no cartão com um botão para ligar.</p>
+        </fieldset>
+        <div class="botoes-relato">
+          <a class="botao-zap" href="#cartao/explodindo">Ver meu cartão</a>
+          <button class="botao-zap" type="button" id="apagar-plano">Apagar minhas escolhas</button>
+        </div>
+        <p id="plano-status" class="fraco" role="status" style="margin-top:8px"></p>
+      </form>
     </details>
 
     <details class="secao" id="sobre-instalar">
@@ -466,7 +516,7 @@
         <h3>Funciona no iPhone e no Android?</h3>
         <p>Sim, nos dois. No Android, use o Chrome; no iPhone, o Safari.</p>
         <h3>O AuHug coleta meus dados?</h3>
-        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail.</p>
+        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular, nem as escolhas do seu plano de apoio. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail.</p>
         <h3>Posso imprimir o cartão?</h3>
         <p>Sim. Os quatro cartões estão num <a href="cartoes/cartoes-auhug-a4.pdf">PDF em tamanho A4</a>, um por página, para imprimir e levar com você.</p>
         <h3>O AuHug substitui atendimento profissional?</h3>
@@ -480,7 +530,7 @@
 
     <details class="secao">
       <summary><h2>Privacidade</h2></summary>
-      <p>O AuHug não pede cadastro e não coleta nenhum dado seu.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
+      <p>O AuHug não pede cadastro e não coleta nenhum dado seu. O que você escolhe em "Meu plano de apoio" fica guardado só neste celular, e você pode apagar quando quiser.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
     </details>
 
     <details class="secao">
@@ -585,8 +635,32 @@ function renderInstrucao(chave){
   document.getElementById("instrucao-simbolo").src = "simbolos/acao-" + chave + ".png";
 }
 
+/* ---------- Meu plano de apoio (guardado só no celular) ---------- */
+const PLANO_TOQUE = { nao: "Não toque em mim.", ombro: "Se precisar, pode tocar no meu ombro, com calma.", abraco: "Um abraço firme me ajuda, se eu aceitar." };
+const PLANO_PERGUNTAS = { nao: "Não faça perguntas.", simnao: "Faça só perguntas de sim ou não; posso responder com um gesto." };
+const PLANO_AJUDA = { luz: "Diminua o barulho e a luz, se puder.", calmo: "Me ajude a ir para um lugar mais calmo.",
+  perto: "Fique por perto, em silêncio.", agua: "Me ofereça água.", fone: "Não tire meu fone nem o objeto que estou segurando." };
+function lerPlano(){ try { return JSON.parse(localStorage.getItem("auhug-plano") || "null"); } catch(e){ return null; } }
+function gravarPlano(p){ try { if (p) localStorage.setItem("auhug-plano", JSON.stringify(p)); else localStorage.removeItem("auhug-plano"); return true; } catch(e){ return false; } }
+
+function conteudoCartao(chave){
+  const c = CONTEUDO[chave], p = lerPlano();
+  const r = { destaque: c.destaque, estado: c.estado.slice(), pedido: c.pedido.slice(),
+              nota: c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : ""), contato: null };
+  if (!p) return r;
+  r.pedido = r.pedido.map(f => f === "Não toque em mim." ? PLANO_TOQUE[p.toque] || f
+                             : f === "Não faça perguntas." ? PLANO_PERGUNTAS[p.perguntas] || f : f);
+  if (chave !== "comecar") (p.ajuda || []).forEach(k => {
+    const f = PLANO_AJUDA[k]; if (f && !r.pedido.includes(f)) r.pedido.push(f);
+  });
+  if (p.frase) r.pedido.push(p.frase.trim());
+  const tel = (p.contatoTel || "").replace(/[^0-9+]/g, "");
+  if (p.contatoNome || tel) r.contato = { nome: (p.contatoNome || "").trim(), tel, telTexto: (p.contatoTel || "").trim() };
+  return r;
+}
+
 function renderCartao(chave){
-  const c = CONTEUDO[chave];
+  const c = conteudoCartao(chave);
   const corpo = document.getElementById("cartao-corpo");
   corpo.replaceChildren();
   corpo.appendChild(el("p","frase destaque",c.destaque));
@@ -594,8 +668,16 @@ function renderCartao(chave){
   const pedido = el("div","pedido");
   c.pedido.forEach(f => pedido.appendChild(el("p","frase",f)));
   corpo.appendChild(pedido);
-  const nota = c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : "");
-  if (nota) corpo.appendChild(el("p","nota",nota));
+  if (c.contato) {
+    const box = el("p","contato");
+    box.appendChild(document.createTextNode("Pessoa de confiança: " + (c.contato.nome || "")));
+    if (c.contato.tel) {
+      box.appendChild(document.createTextNode(c.contato.nome ? " · " : ""));
+      const a = el("a", null, c.contato.telTexto || c.contato.tel); a.href = "tel:" + c.contato.tel; box.appendChild(a);
+    }
+    corpo.appendChild(box);
+  }
+  if (c.nota) corpo.appendChild(el("p","nota",c.nota));
 }
 
 /* Ajuste automático: se o cartão não couber na tela, reduz a fonte aos poucos (mínimo 75%). */
@@ -710,7 +792,8 @@ try { vozAuto = localStorage.getItem("auhug-voz-auto") === "1"; } catch(e){}
 function textoDaTela(qual){
   const c = CONTEUDO[estadoAtual]; if (!c) return "";
   if (qual === "instrucao") return c.principal + " " + c.permissao;
-  return [c.destaque, ...c.estado, ...c.pedido, c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : "")].join(" ");
+  const k = conteudoCartao(estadoAtual);
+  return [k.destaque, ...k.estado, ...k.pedido, k.contato ? "Pessoa de confiança: " + k.contato.nome : "", k.nota].join(" ");
 }
 function vozPortugues(){
   const vs = speechSynthesis.getVoices();
@@ -770,6 +853,30 @@ if (temVoz) {
   }));
   speechSynthesis.getVoices();
 }
+
+/* Formulário do plano de apoio: grava a cada mudança */
+(function(){
+  const f = document.getElementById("form-plano"), st = document.getElementById("plano-status");
+  function preencher(p){
+    f.reset();
+    if (!p) return;
+    f.querySelectorAll("[name=toque]").forEach(i => i.checked = i.value === p.toque);
+    f.querySelectorAll("[name=perguntas]").forEach(i => i.checked = i.value === p.perguntas);
+    f.querySelectorAll("[name=ajuda]").forEach(i => i.checked = (p.ajuda || []).includes(i.value));
+    f.frase.value = p.frase || ""; f.contatoNome.value = p.contatoNome || ""; f.contatoTel.value = p.contatoTel || "";
+  }
+  function coletar(){
+    return { toque: (f.querySelector("[name=toque]:checked") || {}).value || "nao",
+             perguntas: (f.querySelector("[name=perguntas]:checked") || {}).value || "nao",
+             ajuda: [...f.querySelectorAll("[name=ajuda]:checked")].map(i => i.value),
+             frase: f.frase.value.trim(), contatoNome: f.contatoNome.value.trim(), contatoTel: f.contatoTel.value.trim() };
+  }
+  preencher(lerPlano());
+  f.addEventListener("input", () => { st.textContent = gravarPlano(coletar()) ? "Salvo neste celular." : "Não foi possível salvar neste navegador."; });
+  document.getElementById("apagar-plano").addEventListener("click", () => {
+    gravarPlano(null); preencher(null); st.textContent = "Escolhas apagadas. Os cartões voltaram ao padrão.";
+  });
+})();
 
 /* Formulário de avaliação */
 if (LINK_FORMULARIO){
