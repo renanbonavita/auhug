@@ -21,7 +21,8 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
   "audience": { "@type": "PeopleAudience", "audienceType": "Pessoas autistas, familiares e profissionais" },
   "accessibilityFeature": ["pictogramas", "leitura em voz alta", "alto contraste", "funciona sem internet"],
-  "creator": { "@type": "Person", "name": "Renan Peppe Bonavita" }
+  "creator": { "@type": "Person", "name": "Renan Peppe Bonavita" },
+  "sameAs": ["https://www.instagram.com/auhug.br/"]
 }
 </script>
 <meta name="theme-color" content="#1f2329">
@@ -262,6 +263,9 @@
   .secao[open] summary::after{content:"−"}
   .secao > :not(summary){margin-bottom:12px}
   .secao[open]{padding-bottom:10px}
+  .quem-fez p+p{margin-top:12px}
+  .assinatura{color:var(--acento);font-weight:600}
+  .link-ig{display:inline-flex;align-items:center;gap:8px;color:var(--suave);text-decoration:underline}
   .faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
   .faq h3:first-child{margin-top:4px}
   .faq p{color:var(--suave);margin-top:4px}
@@ -405,6 +409,21 @@
       <label class="opcao"><input type="checkbox" id="voz-auto"><span>Ler a instrução em voz alta automaticamente ao tocar num botão</span></label>
     </details>
 
+    <details class="secao" id="sobre-quem-fez">
+      <summary><h2>Quem fez</h2></summary>
+      <div class="quem-fez">
+        <p>Sou o Renan, sou autista, e o AuHug nasceu de uma necessidade minha.</p>
+        <p>Já passei por todos os tipos de crise que estão no app. "Tudo está forte demais" costuma acontecer em lugares e eventos com muita gente. "Estou explodindo por dentro" muitas vezes vem de um pensamento repetitivo ou de um hiperfoco que esgota a minha mente até o meltdown. "Não consigo me mexer nem falar" aparece quando há uma transição sensorial grande, como sair de um lugar silencioso para um lugar barulhento: eu travo e fico sem fala por um tempo. E "Não consigo começar nada" está muito ligado ao trabalho e à exaustão: fico tão esgotado que não consigo terminar uma tarefa nem pensar no que fazer, e chego a esquecer de beber água ou de ir ao banheiro.</p>
+        <p>Nesses momentos, entro em disfunção executiva. Às vezes fico confuso e não sei o que fazer; outras vezes até sei, mas não consigo agir. O que mais me ajuda é uma ação escrita, clara e direta: ela me dá o primeiro passo para sair daquele estado e começar a me recuperar.</p>
+        <p>Procurei ferramentas para isso. Elas existem, mas costumam ser completas demais, cheias de opções, e escolher é justamente o que fica mais difícil numa crise. Por isso o AuHug é o mais objetivo possível: feito para ser usado nos piores momentos. E, como cada pessoa funciona de um jeito, as instruções precisam ser universais e seguras.</p>
+        <p>As crises também costumam vir com a incompreensão de quem está por perto, o que muitas vezes piora tudo. E, com o mutismo, fica difícil explicar o que está acontecendo. Por isso cada situação tem um cartão para mostrar às pessoas ao redor.</p>
+        <p>Conversando com outras pessoas autistas, entendi que as imagens e o áudio eram importantes: nem todo mundo assimila um texto de imediato. E, com o uso, a pessoa passa a associar a imagem ao texto, não precisa mais ler e consegue tocar no botão mais rápido.</p>
+        <p>O AuHug existe porque pessoas autistas se ajudaram a construí-lo, e é isso que quero levar adiante: neurodivergentes apoiando neurodivergentes, compartilhando o que funciona para cada um. Se o AuHug te ajudou, ou se algo não funcionou para você, me conte. A sua experiência pode ajudar a próxima pessoa.</p>
+        <p class="assinatura">Renan Peppe Bonavita</p>
+        <p><a class="link-ig" href="https://www.instagram.com/auhug.br/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@auhug.br no Instagram</span></a></p>
+      </div>
+    </details>
+
     <details class="secao" id="sobre-avaliar" hidden>
       <summary><h2>Conte como foi</h2></summary>
       <p>Se você usou o AuHug, conte como foi: o que ajudou, o que atrapalhou e o que faltou. Pode ser bem curto, quando você estiver bem.</p>
@@ -412,6 +431,7 @@
         <a class="botao-zap" id="link-formulario" href="#" target="_blank" rel="noopener" hidden>Responder ao formulário (1 minuto)</a>
         <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener" hidden>Mandar mensagem no WhatsApp</a>
       </div>
+      <p style="margin-top:14px"><a class="link-ig" href="https://www.instagram.com/auhug.br/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@auhug.br no Instagram</span></a></p>
     </details>
 
     <details class="secao" id="bloco-pix" hidden>
@@ -443,7 +463,7 @@
         <h3>O AuHug substitui atendimento profissional?</h3>
         <p>Não. O AuHug ajuda na hora da crise, mas não é tratamento nem serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV).</p>
         <h3>Quem fez o AuHug?</h3>
-        <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e está sendo melhorado junto com a comunidade autista.</p>
+        <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e está sendo melhorado junto com a comunidade autista. A história está em <a href="#sobre/quem-fez">Quem fez</a>.</p>
         <h3>Como posso dar sugestões?</h3>
         <p>Em &quot;Conte como foi&quot;, aqui na página Sobre, há um formulário de 1 minuto. Toda sugestão é lida.</p>
       </div>
@@ -576,7 +596,7 @@ function rota(){
     mostrar(tipo);
   } else if (tipo === "sobre"){
     mostrar("sobre");
-    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar" }[chave];
+    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar", "quem-fez": "sobre-quem-fez" }[chave];
     if (alvo) { const d = document.getElementById(alvo); d.open = true; d.scrollIntoView(); }
   } else {
     mostrar("inicio");

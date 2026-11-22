@@ -26,6 +26,7 @@ Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cart�
 ## Informações úteis
 
 - Gratuito, sem anúncios, sem cadastro.
-- Criado por Renan Peppe Bonavita, uma pessoa autista. Versão beta, desenvolvida com a comunidade autista.
+- Criado por Renan Peppe Bonavita, uma pessoa autista, a partir das próprias crises: em momentos de disfunção executiva, uma instrução escrita, clara e direta ajuda a agir. Versão beta, desenvolvida com a comunidade autista.
+- Instagram: https://www.instagram.com/auhug.br/
 - Não é um serviço de emergência. No Brasil: 192 (SAMU) em risco de vida; 188 (CVV) para apoio emocional, gratuito e 24h.
 - Pictogramas: Sergio Palao, ARASAAC (arasaac.org), licença CC BY-NC-SA.
