@@ -546,7 +546,8 @@
 
     <details class="secao">
       <summary><h2>Créditos</h2></summary>
-      <p>Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha).</p>
+      <p>Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). Alguns pictogramas são adaptações de pictogramas ARASAAC, sob a mesma licença.</p>
+      <p>Os desenhos de "Não consigo me mexer nem falar" e "Não consigo começar, mudar ou terminar" são desenhos próprios do AuHug.</p>
     </details>
   </div>
 </section>
@@ -899,7 +900,7 @@ function montarImpressao(){
     const ped = el("div","imp-pedido"); cc.pedido.forEach(f => ped.appendChild(el("p","imp-frase",f))); out.appendChild(ped);
     if (cc.contato) out.appendChild(el("p","imp-contato","Pessoa de confiança: " + [cc.contato.nome, cc.contato.telTexto || cc.contato.tel].filter(Boolean).join(" · ")));
     if (cc.nota) out.appendChild(el("p","imp-nota",cc.nota));
-    folha.append(sit, mim, out, el("p","imp-rodape","Cartão do AuHug · auhug.com.br · Pictogramas: Sergio Palao, ARASAAC (CC BY-NC-SA)"));
+    folha.append(sit, mim, out, el("p","imp-rodape","Cartão do AuHug · auhug.com.br · Pictogramas: ARASAAC, Sergio Palao (CC BY-NC-SA), e desenhos próprios do AuHug"));
     area.appendChild(folha);
   });
   return area;
