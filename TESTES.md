@@ -40,7 +40,7 @@ Para **cada** botão: toque nele, leia a instrução, toque em "Mostrar cartão 
 | Tudo está forte demais | "Afaste-se do barulho." | [ ] | [ ] sim |
 | Estou explodindo por dentro | "Vá para um canto quieto." | [ ] | [ ] sim |
 | Não consigo me mexer nem falar | "Fique onde está." | [ ] | [ ] sim |
-| Não consigo começar nada | "Beba um gole de água." | [ ] | [ ] **não** deve aparecer |
+| Não consigo começar, mudar ou terminar | "Beba um gole de água." | [ ] | [ ] **não** deve aparecer |
 
 - [ ] Na tela de instrução, o botão "Mostrar cartão para alguém" aparece **sem rolar**, tanto no navegador (com a barra de endereço) quanto no app instalado.
 - [ ] O cartão inteiro cabe na tela, sem rolar (inclusive o de "explodindo", que é o mais longo).

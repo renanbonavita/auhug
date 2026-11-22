@@ -11,7 +11,7 @@ A tela inicial tem quatro botões, cada um com um pictograma (ARASAAC) e um alto
 - **Tudo está forte demais**: sobrecarga sensorial. Instrução: "Afaste-se do barulho."
 - **Estou explodindo por dentro**: meltdown. Instrução: "Vá para um canto quieto."
 - **Não consigo me mexer nem falar**: shutdown. Instrução: "Fique onde está."
-- **Não consigo começar nada**: inércia autista. Instrução: "Beba um gole de água."
+- **Não consigo começar, mudar ou terminar**: inércia autista (dificuldade de começar, parar ou trocar de tarefa). Instrução: "Beba um gole de água."
 
 Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cartão claro e legível a um braço de distância, explicando a quem está por perto o que está acontecendo e como ajudar (por exemplo: "Sou autista. Estou em sobrecarga e não consigo falar. Fique por perto, em silêncio. Não toque em mim."). O cartão pode ser lido em voz alta pelo celular.
 
@@ -20,7 +20,7 @@ Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cart�
 - [Como ajudar uma pessoa autista em crise](https://auhug.com.br/artigos/como-ajudar-autista-em-crise/)
 - [Meltdown e shutdown: qual a diferença](https://auhug.com.br/artigos/meltdown-e-shutdown/)
 - [Sobrecarga sensorial: o que é e o que fazer](https://auhug.com.br/artigos/sobrecarga-sensorial/)
-- [Inércia autista: quando não dá para começar](https://auhug.com.br/artigos/inercia-autista/)
+- [Inércia autista: quando é difícil começar, parar ou mudar](https://auhug.com.br/artigos/inercia-autista/)
 - [Cartões do AuHug para imprimir (PDF, A4)](https://auhug.com.br/cartoes/cartoes-auhug-a4.pdf)
 
 ## Informações úteis

@@ -167,7 +167,7 @@
   /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
      Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
   :root{--fixo:217px;--aviso:0px;--moldura:26px}
-  body.com-aviso{--aviso:92px}
+  body.com-aviso{--aviso:0px}
   .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
     display:block;width:100%;text-align:left;
@@ -193,6 +193,7 @@
   .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
   .rodape p+p{margin-top:10px}
   .rodape a{color:var(--suave)}
+  .links-rodape a{display:inline-block;padding:4px 1px}
 
   .aviso-instalar{
     background:transparent;border:1px dashed var(--borda);border-radius:14px;
@@ -283,6 +284,31 @@
   button.botao-zap{background:none;font:inherit;cursor:pointer}
   .cartao-corpo .contato{margin-top:18px;padding:12px 14px;border:2px solid var(--contorno-cartao);border-radius:14px;font-size:1.15em}
   .cartao-corpo .contato a{color:var(--cartao-texto);font-weight:700;white-space:nowrap}
+  /* ---------- Impressão do cartão personalizado (A4, uma página por situação) ---------- */
+  #impressao{display:none}
+  @media print{
+    @page{size:A4;margin:0}
+    html,body{background:#fff!important;height:auto}
+    body > *:not(#impressao){display:none!important}
+    #impressao{display:block;color:#22262c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+    #impressao *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .imp-folha{width:210mm;height:297mm;display:flex;flex-direction:column;page-break-after:always;break-after:page;position:relative;overflow:hidden;background:#fff}
+    .imp-rot{font-size:10pt;font-weight:700;letter-spacing:.12em;color:#5a5650;margin:0 0 4mm}
+    .imp-sit,.imp-acao{display:flex;gap:6mm;align-items:center}
+    .imp-sit{padding:12mm 16mm 6mm}
+    .imp-mim{padding:6mm 16mm 7mm;border-top:.3mm solid #e2dccf;border-bottom:.8mm dashed #b9b1a3}
+    .imp-folha img{width:27mm;height:27mm;border:.6mm solid #cfc7b8;border-radius:4mm;padding:1.5mm;background:#ece5d8}
+    .imp-grande{font-size:21pt;font-weight:800;line-height:1.15;margin:0}
+    .imp-perm{font-size:13pt;color:#5a5650;margin:1.5mm 0 0}
+    .imp-outro{flex:1;padding:7mm 16mm 16mm;background:#ece5d8}
+    .imp-destaque{font-size:26pt;font-weight:800;margin:0 0 4mm}
+    .imp-frase{font-size:16pt;line-height:1.28;font-weight:600;margin:0 0 2.5mm}
+    .imp-pedido{margin-top:5mm;padding-top:5mm;border-top:.8mm solid #cfc7b8}
+    .imp-pedido .imp-frase{font-weight:800}
+    .imp-contato{margin-top:5mm;padding:3mm 4mm;border:.5mm solid #898379;border-radius:3mm;font-size:14pt}
+    .imp-nota{margin-top:5mm;padding-top:3mm;border-top:.3mm solid #cfc7b8;font-size:11pt;color:#5a5650}
+    .imp-rodape{position:absolute;left:16mm;right:16mm;bottom:7mm;font-size:8.5pt;color:#5a5650;margin:0}
+  }
   .faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
   .faq h3:first-child{margin-top:4px}
   .faq p{color:var(--suave);margin-top:4px}
@@ -307,12 +333,15 @@
     .marca{margin-bottom:8px}
     .marca{display:none}
     :root{--fixo:132px;--moldura:22px}
-    body.com-aviso{--aviso:72px}
+    body.com-aviso{--aviso:0px}
     .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
     .aviso-instalar{padding:6px 10px;font-size:.85rem;margin-bottom:8px;gap:8px}
     .aviso-instalar button{font-size:.85rem;padding:4px}
     .simbolo img{padding:4px;border-radius:12px}
     body.com-voz .estado{padding-right:58px}
+    body.com-voz .simbolo{max-width:72px}
+    .links-rodape{font-size:.85rem}
+    .logo-rodape{width:20px;height:20px;margin-right:4px}
     .falar-estado{width:44px;height:44px;right:7px}
     .lista{gap:8px}
     .rodape{margin-top:12px;font-size:.88rem}
@@ -338,21 +367,20 @@
     <div class="linha-estado"><button class="estado" type="button" data-estado="forte"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-forte.png" alt=""></span><span>Tudo está forte demais</span></button><button class="falar-estado" type="button" data-falar="forte" aria-label="Ouvir: Tudo está forte demais" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
     <div class="linha-estado"><button class="estado" type="button" data-estado="explodindo"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-explodindo.png" alt=""></span><span>Estou explodindo por dentro</span></button><button class="falar-estado" type="button" data-falar="explodindo" aria-label="Ouvir: Estou explodindo por dentro" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
     <div class="linha-estado"><button class="estado" type="button" data-estado="travado"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-travado.png" alt=""></span><span>Não consigo me mexer nem falar</span></button><button class="falar-estado" type="button" data-falar="travado" aria-label="Ouvir: Não consigo me mexer nem falar" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
-    <div class="linha-estado"><button class="estado" type="button" data-estado="comecar"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-comecar.png" alt=""></span><span>Não consigo começar nada</span></button><button class="falar-estado" type="button" data-falar="comecar" aria-label="Ouvir: Não consigo começar nada" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
+    <div class="linha-estado"><button class="estado" type="button" data-estado="comecar"><span class="simbolo" aria-hidden="true"><img src="simbolos/arasaac-comecar.png" alt=""></span><span>Não consigo começar, mudar ou terminar</span></button><button class="falar-estado" type="button" data-falar="comecar" aria-label="Ouvir: Não consigo começar, mudar ou terminar" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg></button></div>
   </nav>
 
-  <div id="aviso-instalar" class="aviso-instalar" hidden style="margin:14px 0 0">
+  <footer class="rodape">
+    <p>Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
+    <p class="links-rodape"><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre</a> · <a href="#sobre/plano">Meu plano</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
+  </footer>
+  <div id="aviso-instalar" class="aviso-instalar" hidden style="margin:12px 0 0">
     <span>Instale na tela inicial enquanto está tudo bem.</span>
     <span>
       <button type="button" data-ir="sobre-instalar">Como</button>
       <button type="button" id="fechar-aviso" aria-label="Não mostrar de novo">Ocultar</button>
     </span>
   </div>
-
-  <footer class="rodape">
-    <p>Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
-    <p><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
-  </footer>
 </main>
 
 <!-- ===== INSTRUÇÃO PARA A PRÓPRIA PESSOA ===== -->
@@ -397,7 +425,7 @@
         <li><strong>Tudo está forte demais:</strong> sobrecarga sensorial (barulho, luz, movimento).</li>
         <li><strong>Estou explodindo por dentro:</strong> meltdown, quando a sobrecarga chega ao limite.</li>
         <li><strong>Não consigo me mexer nem falar:</strong> shutdown, quando o corpo trava e a fala some.</li>
-        <li><strong>Não consigo começar nada:</strong> inércia autista, a dificuldade de iniciar qualquer tarefa.</li>
+        <li><strong>Não consigo começar, mudar ou terminar:</strong> inércia autista, a dificuldade de começar, de parar ou de trocar de tarefa.</li>
       </ul>
     </details>
 
@@ -437,6 +465,7 @@
         </fieldset>
         <div class="botoes-relato">
           <a class="botao-zap" href="#cartao/explodindo">Ver meu cartão</a>
+          <button class="botao-zap" type="button" id="imprimir-plano">Imprimir meu cartão</button>
           <button class="botao-zap" type="button" id="apagar-plano">Apagar minhas escolhas</button>
         </div>
         <p id="plano-status" class="fraco" role="status" style="margin-top:8px"></p>
@@ -472,7 +501,7 @@
       <summary><h2>Quem fez</h2></summary>
       <div class="quem-fez">
         <p>Sou o Renan, sou autista, e o AuHug nasceu de uma necessidade minha.</p>
-        <p>Já passei por todos os tipos de crise que estão no app. "Tudo está forte demais" costuma acontecer em lugares e eventos com muita gente. "Estou explodindo por dentro" muitas vezes vem de um pensamento repetitivo ou de um hiperfoco que esgota a minha mente até o meltdown. "Não consigo me mexer nem falar" aparece quando há uma transição sensorial grande, como sair de um lugar silencioso para um lugar barulhento: eu travo e fico sem fala por um tempo. E "Não consigo começar nada" está muito ligado ao trabalho e à exaustão: fico tão esgotado que não consigo terminar uma tarefa nem pensar no que fazer, e chego a esquecer de beber água ou de ir ao banheiro.</p>
+        <p>Já passei por todos os tipos de crise que estão no app. "Tudo está forte demais" costuma acontecer em lugares e eventos com muita gente. "Estou explodindo por dentro" muitas vezes vem de um pensamento repetitivo ou de um hiperfoco que esgota a minha mente até o meltdown. "Não consigo me mexer nem falar" aparece quando há uma transição sensorial grande, como sair de um lugar silencioso para um lugar barulhento: eu travo e fico sem fala por um tempo. E "Não consigo começar, mudar ou terminar" está muito ligado ao trabalho e à exaustão: fico tão esgotado que não consigo terminar uma tarefa nem pensar no que fazer, e chego a esquecer de beber água ou de ir ao banheiro.</p>
         <p>Nesses momentos, entro em disfunção executiva. Às vezes fico confuso e não sei o que fazer; outras vezes até sei, mas não consigo agir. O que mais me ajuda é uma ação escrita, clara e direta: ela me dá o primeiro passo para sair daquele estado e começar a me recuperar.</p>
         <p>Procurei ferramentas para isso. Elas existem, mas costumam ser completas demais, cheias de opções, e escolher é justamente o que fica mais difícil numa crise. Por isso o AuHug é o mais objetivo possível: feito para ser usado nos piores momentos. E, como cada pessoa funciona de um jeito, as instruções precisam ser universais e seguras.</p>
         <p>As crises também costumam vir com a incompreensão de quem está por perto, o que muitas vezes piora tudo. E, com o mutismo, fica difícil explicar o que está acontecendo. Por isso cada situação tem um cartão para mostrar às pessoas ao redor.</p>
@@ -584,9 +613,10 @@ const CONTEUDO = {
     principal: "Beba um gole de água.",
     permissao: "Uma coisa só. Sem pressa.",
     destaque: "Sou autista.",
-    estado: ["Estou com dificuldade de iniciar qualquer coisa."],
-    pedido: ["Me ajude assim: diga uma tarefa simples por vez.",
-             "Espere eu terminar antes da próxima.", "Sem pressa."],
+    estado: ["Estou com dificuldade de começar, mudar ou terminar uma tarefa."],
+    pedido: ["Me ajude assim: diga um passo simples por vez.",
+             "Avise antes de mudar de atividade.",
+             "Espere eu terminar antes do próximo.", "Sem pressa."],
     notaSeguranca: false
   }
 };
@@ -701,7 +731,7 @@ function rota(){
     if (tipo === "cartao") ajustarCartao();
   } else if (tipo === "sobre"){
     mostrar("sobre");
-    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar", "quem-fez": "sobre-quem-fez" }[chave];
+    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar", "quem-fez": "sobre-quem-fez", plano: "sobre-plano" }[chave];
     if (alvo) { const d = document.getElementById(alvo); d.open = true; d.scrollIntoView(); }
   } else {
     mostrar("inicio");
@@ -878,6 +908,32 @@ if (temVoz) {
   });
 })();
 
+/* Imprimir meu cartão: monta as 4 páginas com o plano aplicado e abre a impressão do celular */
+function montarImpressao(){
+  const area = document.getElementById("impressao"); area.replaceChildren();
+  document.querySelectorAll("[data-estado]").forEach(b => {
+    const k = b.dataset.estado, c = CONTEUDO[k], cc = conteudoCartao(k);
+    const folha = el("section","imp-folha");
+    const sit = el("div","imp-sit"); const i1 = document.createElement("img"); i1.src = "simbolos/arasaac-" + k + ".png"; i1.alt = "";
+    const s1 = el("div"); s1.append(el("p","imp-rot","QUANDO"), el("p","imp-grande", b.querySelector("span:last-child").textContent)); sit.append(i1, s1);
+    const mim = el("div","imp-mim"); mim.appendChild(el("p","imp-rot","PARA MIM"));
+    const ac = el("div","imp-acao"); const i2 = document.createElement("img"); i2.src = "simbolos/acao-" + k + ".png"; i2.alt = "";
+    const s2 = el("div"); s2.append(el("p","imp-grande",c.principal), el("p","imp-perm",c.permissao)); ac.append(i2, s2); mim.appendChild(ac);
+    const out = el("div","imp-outro"); out.appendChild(el("p","imp-rot","PARA QUEM ESTÁ POR PERTO"));
+    out.appendChild(el("p","imp-destaque",cc.destaque)); cc.estado.forEach(f => out.appendChild(el("p","imp-frase",f)));
+    const ped = el("div","imp-pedido"); cc.pedido.forEach(f => ped.appendChild(el("p","imp-frase",f))); out.appendChild(ped);
+    if (cc.contato) out.appendChild(el("p","imp-contato","Pessoa de confiança: " + [cc.contato.nome, cc.contato.telTexto || cc.contato.tel].filter(Boolean).join(" · ")));
+    if (cc.nota) out.appendChild(el("p","imp-nota",cc.nota));
+    folha.append(sit, mim, out, el("p","imp-rodape","Cartão do AuHug · auhug.com.br · Pictogramas: Sergio Palao, ARASAAC (CC BY-NC-SA)"));
+    area.appendChild(folha);
+  });
+  return area;
+}
+document.getElementById("imprimir-plano").addEventListener("click", () => {
+  const imgs = [...montarImpressao().querySelectorAll("img")];
+  Promise.all(imgs.map(i => i.complete ? null : new Promise(r => { i.onload = i.onerror = r; }))).then(() => window.print());
+});
+
 /* Formulário de avaliação */
 if (LINK_FORMULARIO){
   const a = document.getElementById("link-formulario"); a.href = LINK_FORMULARIO; a.hidden = false;
@@ -896,5 +952,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<!-- Área de impressão do cartão personalizado (só aparece ao imprimir) -->
+<div id="impressao" aria-hidden="true"></div>
 </body>
 </html>
