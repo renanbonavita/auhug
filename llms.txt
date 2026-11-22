@@ -15,6 +15,26 @@ A tela inicial tem quatro botões, cada um com um pictograma (ARASAAC) e um alto
 
 Cada instrução tem um botão "Mostrar cartão para alguém", que abre um cartão claro e legível a um braço de distância, explicando a quem está por perto o que está acontecendo e como ajudar (por exemplo: "Sou autista. Estou em sobrecarga e não consigo falar. Fique por perto, em silêncio. Não toque em mim."). O cartão pode ser lido em voz alta pelo celular.
 
+## Texto completo de cada situação
+
+(Estes textos aparecem no app depois que a pessoa toca no botão.)
+
+### Tudo está forte demais
+- Instrução para a pessoa autista: "Afaste-se do barulho. Você pode sair sem explicar."
+- Cartão para quem está por perto: "Sou autista. Barulho, luz e movimento estão fortes demais para mim. Preciso de um lugar mais calmo por alguns minutos. Fale pouco e devagar. Não toque em mim. Esta é uma reação neurológica do autismo. Não estou sob efeito de álcool ou drogas."
+
+### Estou explodindo por dentro
+- Instrução para a pessoa autista: "Vá para um canto quieto. Nada precisa ser resolvido."
+- Cartão para quem está por perto: "Sou autista. Estou em sobrecarga e não consigo falar. Isso vai passar. Fique por perto, em silêncio. Peça para as pessoas se afastarem. Não toque em mim. Não faça perguntas. Esta é uma reação neurológica do autismo. Não estou sob efeito de álcool ou drogas."
+
+### Não consigo me mexer nem falar
+- Instrução para a pessoa autista: "Fique onde está. Isso vai passar."
+- Cartão para quem está por perto: "Sou autista. Na sobrecarga, meu corpo pode travar e posso não conseguir falar ou me mexer. Posso ouvir, mesmo sem conseguir responder. Preciso de tempo, silêncio e um lugar tranquilo. Não faça perguntas. Não toque em mim. Esta é uma reação que reconheço em mim. Se parecer nova, diferente do meu padrão, ou um lado do meu rosto ou corpo estiver fraco, ligue 192 (SAMU)."
+
+### Não consigo começar, mudar ou terminar
+- Instrução para a pessoa autista: "Beba um gole de água. Uma coisa só. Sem pressa."
+- Cartão para quem está por perto: "Sou autista. Estou com dificuldade de começar, mudar ou terminar uma tarefa. Me ajude assim: diga um passo simples por vez. Avise antes de mudar de atividade. Espere eu terminar antes do próximo. Sem pressa."
+
 ## Artigos
 
 - [Como ajudar uma pessoa autista em crise](https://auhug.com.br/artigos/como-ajudar-autista-em-crise/)
