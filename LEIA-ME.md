@@ -83,4 +83,4 @@ Decidido: o cartão continua genérico, sem dados pessoais, para ser simples de 
 
 ## Créditos
 
-Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). Os pictogramas "canto quieto" e "fique onde está" são adaptações de pictogramas ARASAAC (mesma licença). Os desenhos de "Não consigo me mexer nem falar" e "Não consigo começar, mudar ou terminar" são desenhos próprios do AuHug.
+Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). Os pictogramas "canto quieto" e "fique onde está" são adaptações de pictogramas ARASAAC (mesma licença). Os desenhos de "Estou explodindo por dentro", "Não consigo me mexer nem falar" e "Não consigo começar, mudar ou terminar" são desenhos próprios do AuHug.
