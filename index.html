@@ -7,6 +7,7 @@
 <meta name="description" content="Ferramenta gratuita que ajuda pessoas autistas a comunicar o que precisam em momentos de sobrecarga, meltdown ou shutdown, mesmo sem conseguir falar: cartões para quem está por perto, pictogramas, leitura em voz alta e um primeiro passo simples. Funciona sem internet.">
 <link rel="canonical" href="https://auhug.com.br/">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">
 {
@@ -124,247 +125,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AuHug">
-<style>
-  /* Paleta de baixa estimulação: sem preto puro, sem branco puro, sem cores vivas. */
-  :root{
-    --fundo:#1f2329;
-    --botao:#2a2f37;
-    --borda:#3a404a;
-    --texto:#e6e0d4;
-    --suave:#a8a296;
-    --acento:#c4aa8c;
-    --cartao-fundo:#ece5d8;
-    --cartao-texto:#22262c;
-    --cartao-suave:#5a5650;
-    /* Contorno de botões: contraste mínimo de 3:1 (WCAG 1.4.11). */
-    --contorno:#6d6d6d;
-    --contorno-cartao:#898379;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    background:var(--fundo);color:var(--texto);
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-    line-height:1.4;
-    -webkit-tap-highlight-color:transparent;
-    -webkit-text-size-adjust:100%;
-  }
-  /* Sem animações ou transições em lugar nenhum. */
-  *,*::before,*::after{animation:none!important;transition:none!important}
-
-  .tela{display:none;min-height:100vh;min-height:100dvh;/* dvh por último: altura visível com a barra do navegador */
-    padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));
-    flex-direction:column;max-width:560px;margin:0 auto}
-  .tela.ativa{display:flex}
-
-  button,a.botao{font:inherit;color:inherit;cursor:pointer}
-  /* Foco visível para quem navega pelo teclado (WCAG 2.2): contorno de 3px em ouro, com margem. */
-  :focus{outline:none}
-  :focus-visible{outline:3px solid #e0b440;outline-offset:3px;border-radius:6px}
-  #cartao :focus-visible{outline-color:#22262c}
-  a{color:var(--acento)}
-
-  /* ---------- Início ---------- */
-  .marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-  .logo-rodape{width:24px;height:24px;border-radius:6px;vertical-align:middle;margin:-3px 6px 0 0}
-  .logo-sobre{width:64px;height:64px;border-radius:14px;margin-bottom:10px}
-  .beta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--borda);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
-  /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
-     Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
-  :root{--fixo:223px;--aviso:0px;--moldura:26px}
-  .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
-  .estado{
-    display:block;width:100%;text-align:left;
-    background:var(--botao);border:2px solid var(--contorno);border-radius:18px;
-    padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
-  }
-  .estado:active{border-color:var(--acento)}
-  /* Alto-falante de cada botão: botão separado, preso à direita, só aparece se o celular tiver voz. */
-  .linha-estado{position:relative}
-  body.com-voz .estado{padding-right:64px;gap:14px}
-  .falar-estado{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:48px;height:48px;
-    display:flex;align-items:center;justify-content:center;background:var(--fundo);
-    border:2px solid var(--contorno);border-radius:14px;color:var(--suave)}
-  .falar-estado[hidden]{display:none}
-  .falar-estado[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
-  /* Símbolos (pictogramas ARASAAC) nos botões */
-  .estado{display:flex;align-items:center;gap:16px;padding:10px 16px 10px 10px;min-height:0}
-  .simbolo{flex:0 0 auto;display:flex;
-    width:clamp(56px,calc((100vh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
-    width:clamp(56px,calc((100dvh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
-    aspect-ratio:1}
-  .simbolo img{width:100%;height:100%;border-radius:14px;background:var(--cartao-fundo);padding:5px}
-  .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
-  .rodape p+p{margin-top:8px}
-  .rodape .emergencia{margin-top:16px}
-  .rodape a{color:var(--suave)}
-  .links-rodape{font-size:.9rem}
-  .links-rodape .it{white-space:nowrap}
-  .links-rodape .it[hidden]{display:none}
-  @media (max-width:400px){ .links-rodape{font-size:.86rem} }
-
-  .links-rodape a{display:inline-block;padding:4px 1px;white-space:nowrap}
-  .links-rodape .logo-rodape{width:22px;height:22px;margin-right:5px}
-  .emergencia a{display:inline-block;padding:4px 2px;margin:-4px 0}
-  .emergencia .grupo{white-space:nowrap}
-  /* 192 e 188: área de toque de 44px de altura (margem negativa para não empurrar o layout) */
-  .emergencia a{padding:13px 6px;margin:-13px -3px;position:relative}
-  @media (max-width:360px){ .emergencia{font-size:.84rem} }
-
-
-  /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
-  .barra{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
-  .ouvir{display:inline-flex;align-items:center;gap:8px;background:none;border:2px solid var(--contorno);
-    border-radius:12px;padding:12px 16px;font-size:1.05rem;color:var(--suave)}
-  .ouvir[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
-  .ouvir[hidden]{display:none}
-  .voltar,.ouvir{white-space:nowrap}
-  @media (max-width:360px){
-    .voltar,.ouvir{padding:9px 11px;font-size:.95rem;gap:6px}
-    .ouvir svg{width:18px;height:18px}
-  }
-  #cartao .ouvir{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
-  #cartao .ouvir[aria-pressed="true"]{border-color:var(--cartao-texto);color:var(--cartao-texto)}
-  .opcao{display:flex;gap:12px;align-items:flex-start;margin-top:10px;font-size:1.05rem}
-  .opcao input{width:24px;height:24px;margin-top:2px;accent-color:var(--acento);flex:0 0 auto}
-
-  /* ---------- Tela de instrução ---------- */
-  .voltar{
-    align-self:flex-start;background:none;border:2px solid var(--contorno);
-    border-radius:12px;padding:12px 18px;font-size:1.05rem;color:var(--suave)
-  }
-  .instrucao{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 4px}
-  .instrucao h1{font-size:2.4rem;line-height:1.15;font-weight:700}
-  /* Pictograma da ação, acima da instrução; encolhe em telas baixas. */
-  .simbolo-instrucao{width:clamp(96px,calc(100vh - 470px),168px);width:clamp(96px,calc(100dvh - 470px),168px);
-    aspect-ratio:1;border-radius:20px;background:var(--cartao-fundo);padding:8px;margin-bottom:22px}
-  .instrucao p{font-size:1.35rem;color:var(--suave);margin-top:22px}
-  .mostrar{
-    width:100%;background:var(--botao);border:2px solid var(--acento);border-radius:18px;
-    padding:24px 20px;font-size:1.3rem;font-weight:600;min-height:84px;
-    /* Fica preso ao rodapé visível: nunca exige rolar, mesmo com a barra do navegador. */
-    position:sticky;bottom:max(12px,env(safe-area-inset-bottom))
-  }
-
-  /* ---------- Cartão para terceiros ---------- */
-  #cartao{background:var(--cartao-fundo);color:var(--cartao-texto);max-width:none}
-  #cartao .voltar{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
-  .cartao-corpo{flex:1;display:flex;flex-direction:column;justify-content:center;
-    max-width:560px;width:100%;margin:0 auto;padding:20px 4px}
-  .cartao-corpo{font-size:16px}
-  .cartao-corpo .frase{font-size:1.6em;line-height:1.3;font-weight:600}
-  .cartao-corpo .frase+.frase{margin-top:10px}
-  .cartao-corpo .destaque{font-size:2em;font-weight:800;margin-bottom:14px}
-  .cartao-corpo .pedido{margin-top:22px;padding-top:18px;border-top:2px solid #cfc7b8}
-  .cartao-corpo .pedido .frase{font-weight:700}
-  .cartao-corpo .nota{margin-top:26px;padding-top:14px;border-top:1px solid #cfc7b8;
-    font-size:1.05em;color:var(--cartao-suave)}
-  #cartao .topo{max-width:560px;width:100%;margin:0 auto}
-
-  /* ---------- Sobre ---------- */
-  .texto{padding:24px 2px;font-size:1.08rem}
-  .texto h1{font-size:1.6rem;margin-bottom:14px}
-  .texto h2{font-size:1.2rem;margin:26px 0 10px;color:var(--acento)}
-  .texto p,.texto li{color:var(--texto)}
-  .texto p+p{margin-top:10px}
-  .texto ol,.texto ul{padding-left:22px}
-  .texto li+li{margin-top:6px}
-  .texto .fraco{color:var(--suave)}
-  /* Seções recolhidas: o título é o botão; abre e fecha sem animação. */
-  .dica-secoes{margin:24px 0 10px;font-size:.95rem}
-  .secao{border-top:1px solid var(--borda)}
-  .secao:last-of-type{border-bottom:1px solid var(--borda)}
-  .secao[hidden]{display:none}
-  .secao summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:10px 2px}
-  .secao summary::-webkit-details-marker{display:none}
-  .secao summary h2{margin:0;font-size:1.2rem}
-  .secao summary::after{content:"+";font-size:1.8rem;line-height:1;color:var(--suave);flex:0 0 auto;width:28px;text-align:center}
-  .secao[open] summary::after{content:"−"}
-  .secao > :not(summary){margin-bottom:12px}
-  .secao[open]{padding-bottom:10px}
-  .quem-fez p+p{margin-top:12px}
-  .assinatura{color:var(--acento);font-weight:600}
-  .link-ig{display:inline-flex;align-items:center;gap:8px;color:var(--suave);text-decoration:underline}
-  .plano fieldset{border:none;margin-top:16px}
-  .plano legend{font-weight:700;color:var(--texto);margin-bottom:4px}
-  .plano .opcao{margin-top:8px}
-  .rotulo-campo{display:block;margin-top:10px;font-size:.95rem;color:var(--texto)}
-  .campo{display:block;width:100%;margin-top:6px;padding:12px 14px;font:inherit;color:var(--texto);
-    background:var(--botao);border:2px solid var(--contorno);border-radius:12px}
-  button.botao-zap{background:none;font:inherit;cursor:pointer}
-  .cartao-corpo .contato{margin-top:18px;padding:12px 14px;border:2px solid var(--contorno-cartao);border-radius:14px;font-size:1.15em}
-  .cartao-corpo .contato a{color:var(--cartao-texto);font-weight:700;white-space:nowrap}
-  /* ---------- Impressão do cartão personalizado (A4, uma página por situação) ---------- */
-  #impressao{display:none}
-  @media print{
-    @page{size:A4;margin:0}
-    html,body{background:#fff!important;height:auto}
-    body > *:not(#impressao){display:none!important}
-    #impressao{display:block;color:#22262c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-    #impressao *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .imp-folha{width:210mm;height:297mm;display:flex;flex-direction:column;page-break-after:always;break-after:page;position:relative;overflow:hidden;background:#fff}
-    .imp-rot{font-size:10pt;font-weight:700;letter-spacing:.12em;color:#5a5650;margin:0 0 4mm}
-    .imp-sit,.imp-acao{display:flex;gap:6mm;align-items:center}
-    .imp-sit{padding:12mm 16mm 6mm}
-    .imp-mim{padding:6mm 16mm 7mm;border-top:.3mm solid #e2dccf;border-bottom:.8mm dashed #b9b1a3}
-    .imp-folha img{width:27mm;height:27mm;border:.6mm solid #cfc7b8;border-radius:4mm;padding:1.5mm;background:#ece5d8}
-    .imp-grande{font-size:21pt;font-weight:800;line-height:1.15;margin:0}
-    .imp-perm{font-size:13pt;color:#5a5650;margin:1.5mm 0 0}
-    .imp-outro{flex:1;padding:7mm 16mm 16mm;background:#ece5d8}
-    .imp-destaque{font-size:26pt;font-weight:800;margin:0 0 4mm}
-    .imp-frase{font-size:16pt;line-height:1.28;font-weight:600;margin:0 0 2.5mm}
-    .imp-pedido{margin-top:5mm;padding-top:5mm;border-top:.8mm solid #cfc7b8}
-    .imp-pedido .imp-frase{font-weight:800}
-    .imp-contato{margin-top:5mm;padding:3mm 4mm;border:.5mm solid #898379;border-radius:3mm;font-size:14pt}
-    .imp-nota{margin-top:5mm;padding-top:3mm;border-top:.3mm solid #cfc7b8;font-size:11pt;color:#5a5650}
-    .imp-rodape{position:absolute;left:16mm;right:16mm;bottom:7mm;font-size:8.5pt;color:#5a5650;margin:0}
-  }
-  .faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
-  .faq h3:first-child{margin-top:4px}
-  .faq p{color:var(--suave);margin-top:4px}
-  .botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-  .botao-zap[hidden]{display:none}
-  .botao-zap{display:inline-block;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
-  .pix{margin-top:12px;background:var(--botao);border:2px solid var(--borda);border-radius:14px;padding:14px 16px}
-  .pix .chave{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;word-break:break-all;margin:6px 0 12px}
-  .pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
-
-  @media (min-height:760px){
-    .estado{font-size:1.55rem}
-  }
-  /* Celulares estreitos com alto-falante: fonte e símbolo um pouco menores, para o texto não quebrar demais. */
-  @media (max-width:400px){
-    body.com-voz .estado{font-size:1.18rem;line-height:1.22}
-    body.com-voz .simbolo{max-width:88px}
-  }
-  /* Celulares baixos (ex.: iPhone SE): tela inicial e cartão precisam caber sem rolar. */
-  @media (max-height:700px){
-    #inicio{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom))}
-    .marca{margin-bottom:8px}
-    .marca{display:none}
-    :root{--fixo:132px;--moldura:22px}
-      .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
-    .simbolo img{padding:4px;border-radius:12px}
-    body.com-voz .estado{padding-right:58px}
-    body.com-voz .simbolo{max-width:72px}
-    .links-rodape{font-size:.85rem}
-    .logo-rodape{width:20px;height:20px;margin-right:4px}
-    .falar-estado{width:44px;height:44px;right:7px}
-    .lista{gap:8px}
-    .rodape{margin-top:12px;font-size:.88rem}
-    .rodape p+p{margin-top:6px}
-    #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
-    #cartao .voltar,#cartao .ouvir{padding:8px 14px}
-    .cartao-corpo{padding:10px 4px}
-    .cartao-corpo .frase{font-size:1.4em;line-height:1.22}
-    .cartao-corpo .frase+.frase{margin-top:6px}
-    .cartao-corpo .destaque{font-size:1.75em;margin-bottom:8px}
-    .cartao-corpo .pedido{margin-top:14px;padding-top:12px}
-    .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98em}
-  }
-  /* Rodapé em telas estreitas (até 370px): links numa linha sempre que possível. */
-  @media (max-width:370px){ .rodape .links-rodape{font-size:.78rem} .rodape .links-rodape .logo-rodape{width:20px;height:20px;margin-right:3px} }
-</style>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
@@ -434,8 +195,8 @@
     <details class="secao" id="sobre-plano">
       <summary><h2>Personalize seu cartão</h2></summary>
       <p>Ajuste o que aparece nos seus cartões para quem está por perto. Faça isso num momento tranquilo. Suas escolhas ficam <strong>só neste celular</strong>.</p>
-      <p class="fraco" style="font-size:.95rem">Escolha só o essencial: quanto menos itens, mais fácil para a outra pessoa ler.</p>
-      <form id="form-plano" class="plano" onsubmit="return false">
+      <p class="u-texto-menor fraco">Escolha só o essencial: quanto menos itens, mais fácil para a outra pessoa ler.</p>
+      <form id="form-plano" class="plano">
         <fieldset>
           <legend>Toque</legend>
           <label class="opcao"><input type="radio" name="toque" value="nao" checked><span>Não toque em mim</span></label>
@@ -465,14 +226,14 @@
           <input class="campo" id="contato-nome" type="text" name="contatoNome" maxlength="40" placeholder="Ex.: Ana" autocomplete="off">
           <label class="rotulo-campo" for="contato-tel">Telefone com DDD</label>
           <input class="campo" id="contato-tel" type="tel" name="contatoTel" maxlength="20" placeholder="Ex.: (11) 91234-5678" autocomplete="off">
-          <p class="fraco" style="font-size:.92rem;margin-top:6px">Aparece no cartão com um botão para ligar.</p>
+          <p class="u-nota-campo fraco">Aparece no cartão com um botão para ligar.</p>
         </fieldset>
         <div class="botoes-relato">
           <a class="botao-zap" href="#cartao/explodindo">Ver meu cartão</a>
           <button class="botao-zap" type="button" id="imprimir-plano">Imprimir meu cartão</button>
           <button class="botao-zap" type="button" id="apagar-plano">Apagar minhas escolhas</button>
         </div>
-        <p id="plano-status" class="fraco" role="status" style="margin-top:8px"></p>
+        <p id="plano-status" class="u-mt8 fraco" role="status"></p>
       </form>
     </details>
 
@@ -486,13 +247,13 @@
         <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
         <li>Confirme. O ícone do AuHug aparece junto com seus apps.</li>
       </ol>
-      <p style="margin-top:14px"><strong>iPhone (Safari):</strong></p>
+      <p class="u-mt14"><strong>iPhone (Safari):</strong></p>
       <ol>
         <li>Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima).</li>
         <li>Role e toque em <strong>Adicionar à Tela de Início</strong>.</li>
         <li>Toque em <strong>Adicionar</strong>.</li>
       </ol>
-      <p class="fraco" style="margin-top:14px">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
+      <p class="u-mt14 fraco">Dica: coloque o ícone na primeira tela do celular e mostre o AuHug para as pessoas próximas de você.</p>
     </details>
 
     <details class="secao" id="bloco-voz" hidden>
@@ -523,7 +284,7 @@
         <a class="botao-zap" id="link-formulario" href="#" target="_blank" rel="noopener" hidden>Responder ao formulário (1 minuto)</a>
         <a class="botao-zap" id="link-relato" href="#" target="_blank" rel="noopener" hidden>Mandar mensagem no WhatsApp</a>
       </div>
-      <p style="margin-top:14px"><a class="link-ig" href="https://www.instagram.com/auhug.br/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@auhug.br no Instagram</span></a></p>
+      <p class="u-mt14"><a class="link-ig" href="https://www.instagram.com/auhug.br/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@auhug.br no Instagram</span></a></p>
     </details>
 
     <details class="secao" id="bloco-pix" hidden>
@@ -533,7 +294,7 @@
         <div class="fraco">Chave Pix</div>
         <div class="chave" id="pix-chave"></div>
         <button type="button" id="pix-copiar">Copiar chave Pix</button>
-        <span id="pix-ok" class="fraco" role="status" style="margin-left:10px"></span>
+        <span id="pix-ok" class="u-ml10 fraco" role="status"></span>
       </div>
     </details>
 
@@ -576,382 +337,7 @@
   </div>
 </section>
 
-<script>
-/* =============================================================
-   CONTEÚDO — edite os textos aqui.
-   - principal: instrução para a própria pessoa (até ~5 palavras)
-   - permissao: frase menor de acolhimento
-   - destaque: primeira linha do cartão
-   - estado: o que está acontecendo
-   - pedido: o que a outra pessoa deve fazer
-   - notaSeguranca: mostra a frase sobre álcool/drogas no fim do cartão
-   - nota: (opcional) frase própria no fim do cartão, no lugar da frase padrão
-   ============================================================= */
-const CONTEUDO = {
-  forte: {
-    principal: "Afaste-se do barulho.",
-    permissao: "Você pode sair sem explicar.",
-    destaque: "Sou autista.",
-    estado: ["Barulho, luz e movimento estão fortes demais para mim.",
-             "Preciso de um lugar mais calmo por alguns minutos."],
-    pedido: ["Fale pouco e devagar.", "Não toque em mim."],
-    notaSeguranca: true
-  },
-  explodindo: {
-    principal: "Vá para um canto quieto.",
-    permissao: "Nada precisa ser resolvido.",
-    destaque: "Sou autista.",
-    estado: ["Estou em sobrecarga e não consigo falar.", "Isso vai passar."],
-    pedido: ["Fique por perto, em silêncio.", "Peça para as pessoas se afastarem.",
-             "Não toque em mim.", "Não faça perguntas."],
-    notaSeguranca: true
-  },
-  travado: {
-    principal: "Fique onde está.",
-    permissao: "Isso vai passar.",
-    destaque: "Sou autista.",
-    estado: ["Na sobrecarga, meu corpo pode travar e posso não conseguir falar ou me mexer.",
-             "Posso ouvir, mesmo sem conseguir responder."],
-    pedido: ["Preciso de tempo, silêncio e um lugar tranquilo.", "Não faça perguntas.", "Não toque em mim."],
-    /* Nota própria: travar e perder a fala de repente também pode ser sinal de AVC. */
-    nota: "Esta é uma reação que reconheço em mim. Se parecer nova, diferente do meu padrão, ou um lado do meu rosto ou corpo estiver fraco, ligue 192 (SAMU)."
-  },
-  comecar: {
-    principal: "Beba um gole de água.",
-    permissao: "Uma coisa só. Sem pressa.",
-    destaque: "Sou autista.",
-    estado: ["Estou com dificuldade de começar, mudar ou terminar uma tarefa."],
-    pedido: ["Me ajude assim: diga um passo simples por vez.",
-             "Avise antes de mudar de atividade.",
-             "Espere eu terminar antes do próximo.", "Sem pressa."],
-    notaSeguranca: false
-  }
-};
-
-const NOTA_SEGURANCA = "Esta é uma reação neurológica do autismo. Não estou sob efeito de álcool ou drogas.";
-
-/* WhatsApp para relatos (página Sobre): só números, com 55 e DDD, ex.: "5511999999999".
-   Deixe vazio para esconder o bloco "Conte como foi". */
-const WHATSAPP = "";
-const WHATSAPP_MENSAGEM = "Oi! Usei o AuHug e queria contar como foi: ";
-
-/* Link do formulário de avaliação (ex.: Google Forms). Deixe vazio para esconder. */
-const LINK_FORMULARIO = "https://forms.gle/9T5ycz3EdE6rd37m8";
-
-/* Pix para doações (página Sobre). Deixe CHAVE_PIX vazio para esconder. */
-const CHAVE_PIX = "9e6c357a-1e7a-4344-b6c7-91fcf739bc10";
-
-/* ============================================================= */
-
-const telas = ["inicio","instrucao","cartao","sobre"];
-let estadoAtual = null;
-let travaTela = null;
-
-function el(tag, classe, texto){
-  const e = document.createElement(tag);
-  if (classe) e.className = classe;
-  if (texto) e.textContent = texto;
-  return e;
-}
-
-let manterVoz = false;   /* true quando a fala começou no toque que abriu esta tela */
-function mostrar(id){
-  if (!manterVoz) pararVoz();
-  manterVoz = false;
-  telas.forEach(t => document.getElementById(t).classList.toggle("ativa", t === id));
-  window.scrollTo(0,0);
-  document.querySelector('meta[name="theme-color"]')
-    .setAttribute("content", id === "cartao" ? "#ece5d8" : "#1f2329");
-  if (id === "cartao") manterTelaLigada(); else liberarTela();
-}
-
-function renderInstrucao(chave){
-  const c = CONTEUDO[chave];
-  document.getElementById("instrucao-principal").textContent = c.principal;
-  document.getElementById("instrucao-permissao").textContent = c.permissao;
-  document.getElementById("instrucao-simbolo").src = "simbolos/acao-" + chave + ".png";
-}
-
-/* ---------- Personalize seu cartão (guardado só no celular) ---------- */
-const PLANO_TOQUE = { nao: "Não toque em mim.", ombro: "Se precisar, pode tocar no meu ombro, com calma.", abraco: "Um abraço firme me ajuda, se eu aceitar." };
-const PLANO_PERGUNTAS = { nao: "Não faça perguntas.", simnao: "Faça só perguntas de sim ou não; posso responder com um gesto." };
-const PLANO_AJUDA = { luz: "Diminua o barulho e a luz, se puder.", calmo: "Me ajude a ir para um lugar mais calmo.",
-  perto: "Fique por perto, em silêncio.", agua: "Me ofereça água.", fone: "Não tire meu fone nem o objeto que estou segurando." };
-function lerPlano(){ try { return JSON.parse(localStorage.getItem("auhug-plano") || "null"); } catch(e){ return null; } }
-function gravarPlano(p){ try { if (p) localStorage.setItem("auhug-plano", JSON.stringify(p)); else localStorage.removeItem("auhug-plano"); return true; } catch(e){ return false; } }
-
-function conteudoCartao(chave){
-  const c = CONTEUDO[chave], p = lerPlano();
-  const r = { destaque: c.destaque, estado: c.estado.slice(), pedido: c.pedido.slice(),
-              nota: c.nota || (c.notaSeguranca ? NOTA_SEGURANCA : ""), contato: null };
-  if (!p) return r;
-  r.pedido = r.pedido.map(f => f === "Não toque em mim." ? PLANO_TOQUE[p.toque] || f
-                             : f === "Não faça perguntas." ? PLANO_PERGUNTAS[p.perguntas] || f : f);
-  if (chave !== "comecar") (p.ajuda || []).forEach(k => {
-    const f = PLANO_AJUDA[k]; if (f && !r.pedido.includes(f)) r.pedido.push(f);
-  });
-  if (p.frase) r.pedido.push(p.frase.trim());
-  const tel = (p.contatoTel || "").replace(/[^0-9+]/g, "");
-  if (p.contatoNome || tel) r.contato = { nome: (p.contatoNome || "").trim(), tel, telTexto: (p.contatoTel || "").trim() };
-  return r;
-}
-
-function renderCartao(chave){
-  const c = conteudoCartao(chave);
-  const corpo = document.getElementById("cartao-corpo");
-  corpo.replaceChildren();
-  corpo.appendChild(el("p","frase destaque",c.destaque));
-  c.estado.forEach(f => corpo.appendChild(el("p","frase",f)));
-  const pedido = el("div","pedido");
-  c.pedido.forEach(f => pedido.appendChild(el("p","frase",f)));
-  corpo.appendChild(pedido);
-  if (c.contato) {
-    const box = el("p","contato");
-    box.appendChild(document.createTextNode("Pessoa de confiança: " + (c.contato.nome || "")));
-    if (c.contato.tel) {
-      box.appendChild(document.createTextNode(c.contato.nome ? " · " : ""));
-      const a = el("a", null, c.contato.telTexto || c.contato.tel); a.href = "tel:" + c.contato.tel; box.appendChild(a);
-    }
-    corpo.appendChild(box);
-  }
-  if (c.nota) corpo.appendChild(el("p","nota",c.nota));
-}
-
-/* Ajuste automático: se o cartão não couber na tela, reduz a fonte aos poucos (mínimo 75%). */
-function ajustarCartao(){
-  const corpo = document.getElementById("cartao-corpo");
-  let esc = 1; corpo.style.fontSize = "";
-  while (document.documentElement.scrollHeight > window.innerHeight + 1 && esc > 0.75) {
-    esc -= 0.05; corpo.style.fontSize = (16 * esc) + "px";
-  }
-}
-window.addEventListener("resize", () => { if (location.hash.startsWith("#cartao/")) ajustarCartao(); });
-
-/* Navegação por endereço (#), para o botão "voltar" do celular funcionar. */
-function rota(){
-  const h = location.hash.replace("#","");
-  const [tipo, chave] = h.split("/");
-  if ((tipo === "instrucao" || tipo === "cartao") && CONTEUDO[chave]){
-    estadoAtual = chave;
-    if (tipo === "instrucao") renderInstrucao(chave); else renderCartao(chave);
-    mostrar(tipo);
-    if (tipo === "cartao") ajustarCartao();
-  } else if (tipo === "sobre"){
-    mostrar("sobre");
-    const alvo = { instalar: "sobre-instalar", avaliar: "sobre-avaliar", "quem-fez": "sobre-quem-fez", plano: "sobre-plano" }[chave];
-    if (alvo) { const d = document.getElementById(alvo); d.open = true; d.scrollIntoView(); }
-  } else {
-    mostrar("inicio");
-  }
-}
-
-document.querySelectorAll("[data-estado]").forEach(b =>
-  b.addEventListener("click", () => { location.hash = "instrucao/" + b.dataset.estado; }));
-
-document.getElementById("botao-cartao").addEventListener("click", () => {
-  location.hash = "cartao/" + estadoAtual;
-});
-
-/* "Voltar" desfaz o último passo dentro do app; se a pessoa abriu direto num link, vai para o início. */
-const pilha = [location.hash];
-window.addEventListener("hashchange", () => {
-  if (pilha.length > 1 && pilha[pilha.length - 2] === location.hash) pilha.pop();
-  else pilha.push(location.hash);
-});
-document.querySelectorAll("[data-voltar]").forEach(b =>
-  b.addEventListener("click", () => {
-    if (pilha.length > 1) { history.back(); return; }
-    const destino = location.hash.startsWith("#cartao/") ? "#instrucao/" + estadoAtual : "#";
-    history.replaceState(null, "", destino === "#" ? location.pathname : destino);
-    pilha[0] = location.hash;
-    rota();
-  }));
-
-document.querySelectorAll("[data-ir='sobre-instalar']").forEach(b =>
-  b.addEventListener("click", () => { location.hash = "sobre/instalar"; }));
-
-/* Mantém a tela acesa enquanto o cartão está aberto (quando o navegador permite). */
-async function manterTelaLigada(){
-  try { if ("wakeLock" in navigator && !travaTela) travaTela = await navigator.wakeLock.request("screen"); }
-  catch(e){ travaTela = null; }
-}
-function liberarTela(){
-  try { if (travaTela) travaTela.release(); } catch(e){}
-  travaTela = null;
-}
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible" && location.hash.startsWith("#cartao/")) {
-    travaTela = null; manterTelaLigada();
-  }
-});
-
-/* Link "Instalar" no rodapé: só aparece no navegador (não no app instalado). */
-(function(){
-  const instalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  if (!instalado) document.getElementById("rodape-instalar").hidden = false;
-})();
-
-/* Link de relatos */
-/* Pix */
-if (CHAVE_PIX){
-  document.getElementById("pix-chave").textContent = CHAVE_PIX;
-  
-  document.getElementById("bloco-pix").hidden = false;
-  document.getElementById("pix-copiar").addEventListener("click", async () => {
-    const ok = document.getElementById("pix-ok");
-    try { await navigator.clipboard.writeText(CHAVE_PIX); ok.textContent = "Copiada."; }
-    catch(e){
-      const r = document.createRange(); r.selectNodeContents(document.getElementById("pix-chave"));
-      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
-      ok.textContent = "Selecionada. Toque e segure para copiar.";
-    }
-  });
-}
-
-if (WHATSAPP){
-  const z = document.getElementById("link-relato");
-  z.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WHATSAPP_MENSAGEM); z.hidden = false;
-  document.getElementById("sobre-avaliar").hidden = false;
-}
-
-/* ---------- Voz (leitura em voz alta com a voz do próprio celular) ---------- */
-const temVoz = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
-let vozAuto = false;
-try { vozAuto = localStorage.getItem("auhug-voz-auto") === "1"; } catch(e){}
-
-function textoDaTela(qual){
-  const c = CONTEUDO[estadoAtual]; if (!c) return "";
-  if (qual === "instrucao") return c.principal + " " + c.permissao;
-  const k = conteudoCartao(estadoAtual);
-  return [k.destaque, ...k.estado, ...k.pedido, k.contato ? "Pessoa de confiança: " + k.contato.nome : "", k.nota].join(" ");
-}
-function vozPortugues(){
-  const vs = speechSynthesis.getVoices();
-  return vs.find(v => /^pt[-_]BR/i.test(v.lang)) || vs.find(v => /^pt/i.test(v.lang)) || null;
-}
-function marcarBotoes(ativo){
-  if (!ativo) document.querySelectorAll("[data-falar]").forEach(b => b.setAttribute("aria-pressed","false"));
-  document.querySelectorAll("[data-ouvir]").forEach(b => {
-    b.setAttribute("aria-pressed", ativo ? "true" : "false");
-    b.querySelector("span").textContent = ativo ? "Parar" : (b.dataset.ouvir === "cartao" ? "Ler em voz alta" : "Ouvir");
-  });
-}
-function falar(texto){
-  if (!temVoz || !texto) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(texto);
-  u.lang = "pt-BR"; u.rate = 0.9;
-  const v = vozPortugues(); if (v) u.voice = v;
-  u.onend = u.onerror = () => marcarBotoes(false);
-  marcarBotoes(true);
-  speechSynthesis.speak(u);
-}
-function pararVoz(){ if (temVoz) { speechSynthesis.cancel(); marcarBotoes(false); } }
-
-if (temVoz) {
-  document.querySelectorAll("[data-ouvir]").forEach(b => {
-    b.hidden = false;
-    b.addEventListener("click", () => {
-      if (b.getAttribute("aria-pressed") === "true") pararVoz(); else falar(textoDaTela(b.dataset.ouvir));
-    });
-  });
-  document.getElementById("bloco-voz").hidden = false;
-  document.body.classList.add("com-voz");
-  document.querySelectorAll("[data-falar]").forEach(b => {
-    b.hidden = false;
-    b.addEventListener("click", () => {
-      const tocando = b.getAttribute("aria-pressed") === "true";
-      pararVoz();
-      if (tocando) return;
-      const texto = document.querySelector('[data-estado="' + b.dataset.falar + '"] span:last-child').textContent;
-      falar(texto);
-      b.setAttribute("aria-pressed", "true");
-    });
-  });
-  const caixa = document.getElementById("voz-auto");
-  caixa.checked = vozAuto;
-  caixa.addEventListener("change", () => {
-    vozAuto = caixa.checked;
-    try { localStorage.setItem("auhug-voz-auto", vozAuto ? "1" : "0"); } catch(e){}
-  });
-  /* Leitura automática: fala direto no toque (alguns celulares só permitem voz em resposta a um toque). */
-  document.querySelectorAll("[data-estado]").forEach(b => b.addEventListener("click", () => {
-    if (!vozAuto) return;
-    const c = CONTEUDO[b.dataset.estado];
-    manterVoz = true;
-    falar(c.principal + " " + c.permissao);
-  }));
-  speechSynthesis.getVoices();
-}
-
-/* Formulário do plano de apoio: grava a cada mudança */
-(function(){
-  const f = document.getElementById("form-plano"), st = document.getElementById("plano-status");
-  function preencher(p){
-    f.reset();
-    if (!p) return;
-    f.querySelectorAll("[name=toque]").forEach(i => i.checked = i.value === p.toque);
-    f.querySelectorAll("[name=perguntas]").forEach(i => i.checked = i.value === p.perguntas);
-    f.querySelectorAll("[name=ajuda]").forEach(i => i.checked = (p.ajuda || []).includes(i.value));
-    f.frase.value = p.frase || ""; f.contatoNome.value = p.contatoNome || ""; f.contatoTel.value = p.contatoTel || "";
-  }
-  function coletar(){
-    return { toque: (f.querySelector("[name=toque]:checked") || {}).value || "nao",
-             perguntas: (f.querySelector("[name=perguntas]:checked") || {}).value || "nao",
-             ajuda: [...f.querySelectorAll("[name=ajuda]:checked")].map(i => i.value),
-             frase: f.frase.value.trim(), contatoNome: f.contatoNome.value.trim(), contatoTel: f.contatoTel.value.trim() };
-  }
-  preencher(lerPlano());
-  f.addEventListener("input", () => { st.textContent = gravarPlano(coletar()) ? "Salvo neste celular." : "Não foi possível salvar neste navegador."; });
-  document.getElementById("apagar-plano").addEventListener("click", () => {
-    gravarPlano(null); preencher(null); st.textContent = "Escolhas apagadas. Os cartões voltaram ao padrão.";
-  });
-})();
-
-/* Imprimir meu cartão: monta as 4 páginas com o plano aplicado e abre a impressão do celular */
-function montarImpressao(){
-  const area = document.getElementById("impressao"); area.replaceChildren();
-  document.querySelectorAll("[data-estado]").forEach(b => {
-    const k = b.dataset.estado, c = CONTEUDO[k], cc = conteudoCartao(k);
-    const folha = el("section","imp-folha");
-    const sit = el("div","imp-sit"); const i1 = document.createElement("img"); i1.src = "simbolos/arasaac-" + k + ".png"; i1.alt = "";
-    const s1 = el("div"); s1.append(el("p","imp-rot","QUANDO"), el("p","imp-grande", b.querySelector("span:last-child").textContent)); sit.append(i1, s1);
-    const mim = el("div","imp-mim"); mim.appendChild(el("p","imp-rot","PARA MIM"));
-    const ac = el("div","imp-acao"); const i2 = document.createElement("img"); i2.src = "simbolos/acao-" + k + ".png"; i2.alt = "";
-    const s2 = el("div"); s2.append(el("p","imp-grande",c.principal), el("p","imp-perm",c.permissao)); ac.append(i2, s2); mim.appendChild(ac);
-    const out = el("div","imp-outro"); out.appendChild(el("p","imp-rot","PARA QUEM ESTÁ POR PERTO"));
-    out.appendChild(el("p","imp-destaque",cc.destaque)); cc.estado.forEach(f => out.appendChild(el("p","imp-frase",f)));
-    const ped = el("div","imp-pedido"); cc.pedido.forEach(f => ped.appendChild(el("p","imp-frase",f))); out.appendChild(ped);
-    if (cc.contato) out.appendChild(el("p","imp-contato","Pessoa de confiança: " + [cc.contato.nome, cc.contato.telTexto || cc.contato.tel].filter(Boolean).join(" · ")));
-    if (cc.nota) out.appendChild(el("p","imp-nota",cc.nota));
-    folha.append(sit, mim, out, el("p","imp-rodape","Cartão do AuHug · auhug.com.br · Pictogramas: ARASAAC, Sergio Palao (CC BY-NC-SA), e desenhos próprios do AuHug"));
-    area.appendChild(folha);
-  });
-  return area;
-}
-document.getElementById("imprimir-plano").addEventListener("click", () => {
-  const imgs = [...montarImpressao().querySelectorAll("img")];
-  Promise.all(imgs.map(i => i.complete ? null : new Promise(r => { i.onload = i.onerror = r; }))).then(() => window.print());
-});
-
-/* Formulário de avaliação */
-if (LINK_FORMULARIO){
-  const a = document.getElementById("link-formulario"); a.href = LINK_FORMULARIO; a.hidden = false;
-  document.getElementById("sobre-avaliar").hidden = false;
-  document.getElementById("privacidade-form").hidden = false;
-  document.getElementById("rodape-avaliar").hidden = false;
-}
-
-window.addEventListener("hashchange", rota);
-rota();
-
-/* Funcionamento sem internet (arquivo sw.js). */
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  });
-}
-</script>
+<script src="app.js"></script>
 <!-- Área de impressão do cartão personalizado (só aparece ao imprimir) -->
 <div id="impressao" aria-hidden="true"></div>
 </body>

@@ -25,3 +25,5 @@ li+li{margin-top:8px}
 .outros{margin-top:30px}
 .meta{color:var(--suave);font-size:.9rem;margin:-4px 0 16px}
 .refs li{font-size:.95rem;color:var(--suave)}
+.aviso-extra{border-top:none;margin-top:8px;padding-top:0}
+.lista-artigos{margin-top:24px}

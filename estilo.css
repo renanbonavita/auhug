@@ -1,0 +1,245 @@
+/* Paleta de baixa estimulação: sem preto puro, sem branco puro, sem cores vivas. */
+:root{
+  --fundo:#1f2329;
+  --botao:#2a2f37;
+  --borda:#3a404a;
+  --texto:#e6e0d4;
+  --suave:#a8a296;
+  --acento:#c4aa8c;
+  --cartao-fundo:#ece5d8;
+  --cartao-texto:#22262c;
+  --cartao-suave:#5a5650;
+  /* Contorno de botões: contraste mínimo de 3:1 (WCAG 1.4.11). */
+  --contorno:#6d6d6d;
+  --contorno-cartao:#898379;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--fundo);color:var(--texto);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.4;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-text-size-adjust:100%;
+}
+/* Sem animações ou transições em lugar nenhum. */
+*,*::before,*::after{animation:none!important;transition:none!important}
+
+.tela{display:none;min-height:100vh;min-height:100dvh;/* dvh por último: altura visível com a barra do navegador */
+  padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));
+  flex-direction:column;max-width:560px;margin:0 auto}
+.tela.ativa{display:flex}
+
+button,a.botao{font:inherit;color:inherit;cursor:pointer}
+/* Foco visível para quem navega pelo teclado (WCAG 2.2): contorno de 3px em ouro, com margem. */
+:focus{outline:none}
+:focus-visible{outline:3px solid #e0b440;outline-offset:3px;border-radius:6px}
+#cartao :focus-visible{outline-color:#22262c}
+a{color:var(--acento)}
+
+/* ---------- Início ---------- */
+.marca{font-size:1rem;color:var(--suave);letter-spacing:.04em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.logo-rodape{width:24px;height:24px;border-radius:6px;vertical-align:middle;margin:-3px 6px 0 0}
+.logo-sobre{width:64px;height:64px;border-radius:14px;margin-bottom:10px}
+.beta{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--borda);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+/* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
+   Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
+:root{--fixo:223px;--aviso:0px;--moldura:26px}
+.lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
+.estado{
+  display:block;width:100%;text-align:left;
+  background:var(--botao);border:2px solid var(--contorno);border-radius:18px;
+  padding:26px 22px;font-size:1.45rem;font-weight:600;min-height:92px;
+}
+.estado:active{border-color:var(--acento)}
+/* Alto-falante de cada botão: botão separado, preso à direita, só aparece se o celular tiver voz. */
+.linha-estado{position:relative}
+body.com-voz .estado{padding-right:64px;gap:14px}
+.falar-estado{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;background:var(--fundo);
+  border:2px solid var(--contorno);border-radius:14px;color:var(--suave)}
+.falar-estado[hidden]{display:none}
+.falar-estado[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
+/* Símbolos (pictogramas ARASAAC) nos botões */
+.estado{display:flex;align-items:center;gap:16px;padding:10px 16px 10px 10px;min-height:0}
+.simbolo{flex:0 0 auto;display:flex;
+  width:clamp(56px,calc((100vh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
+  width:clamp(56px,calc((100dvh - var(--fixo) - var(--aviso)) / 4 - var(--moldura)),104px);
+  aspect-ratio:1}
+.simbolo img{width:100%;height:100%;border-radius:14px;background:var(--cartao-fundo);padding:5px}
+.rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
+.rodape p+p{margin-top:8px}
+.rodape .emergencia{margin-top:16px}
+.rodape a{color:var(--suave)}
+.links-rodape{font-size:.9rem}
+.links-rodape .it{white-space:nowrap}
+.links-rodape .it[hidden]{display:none}
+@media (max-width:400px){ .links-rodape{font-size:.86rem} }
+
+.links-rodape a{display:inline-block;padding:4px 1px;white-space:nowrap}
+.links-rodape .logo-rodape{width:22px;height:22px;margin-right:5px}
+.emergencia a{display:inline-block;padding:4px 2px;margin:-4px 0}
+.emergencia .grupo{white-space:nowrap}
+/* 192 e 188: área de toque de 44px de altura (margem negativa para não empurrar o layout) */
+.emergencia a{padding:13px 6px;margin:-13px -3px;position:relative}
+@media (max-width:360px){ .emergencia{font-size:.84rem} }
+
+
+/* ---------- Barra de cima (Voltar + Ouvir) ---------- */
+.barra{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
+.ouvir{display:inline-flex;align-items:center;gap:8px;background:none;border:2px solid var(--contorno);
+  border-radius:12px;padding:12px 16px;font-size:1.05rem;color:var(--suave)}
+.ouvir[aria-pressed="true"]{border-color:var(--acento);color:var(--texto)}
+.ouvir[hidden]{display:none}
+.voltar,.ouvir{white-space:nowrap}
+@media (max-width:360px){
+  .voltar,.ouvir{padding:9px 11px;font-size:.95rem;gap:6px}
+  .ouvir svg{width:18px;height:18px}
+}
+#cartao .ouvir{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
+#cartao .ouvir[aria-pressed="true"]{border-color:var(--cartao-texto);color:var(--cartao-texto)}
+.opcao{display:flex;gap:12px;align-items:flex-start;margin-top:10px;font-size:1.05rem}
+.opcao input{width:24px;height:24px;margin-top:2px;accent-color:var(--acento);flex:0 0 auto}
+
+/* ---------- Tela de instrução ---------- */
+.voltar{
+  align-self:flex-start;background:none;border:2px solid var(--contorno);
+  border-radius:12px;padding:12px 18px;font-size:1.05rem;color:var(--suave)
+}
+.instrucao{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 4px}
+.instrucao h1{font-size:2.4rem;line-height:1.15;font-weight:700}
+/* Pictograma da ação, acima da instrução; encolhe em telas baixas. */
+.simbolo-instrucao{width:clamp(96px,calc(100vh - 470px),168px);width:clamp(96px,calc(100dvh - 470px),168px);
+  aspect-ratio:1;border-radius:20px;background:var(--cartao-fundo);padding:8px;margin-bottom:22px}
+.instrucao p{font-size:1.35rem;color:var(--suave);margin-top:22px}
+.mostrar{
+  width:100%;background:var(--botao);border:2px solid var(--acento);border-radius:18px;
+  padding:24px 20px;font-size:1.3rem;font-weight:600;min-height:84px;
+  /* Fica preso ao rodapé visível: nunca exige rolar, mesmo com a barra do navegador. */
+  position:sticky;bottom:max(12px,env(safe-area-inset-bottom))
+}
+
+/* ---------- Cartão para terceiros ---------- */
+#cartao{background:var(--cartao-fundo);color:var(--cartao-texto);max-width:none}
+#cartao .voltar{border-color:var(--contorno-cartao);color:var(--cartao-suave)}
+.cartao-corpo{flex:1;display:flex;flex-direction:column;justify-content:center;
+  max-width:560px;width:100%;margin:0 auto;padding:20px 4px}
+.cartao-corpo{font-size:16px}
+.cartao-corpo .frase{font-size:1.6em;line-height:1.3;font-weight:600}
+.cartao-corpo .frase+.frase{margin-top:10px}
+.cartao-corpo .destaque{font-size:2em;font-weight:800;margin-bottom:14px}
+.cartao-corpo .pedido{margin-top:22px;padding-top:18px;border-top:2px solid #cfc7b8}
+.cartao-corpo .pedido .frase{font-weight:700}
+.cartao-corpo .nota{margin-top:26px;padding-top:14px;border-top:1px solid #cfc7b8;
+  font-size:1.05em;color:var(--cartao-suave)}
+#cartao .topo{max-width:560px;width:100%;margin:0 auto}
+
+/* ---------- Sobre ---------- */
+.texto{padding:24px 2px;font-size:1.08rem}
+.texto h1{font-size:1.6rem;margin-bottom:14px}
+.texto h2{font-size:1.2rem;margin:26px 0 10px;color:var(--acento)}
+.texto p,.texto li{color:var(--texto)}
+.texto p+p{margin-top:10px}
+.texto ol,.texto ul{padding-left:22px}
+.texto li+li{margin-top:6px}
+.texto .fraco{color:var(--suave)}
+/* Seções recolhidas: o título é o botão; abre e fecha sem animação. */
+.dica-secoes{margin:24px 0 10px;font-size:.95rem}
+.secao{border-top:1px solid var(--borda)}
+.secao:last-of-type{border-bottom:1px solid var(--borda)}
+.secao[hidden]{display:none}
+.secao summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:10px 2px}
+.secao summary::-webkit-details-marker{display:none}
+.secao summary h2{margin:0;font-size:1.2rem}
+.secao summary::after{content:"+";font-size:1.8rem;line-height:1;color:var(--suave);flex:0 0 auto;width:28px;text-align:center}
+.secao[open] summary::after{content:"−"}
+.secao > :not(summary){margin-bottom:12px}
+.secao[open]{padding-bottom:10px}
+.quem-fez p+p{margin-top:12px}
+.assinatura{color:var(--acento);font-weight:600}
+.link-ig{display:inline-flex;align-items:center;gap:8px;color:var(--suave);text-decoration:underline}
+.plano fieldset{border:none;margin-top:16px}
+.plano legend{font-weight:700;color:var(--texto);margin-bottom:4px}
+.plano .opcao{margin-top:8px}
+.rotulo-campo{display:block;margin-top:10px;font-size:.95rem;color:var(--texto)}
+.campo{display:block;width:100%;margin-top:6px;padding:12px 14px;font:inherit;color:var(--texto);
+  background:var(--botao);border:2px solid var(--contorno);border-radius:12px}
+button.botao-zap{background:none;font:inherit;cursor:pointer}
+.cartao-corpo .contato{margin-top:18px;padding:12px 14px;border:2px solid var(--contorno-cartao);border-radius:14px;font-size:1.15em}
+.cartao-corpo .contato a{color:var(--cartao-texto);font-weight:700;white-space:nowrap}
+/* ---------- Impressão do cartão personalizado (A4, uma página por situação) ---------- */
+#impressao{display:none}
+@media print{
+  @page{size:A4;margin:0}
+  html,body{background:#fff!important;height:auto}
+  body > *:not(#impressao){display:none!important}
+  #impressao{display:block;color:#22262c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  #impressao *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .imp-folha{width:210mm;height:297mm;display:flex;flex-direction:column;page-break-after:always;break-after:page;position:relative;overflow:hidden;background:#fff}
+  .imp-rot{font-size:10pt;font-weight:700;letter-spacing:.12em;color:#5a5650;margin:0 0 4mm}
+  .imp-sit,.imp-acao{display:flex;gap:6mm;align-items:center}
+  .imp-sit{padding:12mm 16mm 6mm}
+  .imp-mim{padding:6mm 16mm 7mm;border-top:.3mm solid #e2dccf;border-bottom:.8mm dashed #b9b1a3}
+  .imp-folha img{width:27mm;height:27mm;border:.6mm solid #cfc7b8;border-radius:4mm;padding:1.5mm;background:#ece5d8}
+  .imp-grande{font-size:21pt;font-weight:800;line-height:1.15;margin:0}
+  .imp-perm{font-size:13pt;color:#5a5650;margin:1.5mm 0 0}
+  .imp-outro{flex:1;padding:7mm 16mm 16mm;background:#ece5d8}
+  .imp-destaque{font-size:26pt;font-weight:800;margin:0 0 4mm}
+  .imp-frase{font-size:16pt;line-height:1.28;font-weight:600;margin:0 0 2.5mm}
+  .imp-pedido{margin-top:5mm;padding-top:5mm;border-top:.8mm solid #cfc7b8}
+  .imp-pedido .imp-frase{font-weight:800}
+  .imp-contato{margin-top:5mm;padding:3mm 4mm;border:.5mm solid #898379;border-radius:3mm;font-size:14pt}
+  .imp-nota{margin-top:5mm;padding-top:3mm;border-top:.3mm solid #cfc7b8;font-size:11pt;color:#5a5650}
+  .imp-rodape{position:absolute;left:16mm;right:16mm;bottom:7mm;font-size:8.5pt;color:#5a5650;margin:0}
+}
+.faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
+.faq h3:first-child{margin-top:4px}
+.faq p{color:var(--suave);margin-top:4px}
+.botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.botao-zap[hidden]{display:none}
+.botao-zap{display:inline-block;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
+.pix{margin-top:12px;background:var(--botao);border:2px solid var(--borda);border-radius:14px;padding:14px 16px}
+.pix .chave{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;word-break:break-all;margin:6px 0 12px}
+.pix button{background:none;border:2px solid var(--acento);border-radius:12px;padding:10px 16px;font-size:1rem;font-weight:600}
+
+@media (min-height:760px){
+  .estado{font-size:1.55rem}
+}
+/* Celulares estreitos com alto-falante: fonte e símbolo um pouco menores, para o texto não quebrar demais. */
+@media (max-width:400px){
+  body.com-voz .estado{font-size:1.18rem;line-height:1.22}
+  body.com-voz .simbolo{max-width:88px}
+}
+/* Celulares baixos (ex.: iPhone SE): tela inicial e cartão precisam caber sem rolar. */
+@media (max-height:700px){
+  #inicio{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom))}
+  .marca{margin-bottom:8px}
+  .marca{display:none}
+  :root{--fixo:132px;--moldura:22px}
+    .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
+  .simbolo img{padding:4px;border-radius:12px}
+  body.com-voz .estado{padding-right:58px}
+  body.com-voz .simbolo{max-width:72px}
+  .links-rodape{font-size:.85rem}
+  .logo-rodape{width:20px;height:20px;margin-right:4px}
+  .falar-estado{width:44px;height:44px;right:7px}
+  .lista{gap:8px}
+  .rodape{margin-top:12px;font-size:.88rem}
+  .rodape p+p{margin-top:6px}
+  #cartao{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}
+  #cartao .voltar,#cartao .ouvir{padding:8px 14px}
+  .cartao-corpo{padding:10px 4px}
+  .cartao-corpo .frase{font-size:1.4em;line-height:1.22}
+  .cartao-corpo .frase+.frase{margin-top:6px}
+  .cartao-corpo .destaque{font-size:1.75em;margin-bottom:8px}
+  .cartao-corpo .pedido{margin-top:14px;padding-top:12px}
+  .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98em}
+}
+/* Rodapé em telas estreitas (até 370px): links numa linha sempre que possível. */
+@media (max-width:370px){ .rodape .links-rodape{font-size:.78rem} .rodape .links-rodape .logo-rodape{width:20px;height:20px;margin-right:3px} }
+/* Utilitários (antes eram estilos escritos nas tags) */
+.u-texto-menor{font-size:.95rem!important}
+.u-nota-campo{font-size:.92rem!important;margin-top:6px!important}
+.u-mt8{margin-top:8px!important}
+.u-mt14{margin-top:14px!important}
+.u-ml10{margin-left:10px!important}

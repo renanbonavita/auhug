@@ -6,7 +6,9 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 
 | Arquivo | Para que serve |
 |---|---|
-| `index.html` | O app inteiro (telas, textos, estilo e lógica) |
+| `index.html` | A estrutura das telas (HTML) |
+| `app.js` | Os textos dos cartões e instruções (bloco CONTEÚDO) e toda a lógica do app |
+| `estilo.css` | Cores, tamanhos e layout |
 | `manifest.webmanifest` | Permite instalar na tela inicial com nome e ícone |
 | `sw.js` | Faz o app funcionar sem internet depois da primeira visita |
 | `icon-192.png`, `icon-512.png`, `icon-maskable-512.png` | Ícones do app (Android; a versão maskable tem margem para o recorte redondo) |
@@ -20,7 +22,9 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 
 ## Como editar os textos
 
-Abra `index.html` num editor de texto e procure por `CONTEÚDO`. Todos os textos das quatro telas e dos cartões estão ali, num bloco só. Mude o texto entre aspas e salve.
+Abra `app.js` num editor de texto e procure por `CONTEÚDO`. Todos os textos das quatro telas e dos cartões estão ali, num bloco só. Mude o texto entre aspas e salve.
+
+As configurações abaixo (WhatsApp, formulário e Pix) também ficam no `app.js`.
 
 Para ativar o botão "Conte como foi" (WhatsApp) na página Sobre, coloque seu número em `WHATSAPP = ""`, só números, com 55 e DDD (ex.: `"5511999999999"`).
 
@@ -84,3 +88,9 @@ Decidido: o cartão continua genérico, sem dados pessoais, para ser simples de 
 ## Créditos
 
 Pictogramas: Sergio Palao. Origem: ARASAAC (arasaac.org). Licença: CC BY-NC-SA. Propriedade: Governo de Aragão (Espanha). Os pictogramas "afaste-se do barulho", "canto quieto" e "fique onde está" são adaptações de pictogramas ARASAAC (mesma licença). Os desenhos de "Estou explodindo por dentro", "Não consigo me mexer nem falar" e "Não consigo começar, mudar ou terminar" são desenhos próprios do AuHug.
+
+## Segurança (CSP)
+
+O `index.html` tem uma regra de segurança (Content-Security-Policy) que só permite rodar código e carregar arquivos do próprio site. Por isso:
+- não escreva JavaScript nem `style="..."` direto no HTML: use o `app.js` e o `estilo.css`;
+- se um dia precisar carregar algo de outro site (uma fonte, um vídeo, um serviço), a regra no topo do `index.html` precisa ser ajustada, senão o navegador bloqueia.
