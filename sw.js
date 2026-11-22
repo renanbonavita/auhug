@@ -7,7 +7,7 @@
    Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
    atualize a lista ARQUIVOS e aumente o número em VERSAO. */
 
-const VERSAO = "auhug-v21";
+const VERSAO = "auhug-v22";
 const ARQUIVOS = [
   "./",
   "index.html",
@@ -47,7 +47,21 @@ self.addEventListener("fetch", evento => {
   const pedido = evento.request;
   if (pedido.method !== "GET" || new URL(pedido.url).origin !== self.location.origin) return;
 
-  // Abrir o app (qualquer endereço dentro dele) sempre usa a página principal guardada.
+  // Abrir o app (o endereço raiz, com ou sem #...) usa a página principal guardada.
+  // Outras páginas do site (ex.: /artigos/) são buscadas na rede e guardadas para leitura sem internet.
+  const url = new URL(pedido.url);
+  const raiz = new URL(self.registration.scope).pathname;
+  const ehApp = url.pathname === raiz || url.pathname === raiz + "index.html";
+  if (pedido.mode === "navigate" && !ehApp) {
+    evento.respondWith(
+      fetch(pedido).then(resp => {
+        if (resp && resp.ok) { const c = resp.clone(); caches.open(VERSAO).then(cache => cache.put(pedido, c)); }
+        return resp;
+      }).catch(() => caches.match(pedido, { ignoreSearch: true }).then(r =>
+        r || new Response("Sem conexão. Abra o AuHug pela tela inicial.", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } })))
+    );
+    return;
+  }
   const chave = pedido.mode === "navigate" ? "./" : pedido;
 
   evento.respondWith(

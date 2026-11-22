@@ -27,6 +27,86 @@
 <meta name="theme-color" content="#1f2329">
 <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.). -->
 <meta property="og:url" content="https://auhug.com.br/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O AuHug é gratuito?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. O AuHug é gratuito, sem anúncios e sem cadastro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funciona sem internet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Depois de aberto uma vez com internet, o AuHug guarda tudo no celular e abre mesmo sem sinal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Preciso instalar alguma coisa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. O AuHug funciona no navegador do celular. Mas vale adicionar à tela inicial, para abrir com um toque na hora da crise."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funciona no iPhone e no Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim, nos dois. No Android, use o Chrome; no iPhone, o Safari."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O AuHug coleta meus dados?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional e anônimo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso imprimir o cartão?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Os quatro cartões estão num PDF em tamanho A4, um por página, para imprimir e levar com você."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O AuHug substitui atendimento profissional?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. O AuHug ajuda na hora da crise, mas não é tratamento nem serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quem fez o AuHug?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e está sendo melhorado junto com a comunidade autista."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como posso dar sugestões?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Em \"Conte como foi\", aqui na página Sobre, há um formulário de 1 minuto. Toda sugestão é lida."
+      }
+    }
+  ]
+}
+</script>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="AuHug: apoio para pessoas autistas em crise">
@@ -182,6 +262,9 @@
   .secao[open] summary::after{content:"−"}
   .secao > :not(summary){margin-bottom:12px}
   .secao[open]{padding-bottom:10px}
+  .faq h3{font-size:1.05rem;margin-top:16px;color:var(--texto)}
+  .faq h3:first-child{margin-top:4px}
+  .faq p{color:var(--suave);margin-top:4px}
   .botoes-relato{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .botao-zap[hidden]{display:none}
   .botao-zap{display:inline-block;border:2px solid var(--acento);border-radius:12px;padding:12px 16px;font-weight:600;text-decoration:none;color:var(--texto)}
@@ -247,7 +330,7 @@
 
   <footer class="rodape">
     <p>Se você pensa em se machucar, ligue <a href="tel:188">188 (CVV)</a>. Gratuito, 24h.</p>
-    <p><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span></p>
+    <p><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre o AuHug</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
   </footer>
 </main>
 
@@ -339,6 +422,30 @@
         <div class="chave" id="pix-chave"></div>
         <button type="button" id="pix-copiar">Copiar chave Pix</button>
         <span id="pix-ok" class="fraco" role="status" style="margin-left:10px"></span>
+      </div>
+    </details>
+
+    <details class="secao" id="sobre-perguntas">
+      <summary><h2>Perguntas frequentes</h2></summary>
+      <div class="faq">
+        <h3>O AuHug é gratuito?</h3>
+        <p>Sim. O AuHug é gratuito, sem anúncios e sem cadastro.</p>
+        <h3>Funciona sem internet?</h3>
+        <p>Sim. Depois de aberto uma vez com internet, o AuHug guarda tudo no celular e abre mesmo sem sinal.</p>
+        <h3>Preciso instalar alguma coisa?</h3>
+        <p>Não. O AuHug funciona no navegador do celular. Mas vale adicionar à tela inicial, para abrir com um toque na hora da crise.</p>
+        <h3>Funciona no iPhone e no Android?</h3>
+        <p>Sim, nos dois. No Android, use o Chrome; no iPhone, o Safari.</p>
+        <h3>O AuHug coleta meus dados?</h3>
+        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular. O formulário de avaliação é opcional e anônimo.</p>
+        <h3>Posso imprimir o cartão?</h3>
+        <p>Sim. Os quatro cartões estão num <a href="cartoes/cartoes-auhug-a4.pdf">PDF em tamanho A4</a>, um por página, para imprimir e levar com você.</p>
+        <h3>O AuHug substitui atendimento profissional?</h3>
+        <p>Não. O AuHug ajuda na hora da crise, mas não é tratamento nem serviço de emergência. Em risco de vida, ligue 192 (SAMU). Para apoio emocional, ligue 188 (CVV).</p>
+        <h3>Quem fez o AuHug?</h3>
+        <p>O AuHug foi criado por Renan Peppe Bonavita, uma pessoa autista, e está sendo melhorado junto com a comunidade autista.</p>
+        <h3>Como posso dar sugestões?</h3>
+        <p>Em &quot;Conte como foi&quot;, aqui na página Sobre, há um formulário de 1 minuto. Toda sugestão é lida.</p>
       </div>
     </details>
 

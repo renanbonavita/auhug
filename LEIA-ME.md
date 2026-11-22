@@ -14,6 +14,8 @@ Ferramenta de autorregulação e comunicação para pessoas autistas em momentos
 | `favicon.png` | Ícone da aba do navegador |
 | `robots.txt`, `sitemap.xml` | Orientam buscadores (Google, Bing) |
 | `llms.txt` | Resumo do app para assistentes de IA |
+| `artigos/` | Artigos (uma pasta por artigo, cada uma com `index.html`) e o estilo `artigos.css` |
+| `cartoes/cartoes-auhug-a4.pdf` | Os 4 cartões para imprimir em A4 |
 | `og-image-6.png` | Imagem de prévia quando o link é compartilhado |
 
 ## Como editar os textos

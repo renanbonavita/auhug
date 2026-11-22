@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://auhug.com.br/</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://auhug.com.br/artigos/</loc>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://auhug.com.br/artigos/como-ajudar-autista-em-crise/</loc>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://auhug.com.br/artigos/meltdown-e-shutdown/</loc>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://auhug.com.br/artigos/sobrecarga-sensorial/</loc>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://auhug.com.br/artigos/inercia-autista/</loc>
+    <lastmod>2026-11-22</lastmod>
   </url>
 </urlset>
