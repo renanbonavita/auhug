@@ -10,7 +10,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 ## 1. Primeira visita (no navegador, com internet)
 
 - [ ] O site abre em menos de 3 segundos.
-- [ ] Aparece o aviso "Instale na tela inicial enquanto está tudo bem".
+- [ ] No rodapé aparece o link "Instalar", que abre as instruções de instalação.
 - [ ] Os 4 botões aparecem com símbolo e texto, sem rolar a tela.
 - [ ] O link "188 (CVV)" e o "Sobre o AuHug" aparecem no fim da tela, sem rolar.
 - [ ] Os símbolos estão nítidos (não borrados) e dá para entender cada um.
@@ -18,7 +18,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 ## 2. Instalação na tela inicial
 
 **Android (Chrome)**
-- [ ] Toque em "Como" no aviso: abre a página Sobre, já nas instruções de instalação.
+- [ ] Toque em "Instalar" no rodapé: abre a página Sobre, já nas instruções de instalação.
 - [ ] Menu ⋮ → "Instalar app" ou "Adicionar à tela inicial" funciona.
 - [ ] O ícone aparece na tela inicial com o nome "AuHug".
 - [ ] O ícone não está cortado (os dois arcos e a bolinha aparecem inteiros).
@@ -29,7 +29,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 
 **Os dois**
 - [ ] Abrindo pelo ícone, o app abre **sem barra de endereço** do navegador.
-- [ ] Dentro do app instalado, o aviso "Instale na tela inicial" **não** aparece.
+- [ ] Dentro do app instalado, o link "Instalar" **não** aparece no rodapé.
 
 ## 3. Os 4 botões (abra pelo ícone instalado)
 
@@ -93,9 +93,9 @@ Desative o modo avião depois.
 - [ ] "Mandar mensagem no WhatsApp" abre uma conversa com o seu número e a mensagem "Oi! Usei o AuHug e queria contar como foi:" já escrita.
 - [ ] O crédito dos pictogramas ARASAAC aparece no fim.
 
-## 8b. Meu plano de apoio
+## 8b. Personalize seu cartão
 
-- [ ] Em Sobre → Meu plano de apoio, mude o toque e as perguntas, marque 1 ou 2 itens de "O que mais me ajuda" e preencha a pessoa de confiança.
+- [ ] Em Sobre → Personalize seu cartão (ou "Personalize" no rodapé), mude o toque e as perguntas, marque 1 ou 2 itens de "O que mais me ajuda" e preencha a pessoa de confiança.
 - [ ] "Ver meu cartão" mostra o cartão com essas escolhas.
 - [ ] O telefone da pessoa de confiança abre o discador.
 - [ ] Feche e abra o app: as escolhas continuam lá.

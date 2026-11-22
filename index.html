@@ -70,7 +70,7 @@
       "name": "O AuHug coleta meus dados?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular, nem as escolhas do seu plano de apoio. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail."
+        "text": "Não. O app não pede cadastro e não guarda nada fora do seu celular, nem o que você escolhe em "Personalize seu cartão". O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail."
       }
     },
     {
@@ -167,7 +167,6 @@
   /* Tamanho do símbolo: divide a altura da tela entre os 4 botões (entre 56px e 104px).
      Se o texto precisar de mais espaço (fonte grande, tela deitada), o botão cresce e a tela rola. */
   :root{--fixo:217px;--aviso:0px;--moldura:26px}
-  body.com-aviso{--aviso:0px}
   .lista{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
   .estado{
     display:block;width:100%;text-align:left;
@@ -191,17 +190,10 @@
     aspect-ratio:1}
   .simbolo img{width:100%;height:100%;border-radius:14px;background:var(--cartao-fundo);padding:5px}
   .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
-  .rodape p+p{margin-top:10px}
+  .rodape p+p{margin-top:8px}
   .rodape a{color:var(--suave)}
   .links-rodape a{display:inline-block;padding:4px 1px}
 
-  .aviso-instalar{
-    background:transparent;border:1px dashed var(--borda);border-radius:14px;
-    padding:12px 14px;font-size:.95rem;color:var(--suave);
-    display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px
-  }
-  .aviso-instalar[hidden]{display:none}
-  .aviso-instalar button{background:none;border:none;color:var(--suave);font-size:.95rem;text-decoration:underline;padding:6px}
 
   /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
   .barra{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
@@ -333,10 +325,7 @@
     .marca{margin-bottom:8px}
     .marca{display:none}
     :root{--fixo:132px;--moldura:22px}
-    body.com-aviso{--aviso:0px}
-    .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
-    .aviso-instalar{padding:6px 10px;font-size:.85rem;margin-bottom:8px;gap:8px}
-    .aviso-instalar button{font-size:.85rem;padding:4px}
+      .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
     .simbolo img{padding:4px;border-radius:12px}
     body.com-voz .estado{padding-right:58px}
     body.com-voz .simbolo{max-width:72px}
@@ -371,16 +360,9 @@
   </nav>
 
   <footer class="rodape">
-    <p>Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
-    <p class="links-rodape"><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre</a> · <a href="#sobre/plano">Meu plano</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
+    <p class="links-rodape"><a href="#sobre"><img class="logo-rodape" src="icon-192.png" alt="">Sobre</a> · <a href="#sobre/plano">Personalize</a><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a><span id="rodape-instalar" hidden> · <a href="#sobre/instalar">Instalar</a></span></p>
+    <p class="emergencia">Emergência: <a href="tel:192">192 (SAMU)</a> · Apoio emocional: <a href="tel:188">188 (CVV)</a>, 24h</p>
   </footer>
-  <div id="aviso-instalar" class="aviso-instalar" hidden style="margin:12px 0 0">
-    <span>Instale na tela inicial enquanto está tudo bem.</span>
-    <span>
-      <button type="button" data-ir="sobre-instalar">Como</button>
-      <button type="button" id="fechar-aviso" aria-label="Não mostrar de novo">Ocultar</button>
-    </span>
-  </div>
 </main>
 
 <!-- ===== INSTRUÇÃO PARA A PRÓPRIA PESSOA ===== -->
@@ -430,7 +412,7 @@
     </details>
 
     <details class="secao" id="sobre-plano">
-      <summary><h2>Meu plano de apoio</h2></summary>
+      <summary><h2>Personalize seu cartão</h2></summary>
       <p>Ajuste o que aparece nos seus cartões para quem está por perto. Faça isso num momento tranquilo. Suas escolhas ficam <strong>só neste celular</strong>.</p>
       <p class="fraco" style="font-size:.95rem">Escolha só o essencial: quanto menos itens, mais fácil para a outra pessoa ler.</p>
       <form id="form-plano" class="plano" onsubmit="return false">
@@ -545,7 +527,7 @@
         <h3>Funciona no iPhone e no Android?</h3>
         <p>Sim, nos dois. No Android, use o Chrome; no iPhone, o Safari.</p>
         <h3>O AuHug coleta meus dados?</h3>
-        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular, nem as escolhas do seu plano de apoio. O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail.</p>
+        <p>Não. O app não pede cadastro e não guarda nada fora do seu celular, nem o que você escolhe em "Personalize seu cartão". O formulário de avaliação é opcional, fica no Google Forms e não pede nome nem e-mail.</p>
         <h3>Posso imprimir o cartão?</h3>
         <p>Sim. Os quatro cartões estão num <a href="cartoes/cartoes-auhug-a4.pdf">PDF em tamanho A4</a>, um por página, para imprimir e levar com você.</p>
         <h3>O AuHug substitui atendimento profissional?</h3>
@@ -559,7 +541,7 @@
 
     <details class="secao">
       <summary><h2>Privacidade</h2></summary>
-      <p>O AuHug não pede cadastro e não coleta nenhum dado seu. O que você escolhe em "Meu plano de apoio" fica guardado só neste celular, e você pode apagar quando quiser.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
+      <p>O AuHug não pede cadastro e não coleta nenhum dado seu. O que você escolhe em "Personalize seu cartão" fica guardado só neste celular, e você pode apagar quando quiser.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
     </details>
 
     <details class="secao">
@@ -665,7 +647,7 @@ function renderInstrucao(chave){
   document.getElementById("instrucao-simbolo").src = "simbolos/acao-" + chave + ".png";
 }
 
-/* ---------- Meu plano de apoio (guardado só no celular) ---------- */
+/* ---------- Personalize seu cartão (guardado só no celular) ---------- */
 const PLANO_TOQUE = { nao: "Não toque em mim.", ombro: "Se precisar, pode tocar no meu ombro, com calma.", abraco: "Um abraço firme me ajuda, se eu aceitar." };
 const PLANO_PERGUNTAS = { nao: "Não faça perguntas.", simnao: "Faça só perguntas de sim ou não; posso responder com um gesto." };
 const PLANO_AJUDA = { luz: "Diminua o barulho e a luz, se puder.", calmo: "Me ajude a ir para um lugar mais calmo.",
@@ -778,17 +760,10 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-/* Aviso de instalação: só aparece no navegador (não no app instalado) e pode ser ocultado. */
+/* Link "Instalar" no rodapé: só aparece no navegador (não no app instalado). */
 (function(){
   const instalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  let oculto = false;
-  try { oculto = localStorage.getItem("auhug-aviso-oculto") === "1"; } catch(e){}
-  const aviso = document.getElementById("aviso-instalar");
-  if (!instalado && !oculto) { aviso.hidden = false; document.body.classList.add("com-aviso"); }
-  document.getElementById("fechar-aviso").addEventListener("click", () => {
-    aviso.hidden = true; document.body.classList.remove("com-aviso");
-    try { localStorage.setItem("auhug-aviso-oculto","1"); } catch(e){}
-  });
+  if (!instalado) document.getElementById("rodape-instalar").hidden = false;
 })();
 
 /* Link de relatos */
