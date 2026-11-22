@@ -95,7 +95,7 @@ Desative o modo avião depois.
 
 ## 8b. Personalize seu cartão
 
-- [ ] Em Sobre → Personalize seu cartão (ou "Personalize" no rodapé), mude o toque e as perguntas, marque 1 ou 2 itens de "O que mais me ajuda" e preencha a pessoa de confiança.
+- [ ] Em Sobre → Personalize seu cartão (ou "Personalizar" no rodapé), mude o toque e as perguntas, marque 1 ou 2 itens de "O que mais me ajuda" e preencha a pessoa de confiança.
 - [ ] "Ver meu cartão" mostra o cartão com essas escolhas.
 - [ ] O telefone da pessoa de confiança abre o discador.
 - [ ] Feche e abra o app: as escolhas continuam lá.
