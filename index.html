@@ -6,6 +6,7 @@
 <title>AuHug: apoio à comunicação em momentos de sobrecarga autista</title>
 <meta name="description" content="Ferramenta gratuita que ajuda pessoas autistas a comunicar o que precisam em momentos de sobrecarga, meltdown ou shutdown, mesmo sem conseguir falar: cartões para quem está por perto, pictogramas, leitura em voz alta e um primeiro passo simples. Funciona sem internet.">
 <link rel="canonical" href="https://auhug.com.br/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">
 {
@@ -157,6 +158,10 @@
   .tela.ativa{display:flex}
 
   button,a.botao{font:inherit;color:inherit;cursor:pointer}
+  /* Foco visível para quem navega pelo teclado (WCAG 2.2): contorno de 3px em ouro, com margem. */
+  :focus{outline:none}
+  :focus-visible{outline:3px solid #e0b440;outline-offset:3px;border-radius:6px}
+  #cartao :focus-visible{outline-color:#22262c}
   a{color:var(--acento)}
 
   /* ---------- Início ---------- */
@@ -193,6 +198,7 @@
   .rodape p+p{margin-top:8px}
   .rodape a{color:var(--suave)}
   .links-rodape a{display:inline-block;padding:4px 1px}
+  .emergencia a{display:inline-block;padding:4px 2px;margin:-4px 0}
 
 
   /* ---------- Barra de cima (Voltar + Ouvir) ---------- */
@@ -541,7 +547,9 @@
 
     <details class="secao">
       <summary><h2>Privacidade</h2></summary>
-      <p>O AuHug não pede cadastro e não coleta nenhum dado seu. O que você escolhe em "Personalize seu cartão" fica guardado só neste celular, e você pode apagar quando quiser.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
+      <p>O AuHug não pede cadastro, não usa cookies de rastreamento nem anúncios e não envia nenhum dado seu para nós.</p>
+      <p>Algumas escolhas ficam guardadas <strong>só neste celular</strong>, no próprio navegador: o que você define em "Personalize seu cartão", a leitura automática em voz alta e os arquivos do app para funcionar sem internet. Você pode apagar a personalização quando quiser, ou limpar tudo nas configurações do navegador.</p>
+      <p>O site é hospedado pelo GitHub Pages, que pode registrar dados técnicos de acesso, como o endereço IP, para segurança e funcionamento do serviço.<span id="privacidade-form" hidden> O formulário de avaliação é opcional e fica no Google Forms, que tem a própria política de privacidade. As perguntas não pedem nome, e-mail nem informações de saúde.</span></p>
     </details>
 
     <details class="secao">
