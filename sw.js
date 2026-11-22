@@ -7,7 +7,7 @@
    Só é preciso mexer aqui se você ADICIONAR ou RENOMEAR arquivos:
    atualize a lista ARQUIVOS e aumente o número em VERSAO. */
 
-const VERSAO = "auhug-v38";
+const VERSAO = "auhug-v39";
 const ARQUIVOS = [
   "./",
   "index.html",

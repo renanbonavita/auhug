@@ -197,7 +197,13 @@
   .rodape{margin-top:20px;font-size:.95rem;color:var(--suave);text-align:center}
   .rodape p+p{margin-top:8px}
   .rodape a{color:var(--suave)}
-  .links-rodape a{display:inline-block;padding:4px 1px}
+  .links-rodape{font-size:.9rem}
+  .links-rodape .it{white-space:nowrap}
+  .links-rodape .it[hidden]{display:none}
+  @media (max-width:400px){ .links-rodape{font-size:.86rem} }
+
+  .links-rodape a{display:inline-block;padding:4px 1px;white-space:nowrap}
+  .links-rodape .logo-rodape{width:22px;height:22px;margin-right:5px}
   .emergencia a{display:inline-block;padding:4px 2px;margin:-4px 0}
   .emergencia .grupo{white-space:nowrap}
   .emergencia a{padding:4px 3px}
@@ -353,6 +359,8 @@
     .cartao-corpo .pedido{margin-top:14px;padding-top:12px}
     .cartao-corpo .nota{margin-top:14px;padding-top:10px;font-size:.98em}
   }
+  /* Rodapé em telas estreitas (até 370px): links numa linha sempre que possível. */
+  @media (max-width:370px){ .rodape .links-rodape{font-size:.78rem} .rodape .links-rodape .logo-rodape{width:20px;height:20px;margin-right:3px} }
 </style>
 </head>
 <body>
@@ -369,7 +377,7 @@
   </nav>
 
   <footer class="rodape">
-    <p class="links-rodape"><a href="#sobre"><img class="logo-rodape" src="icon-64.png" alt="" width="24" height="24">Sobre</a> · <a href="#sobre/plano">Personalizar</a><span id="rodape-instalar" hidden> · <a href="#sobre/instalar">Instalar</a></span><span id="rodape-avaliar" hidden> · <a href="#sobre/avaliar">Avaliar</a></span> · <a href="artigos/">Artigos</a></p>
+    <p class="links-rodape"><span class="it"><a href="#sobre"><img class="logo-rodape" src="icon-64.png" alt="" width="24" height="24">Sobre</a>&nbsp;·</span> <span class="it"><a href="#sobre/plano">Personalizar</a>&nbsp;·</span> <span class="it" id="rodape-instalar" hidden><a href="#sobre/instalar">Instalar</a>&nbsp;·</span> <span class="it" id="rodape-avaliar" hidden><a href="#sobre/avaliar">Avaliar</a>&nbsp;·</span> <span class="it"><a href="artigos/">Artigos</a></span></p>
     <p class="emergencia"><span class="grupo">Emergência: <a href="tel:192" aria-label="Ligar para 192, SAMU, emergência">192</a></span> · <span class="grupo">Apoio emocional: <a href="tel:188" aria-label="Ligar para 188, CVV, apoio emocional 24 horas">188</a></span></p>
   </footer>
 </main>
