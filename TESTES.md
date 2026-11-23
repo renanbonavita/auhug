@@ -10,7 +10,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 ## 1. Primeira visita (no navegador, com internet)
 
 - [ ] O site abre em menos de 3 segundos.
-- [ ] No topo, ao lado de "AuHug beta", aparece o botão cinza "Usar sem internet" (em celulares baixos, como o iPhone SE, ele aparece como "Instalar" no rodapé).
+- [ ] No topo, ao lado de "AuHug beta", aparece o botão cinza "Usar sem internet".
 - [ ] Os 4 botões aparecem com símbolo e texto, sem rolar a tela.
 - [ ] Os links do rodapé e a linha "Emergência: 192 · Apoio emocional: 188" aparecem no fim da tela, sem rolar.
 - [ ] Os símbolos estão nítidos (não borrados) e dá para entender cada um.
@@ -30,7 +30,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 
 **Os dois**
 - [ ] Abrindo pelo ícone, o app abre **sem barra de endereço** do navegador.
-- [ ] Dentro do app instalado, o botão "Usar sem internet" e o link "Instalar" **não** aparecem.
+- [ ] Dentro do app instalado, o botão "Usar sem internet" **não** aparece.
 
 ## 3. Os 4 botões (abra pelo ícone instalado)
 

@@ -78,8 +78,6 @@ body.com-voz .estado{padding-right:64px;gap:14px}
 .botao-instalar{margin-left:auto;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--borda);background:var(--botao);color:var(--suave);font:inherit;font-size:.9rem;letter-spacing:0;cursor:pointer}
 .botao-instalar:hover{color:var(--texto)}
 .botao-instalar[hidden]{display:none}
-/* Link "Instalar" do rodapé: só em celulares baixos, onde o topo fica escondido. */
-.links-rodape .so-baixo{display:none}
 @media (max-width:400px){ .links-rodape{font-size:.86rem} }
 
 .links-rodape a{display:inline-block;padding:4px 1px;white-space:nowrap}
@@ -221,7 +219,9 @@ button.botao-zap{background:none;font:inherit;cursor:pointer}
   #inicio{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom))}
   .marca{margin-bottom:8px}
   .marca{display:none}
-  .links-rodape .so-baixo:not([hidden]){display:inline}
+  /* No navegador, o topo volta (compacto) para mostrar "Usar sem internet"; no app instalado, continua escondido. */
+  body.navegador .marca{display:flex;margin-bottom:6px}
+  body.navegador{--fixo:184px}
   :root{--fixo:132px;--moldura:22px}
     .estado{min-height:0;padding:8px 12px 8px 8px;gap:12px;font-size:1.12rem;line-height:1.22;border-radius:16px}
   .simbolo img{padding:4px;border-radius:12px}

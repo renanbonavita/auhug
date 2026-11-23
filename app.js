@@ -206,17 +206,16 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-/* "Usar sem internet" (topo) e "Instalar" (rodapé, celulares baixos): só no navegador, não no app instalado.
+/* "Usar sem internet" (topo): só no navegador, não no app instalado.
    No Android/Chrome, abre a janela de instalação do próprio navegador; nos outros, abre as instruções. */
 (function(){
   const instalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   if (instalado) return;
   const botao = document.getElementById("botao-instalar");
-  const rodape = document.getElementById("rodape-instalar");
-  botao.hidden = false; rodape.hidden = false;
+  botao.hidden = false; document.body.classList.add("navegador");
   let pedido = null;
   window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); pedido = e; });
-  window.addEventListener("appinstalled", () => { botao.hidden = true; rodape.hidden = true; pedido = null; });
+  window.addEventListener("appinstalled", () => { botao.hidden = true; document.body.classList.remove("navegador"); pedido = null; });
   botao.addEventListener("click", async () => {
     if (pedido){
       pedido.prompt();
