@@ -10,7 +10,7 @@ Endereço: https://renanbonavita.github.io/auhug/
 ## 1. Primeira visita (no navegador, com internet)
 
 - [ ] O site abre em menos de 3 segundos.
-- [ ] No rodapé aparece o link "Instalar", que abre as instruções de instalação.
+- [ ] No topo, ao lado de "AuHug beta", aparece o botão cinza "Usar sem internet" (em celulares baixos, como o iPhone SE, ele aparece como "Instalar" no rodapé).
 - [ ] Os 4 botões aparecem com símbolo e texto, sem rolar a tela.
 - [ ] Os links do rodapé e a linha "Emergência: 192 · Apoio emocional: 188" aparecem no fim da tela, sem rolar.
 - [ ] Os símbolos estão nítidos (não borrados) e dá para entender cada um.
@@ -18,18 +18,19 @@ Endereço: https://renanbonavita.github.io/auhug/
 ## 2. Instalação na tela inicial
 
 **Android (Chrome)**
-- [ ] Toque em "Instalar" no rodapé: abre a página Sobre, já nas instruções de instalação.
+- [ ] Toque em "Usar sem internet": abre a janela de instalação do Chrome (ou, se ela não abrir, as instruções na página Sobre).
 - [ ] Menu ⋮ → "Instalar app" ou "Adicionar à tela inicial" funciona.
 - [ ] O ícone aparece na tela inicial com o nome "AuHug".
 - [ ] O ícone não está cortado (os dois arcos e a bolinha aparecem inteiros).
 
 **iPhone (Safari)**
+- [ ] Toque em "Usar sem internet": abre as instruções na página Sobre.
 - [ ] Compartilhar → "Adicionar à Tela de Início" funciona.
 - [ ] O ícone aparece com o nome "AuHug" e não está cortado.
 
 **Os dois**
 - [ ] Abrindo pelo ícone, o app abre **sem barra de endereço** do navegador.
-- [ ] Dentro do app instalado, o link "Instalar" **não** aparece no rodapé.
+- [ ] Dentro do app instalado, o botão "Usar sem internet" e o link "Instalar" **não** aparecem.
 
 ## 3. Os 4 botões (abra pelo ícone instalado)
 
